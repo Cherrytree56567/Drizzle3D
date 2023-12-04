@@ -1,6 +1,16 @@
 #include "Window.h"
 
 namespace Drizzle3D {
+	LRESULT CALLBACK WindowProcess(HWND hWnd, UINT message, WPARAM wparam, LPARAM lparam)
+	{
+		switch (message) {
+		case WM_DESTROY:
+			PostQuitMessage(0);
+			break;
+		}
+
+		return DefWindowProc(hWnd, message, wparam, lparam);
+	}
 	Window::Window(char* title, int width, int height, HICON TBICON, HICON WICON, HCURSOR cursor) {
 		WNDCLASSEX wcex;
 
@@ -45,15 +55,30 @@ namespace Drizzle3D {
 		MSG msg = { 0 };
 		if (msg.message != WM_QUIT) {
 			// If there are Window messages then process them.
-			if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE))
-			{
+			if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
 			}
-
 			return true;
 		} else {
 			return false;
+		}
+		if (msg.message == WM_SIZE) {
+			dispatcher.DispatchEvent(EventType::WindowResize);
+		}
+		else if (msg.message == WM_SETFOCUS) {
+			dispatcher.DispatchEvent(EventType::WindowFocus);
+		}
+		else if (msg.message == WM_KILLFOCUS) {
+			dispatcher.DispatchEvent(EventType::WindowLostFocus);
+		}
+		else if (msg.message == WM_MOVE) {
+			dispatcher.DispatchEvent(EventType::WindowMoved);
+		}
+		else if (msg.message == WM_CLOSE) {
+			dispatcher.DispatchEvent(EventType::WindowClose);
+		} else if (msg.message == WM_DESTROY) {
+			exit(0);
 		}
 	}
 }

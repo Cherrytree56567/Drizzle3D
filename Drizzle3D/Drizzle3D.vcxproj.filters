@@ -16,18 +16,27 @@
     <Filter Include="Source Files\Window">
       <UniqueIdentifier>{0708d4a0-900c-4fc5-8438-468db4c3b6d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Events">
+      <UniqueIdentifier>{2320265e-bcee-4e73-93a5-565598dc76a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Events.cpp">
+      <Filter>Source Files\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.h">
+      <Filter>Source Files\Events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
