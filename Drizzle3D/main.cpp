@@ -1,4 +1,3 @@
-#include <windows.h>
 #include "Application.h"
 
 void resix(HWND hwnd, UINT, WPARAM wparam, LPARAM lparam) {

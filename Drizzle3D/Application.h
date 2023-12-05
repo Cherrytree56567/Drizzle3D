@@ -1,4 +1,5 @@
 #pragma once
+#include "Base.h"
 #include "Window.h"
 #include "Timer.h"
 

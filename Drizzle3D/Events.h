@@ -1,9 +1,5 @@
 #pragma once
-#include <iostream>
-#include <functional>
-#include <unordered_map>
-#include <vector>
-#include <Windows.h>
+#include "Base.h"
 
 namespace Drizzle3D {
     enum class EventType

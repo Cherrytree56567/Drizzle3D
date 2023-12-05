@@ -1,5 +1,5 @@
 #pragma once
-#include <chrono>
+#include "Base.h"
 
 namespace Drizzle3D {
 	class Timer {
