@@ -1,35 +1,33 @@
 #pragma once
-#include "Base.h"
+#include <GLFW/glfw3.h>
+#include <iostream>
+#include <functional>
+#include <unordered_map>
+#include <vector>
+#include "Logging.h"
 
 namespace Drizzle3D {
-    enum class EventType
-    {
+
+    enum class EventType {
         None = 0,
         WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
         AppTick, AppUpdate, AppRender,
         KeyPressed, KeyReleased,
-        MouseLeftButtonPressed, MouseLeftButtonReleased, MouseRightButtonPressed, MouseRightButtonReleased, MouseMoved, MouseScrolled
+        MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
     };
 
-    class Events
-    {
+    class Events {
     public:
-        typedef void (*EventCallback)(HWND hwnd, UINT MSG, WPARAM wparam, LPARAM lparam);
+        typedef void (*EventCallback)(GLFWwindow* app);
 
         void AddEventListener(EventType eventType, EventCallback callback);
 
         void RemoveEventListener(EventType eventType, EventCallback callback);
 
-        void DispatchEvent(EventType eventType, HWND hwnd, UINT MSG, WPARAM wparam, LPARAM lparam);
-
-        void CaptureMouse(HWND hWnd);
-
-        void ReleaseMouse(HWND hWnd);
-
-        bool GetMouseCaptureState() { return g_MouseCaptured; }
+        void DispatchEvent(EventType eventType, GLFWwindow* window);
 
     private:
         std::unordered_map<EventType, std::vector<EventCallback>> eventCallbacks;
-        bool g_MouseCaptured = false;
+        Logging log;
     };
 }

@@ -5,34 +5,25 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Source Files\Window">
-      <UniqueIdentifier>{0708d4a0-900c-4fc5-8438-468db4c3b6d6}</UniqueIdentifier>
+      <UniqueIdentifier>{aa439520-3655-47f6-a2a9-48af0baef570}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Events">
-      <UniqueIdentifier>{2320265e-bcee-4e73-93a5-565598dc76a7}</UniqueIdentifier>
+      <UniqueIdentifier>{1bb9d953-30b8-4351-8702-0690cc8b898b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Application">
-      <UniqueIdentifier>{a4a0e103-a910-4c36-9192-d36ecfaab607}</UniqueIdentifier>
+    <Filter Include="Source Files\App">
+      <UniqueIdentifier>{4bfca9f7-dda6-4a36-b2e0-36f3092c2533}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Timer">
-      <UniqueIdentifier>{bbc9e8ee-f4b5-49cd-b535-97b74c6135eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Rendering">
-      <UniqueIdentifier>{bcfdad61-2370-488b-99f0-c68e5693acf3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Shaders">
-      <UniqueIdentifier>{cb36361a-d5b6-4913-a96b-98a0885f4218}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Exception">
-      <UniqueIdentifier>{e51dd3b6-d1f0-4e05-9357-6c73e04c64c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Source Files\Logging">
+      <UniqueIdentifier>{7b422a17-ed96-4179-842b-2e49056477bb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -45,20 +36,11 @@
     <ClCompile Include="Events.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Source Files\Application</Filter>
+    <ClCompile Include="App.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files\Timer</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="D3DException.cpp">
-      <Filter>Source Files\Exception</Filter>
-    </ClCompile>
-    <ClCompile Include="dxerr.cpp">
-      <Filter>External Files</Filter>
+    <ClCompile Include="Logging.cpp">
+      <Filter>Source Files\Logging</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,42 +50,11 @@
     <ClInclude Include="Events.h">
       <Filter>Source Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Application.h">
-      <Filter>Source Files\Application</Filter>
+    <ClInclude Include="App.h">
+      <Filter>Source Files\App</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Source Files\Timer</Filter>
+    <ClInclude Include="Logging.h">
+      <Filter>Source Files\Logging</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Source Files\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="D3DException.h">
-      <Filter>Source Files\Exception</Filter>
-    </ClInclude>
-    <ClInclude Include="dxerr.h">
-      <Filter>External Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Base.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="VertexShader.hlsl">
-      <Filter>Source Files\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="PixelShader.hlsl">
-      <Filter>Source Files\Shaders</Filter>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DXGetErrorDescription.inl">
-      <Filter>External Files</Filter>
-    </None>
-    <None Include="DXGetErrorString.inl">
-      <Filter>External Files</Filter>
-    </None>
-    <None Include="DXTrace.inl">
-      <Filter>External Files</Filter>
-    </None>
   </ItemGroup>
 </Project>

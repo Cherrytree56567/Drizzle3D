@@ -10,20 +10,56 @@ namespace Drizzle3D {
         callbacks.erase(std::remove(callbacks.begin(), callbacks.end(), callback), callbacks.end());
     }
 
-    void Events::DispatchEvent(EventType eventType, HWND hwnd, UINT MSG, WPARAM wparam, LPARAM lparam) {
+    void Events::DispatchEvent(EventType eventType, GLFWwindow* window) {
         auto& callbacks = eventCallbacks[eventType];
         for (const auto& callback : callbacks) {
-            callback(hwnd, MSG, wparam, lparam);
+            callback(window);
         }
-    }
-
-    void Events::CaptureMouse(HWND hWnd) {
-        g_MouseCaptured = false;
-        SetCapture(hWnd);
-    }
-
-    void Events::ReleaseMouse(HWND hWnd) {
-        ReleaseCapture();
-        g_MouseCaptured = false;
+        switch (eventType) {
+        case Drizzle3D::EventType::WindowClose:
+            log.Info("Window Closed.", "[Drizzle3D::Core::Events]");
+            break;
+        case Drizzle3D::EventType::WindowResize:
+            log.Info("Window Resized.", "[Drizzle3D::Core::Events]");
+            break;
+        case Drizzle3D::EventType::WindowFocus:
+            log.Info("Window is Focused.", "[Drizzle3D::Core::Events]");
+            break;
+        case Drizzle3D::EventType::WindowLostFocus:
+            log.Info("Window has Lost Focus.", "[Drizzle3D::Core::Events]");
+            break;
+        case Drizzle3D::EventType::WindowMoved:
+            log.Info("Window Moved.", "[Drizzle3D::Core::Events]");
+            break;
+        case Drizzle3D::EventType::AppTick:
+            log.Info("Application Tick.", "[Drizzle3D::Core::Events]");
+            break;
+        case Drizzle3D::EventType::AppUpdate:
+            log.Info("Application Update.", "[Drizzle3D::Core::Events]");
+            break;
+        case Drizzle3D::EventType::AppRender:
+            log.Info("Application Render.", "[Drizzle3D::Core::Events]");
+            break;
+        case Drizzle3D::EventType::KeyPressed:
+            log.Info("Key Pressed.", "[Drizzle3D::Core::Events]");
+            break;
+        case Drizzle3D::EventType::KeyReleased:
+            log.Info("Key Released.", "[Drizzle3D::Core::Events]");
+            break;
+        case Drizzle3D::EventType::MouseButtonPressed:
+            log.Info("Mouse Button Pressed.", "[Drizzle3D::Core::Events]");
+            break;
+        case Drizzle3D::EventType::MouseButtonReleased:
+            log.Info("Mouse Button Released.", "[Drizzle3D::Core::Events]");
+            break;
+        case Drizzle3D::EventType::MouseMoved:
+            log.Info("Mouse Moved.", "[Drizzle3D::Core::Events]");
+            break;
+        case Drizzle3D::EventType::MouseScrolled:
+            log.Info("Mouse Scrolled.", "[Drizzle3D::Core::Events]");
+            break;
+        default:
+            break;
+        }
     }
 }

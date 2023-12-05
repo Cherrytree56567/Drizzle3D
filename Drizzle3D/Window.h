@@ -1,23 +1,32 @@
 #pragma once
-#define _CRT_SECURE_NO_WARNINGS
-#include "Base.h"
-#include "Renderer.h"
+#include <vector>
+#include <GLFW/glfw3.h>
+#include <iostream>
 #include "Events.h"
 
 namespace Drizzle3D {
-	void SetTitle(char* title, HWND hwnd);
-	void SetIcon(char* filepath, HWND hwnd);
+
 	class Window {
 	public:
-		Window(char* title = (char*)"New Drizzle3D Game", int width = 800, int height = 600, HICON TBIcon = LoadIcon(0, IDI_APPLICATION), HICON WICON = LoadIcon(0, IDI_APPLICATION), HCURSOR cursor = LoadCursor(nullptr, IDC_ARROW));
-		bool Update();
+		Window(Events* dispatch, char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
+		~Window();
+
+		GLFWwindow* returnwindow() { return window; };
+		int returnWidth() { return winwidth; }
+		int returnHeight() { return winheight; }
+		int returnX() { return winx; }
+		int returnY() { return winy; }
+
+		void ProcessEvents();
 		void Render();
-		Renderer& GetRenderer() { return *pRender; }
-		HWND GetHandle() { return hWnd; }
-		Events dispatcher;
+
+		Events* dispatcher;
 	private:
-		std::unique_ptr<Renderer> pRender;
-		WCHAR WindowClass[256];
-		HWND hWnd;
+		GLFWwindow* window = NULL;
+		int winwidth;
+		int winheight;
+		int winx;
+		int winy;
 	};
+
 }

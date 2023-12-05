@@ -1,8 +1,4 @@
-C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Application.cpp;C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\x64\Debug\Application.obj
-C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\dxerr.cpp;C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\x64\Debug\dxerr.obj
-C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Events.cpp;C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\x64\Debug\Events.obj
-C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\D3DException.cpp;C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\x64\Debug\D3DException.obj
-C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\main.cpp;C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\x64\Debug\main.obj
-C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Renderer.cpp;C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\x64\Debug\Renderer.obj
-C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Timer.cpp;C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\x64\Debug\Timer.obj
-C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Window.cpp;C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\x64\Debug\Window.obj
+C:\Users\ronit\Desktop\Drizzle3Dold\Drizzle3D\App.cpp;C:\Users\ronit\Desktop\Drizzle3Dold\Drizzle3D\x64\Debug\App.obj
+C:\Users\ronit\Desktop\Drizzle3Dold\Drizzle3D\Events.cpp;C:\Users\ronit\Desktop\Drizzle3Dold\Drizzle3D\x64\Debug\Events.obj
+C:\Users\ronit\Desktop\Drizzle3Dold\Drizzle3D\main.cpp;C:\Users\ronit\Desktop\Drizzle3Dold\Drizzle3D\x64\Debug\main.obj
+C:\Users\ronit\Desktop\Drizzle3Dold\Drizzle3D\Window.cpp;C:\Users\ronit\Desktop\Drizzle3Dold\Drizzle3D\x64\Debug\Window.obj
