@@ -19,6 +19,15 @@
     <Filter Include="Source Files\Events">
       <UniqueIdentifier>{2320265e-bcee-4e73-93a5-565598dc76a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Application">
+      <UniqueIdentifier>{a4a0e103-a910-4c36-9192-d36ecfaab607}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Timer">
+      <UniqueIdentifier>{bbc9e8ee-f4b5-49cd-b535-97b74c6135eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering">
+      <UniqueIdentifier>{bcfdad61-2370-488b-99f0-c68e5693acf3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,6 +39,15 @@
     <ClCompile Include="Events.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -37,6 +55,15 @@
     </ClInclude>
     <ClInclude Include="Events.h">
       <Filter>Source Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Source Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Source Files\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Source Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

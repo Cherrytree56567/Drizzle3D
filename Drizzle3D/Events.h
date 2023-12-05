@@ -26,7 +26,14 @@ namespace Drizzle3D {
 
         void DispatchEvent(EventType eventType, HWND hwnd, UINT MSG, WPARAM wparam, LPARAM lparam);
 
+        void CaptureMouse(HWND hWnd);
+
+        void ReleaseMouse(HWND hWnd);
+
+        bool GetMouseCaptureState() { return g_MouseCaptured; }
+
     private:
         std::unordered_map<EventType, std::vector<EventCallback>> eventCallbacks;
+        bool g_MouseCaptured = false;
     };
 }

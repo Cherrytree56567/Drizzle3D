@@ -101,10 +101,12 @@ namespace Drizzle3D {
 		delete[] wcharString;
 
 		ShowWindow(hWnd, SW_SHOW);
+
+		pRender = std::make_unique<Renderer>(hWnd);
 	}
 
 	bool Window::Update() {
-		MSG msg = { 0 };
+		MSG msg{};
 		if (msg.message != WM_QUIT) {
 			disp = dispatcher;
 			if (PeekMessage(&msg, 0, 0, 0, PM_REMOVE)) {

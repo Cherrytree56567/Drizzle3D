@@ -16,4 +16,14 @@ namespace Drizzle3D {
             callback(hwnd, MSG, wparam, lparam);
         }
     }
+
+    void Events::CaptureMouse(HWND hWnd) {
+        g_MouseCaptured = false;
+        SetCapture(hWnd);
+    }
+
+    void Events::ReleaseMouse(HWND hWnd) {
+        ReleaseCapture();
+        g_MouseCaptured = false;
+    }
 }
