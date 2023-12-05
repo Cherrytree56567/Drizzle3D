@@ -10,10 +10,10 @@ namespace Drizzle3D {
         callbacks.erase(std::remove(callbacks.begin(), callbacks.end(), callback), callbacks.end());
     }
 
-    void Events::DispatchEvent(EventType eventType) {
+    void Events::DispatchEvent(EventType eventType, HWND hwnd, UINT MSG, WPARAM wparam, LPARAM lparam) {
         auto& callbacks = eventCallbacks[eventType];
         for (const auto& callback : callbacks) {
-            callback();
+            callback(hwnd, MSG, wparam, lparam);
         }
     }
 }

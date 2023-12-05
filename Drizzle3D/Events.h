@@ -3,6 +3,7 @@
 #include <functional>
 #include <unordered_map>
 #include <vector>
+#include <Windows.h>
 
 namespace Drizzle3D {
     enum class EventType
@@ -11,19 +12,19 @@ namespace Drizzle3D {
         WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
         AppTick, AppUpdate, AppRender,
         KeyPressed, KeyReleased,
-        MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
+        MouseLeftButtonPressed, MouseLeftButtonReleased, MouseRightButtonPressed, MouseRightButtonReleased, MouseMoved, MouseScrolled
     };
 
     class Events
     {
     public:
-        typedef void (*EventCallback)();
+        typedef void (*EventCallback)(HWND hwnd, UINT MSG, WPARAM wparam, LPARAM lparam);
 
         void AddEventListener(EventType eventType, EventCallback callback);
 
         void RemoveEventListener(EventType eventType, EventCallback callback);
 
-        void DispatchEvent(EventType eventType);
+        void DispatchEvent(EventType eventType, HWND hwnd, UINT MSG, WPARAM wparam, LPARAM lparam);
 
     private:
         std::unordered_map<EventType, std::vector<EventCallback>> eventCallbacks;
