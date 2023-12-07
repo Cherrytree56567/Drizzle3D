@@ -3,10 +3,11 @@
 
 namespace Drizzle3D {
 	class RenderingLayer : public Layer {
+    public:
 		RenderingLayer(Window* window) : name("3DLayer"), show(true), pWindow(window) {}
 
-        void OnAttach();
-        void OnDetach();
+        void OnAttach() override;
+        void OnDetach() {}
         void Render() override;
 
         bool IsShown() const { return show; }
@@ -17,6 +18,7 @@ namespace Drizzle3D {
         bool show;
 
     private:
+        unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
         std::string name;
         Window* pWindow;
 	};

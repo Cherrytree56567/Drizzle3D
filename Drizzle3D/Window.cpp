@@ -17,15 +17,6 @@ namespace Drizzle3D {
 			std::cout << "[Drizzle3D::Core::Window] Error: Failed to Load GL Loader." << std::endl;
 			exit(-1);
 		}
-		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-		// Setup ImGui GLFW binding
-		ImGui_ImplGlfw_InitForOpenGL(window, true);
-
-		// Setup ImGui OpenGL binding
-		ImGui_ImplOpenGL3_Init("#version 330 core");
 		winwidth = width;
 		winheight = height;
 		glfwGetWindowPos(window, &winx, &winy);
@@ -119,5 +110,7 @@ namespace Drizzle3D {
 
 	void Window::Render() {
 		dispatcher->DispatchEvent(EventType::AppRender, window);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
 	}
 }

@@ -13,10 +13,20 @@ namespace Drizzle3D {
         int display_w, display_h;
         glfwGetFramebufferSize(pWindow->returnwindow(), &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
 
         // Render ImGui
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
+
+    void ImGuiLayer::OnAttach() {
+        IMGUI_CHECKVERSION();
+        ImGui::CreateContext();
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+        // Setup ImGui GLFW binding
+        ImGui_ImplGlfw_InitForOpenGL(pWindow->returnwindow(), true);
+
+        // Setup ImGui OpenGL binding
+        ImGui_ImplOpenGL3_Init("#version 330 core");
+    }
 }

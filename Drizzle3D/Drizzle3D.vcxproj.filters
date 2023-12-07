@@ -40,6 +40,9 @@
     <Filter Include="Source Files\Layers">
       <UniqueIdentifier>{2dda3515-d449-4031-86ba-7e5061a94b52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Rendering">
+      <UniqueIdentifier>{2e56a764-a819-4f6c-ac7a-47180eec5afb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -87,6 +90,9 @@
     <ClCompile Include="Layer.cpp">
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
+    <ClCompile Include="RenderingLayer.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -133,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="Layer.h">
       <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderingLayer.h">
+      <Filter>Source Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,7 +13,7 @@ namespace Drizzle3D {
 
         ImGUICode code = [](ImGuiLayer* imguir) {};
 
-        void OnAttach() { }
+        void OnAttach() override;
         void OnDetach() { }
         void Render() override;
 

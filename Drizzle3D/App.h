@@ -1,6 +1,7 @@
 #pragma once
 #include "Window.h"
 #include "ImGuiLayer.h"
+#include "RenderingLayer.h"
 #include "layer.h"
 
 namespace Drizzle3D {
@@ -12,6 +13,7 @@ namespace Drizzle3D {
 
 		Window* window() { return &D3DWindow; }
 		ImGuiLayer* ImguiLayer() { return &imguilayer; }
+		RenderingLayer* GetRenderingLayer() { return &renderinglayer; }
 		Events* dispatcher() { return &dispatch; }
 
 	private:
@@ -19,6 +21,7 @@ namespace Drizzle3D {
 
 		// Layers
 		ImGuiLayer imguilayer;
+		RenderingLayer renderinglayer;
 
 		// Dispatchers
 		Events dispatch;
