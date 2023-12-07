@@ -34,11 +34,6 @@ namespace Drizzle3D {
         void AddLayer(Layer* layer);
         void RemoveLayerByName(const std::string& name);
         void ShowHideLayerByName(const std::string& name, bool show);
-        void PushFront(const std::string& layerName);
-        void PushBack(const std::string& layerName);
-        void PushForward(const std::string& layerName);
-        void PushBackward(const std::string& layerName);
-        void ChangeLayerOrderByName(const std::string& name, size_t newIndex);
 
         void DispatchLayerRender();
         void DispatchLayerDetach();

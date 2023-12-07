@@ -2,9 +2,8 @@
 
 namespace Drizzle3D {
 	App::App(char* WindowName, int width, int height) : D3DWindow(&dispatch, WindowName, width, height), imguilayer(&D3DWindow), renderinglayer(&D3DWindow) {
-		LayerDispatcher.AddLayer(&imguilayer);
 		LayerDispatcher.AddLayer(&renderinglayer);
-		LayerDispatcher.ChangeLayerOrderByName("ImGUI", 1);
+		LayerDispatcher.AddLayer(&imguilayer);
 		LayerDispatcher.DispatchLayerAttach();
 	}
 

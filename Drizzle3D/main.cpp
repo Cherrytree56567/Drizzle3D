@@ -4,6 +4,11 @@
 #include <iostream>
 #include "App.h"
 
+/*
+* NOTE:
+* Allow changing the order of Layers.
+*/
+
 void Closed(GLFWwindow* window) {
     std::cout << "Closeda";
 }
