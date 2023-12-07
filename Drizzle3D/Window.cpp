@@ -13,9 +13,23 @@ namespace Drizzle3D {
 			glfwTerminate();
 		}
 		glfwMakeContextCurrent(window);
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+			std::cout << "[Drizzle3D::Core::Window] Error: Failed to Load GL Loader." << std::endl;
+			exit(-1);
+		}
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+		// Setup ImGui GLFW binding
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
+
+		// Setup ImGui OpenGL binding
+		ImGui_ImplOpenGL3_Init("#version 330 core");
 		winwidth = width;
 		winheight = height;
 		glfwGetWindowPos(window, &winx, &winy);
+		glfwGetCursorPos(window, &lastMouseX, &lastMouseY);
 	}
 
 	Window::~Window() {
@@ -55,6 +69,51 @@ namespace Drizzle3D {
 			winx = x;
 			winy = y;
 			dispatcher->DispatchEvent(EventType::WindowMoved, window);
+		}
+
+		bool keyp = false;
+		bool keyr = false;
+		for (int key = GLFW_KEY_SPACE; key <= GLFW_KEY_LAST; ++key) {
+			if (glfwGetKey(window, key) == GLFW_PRESS) {
+				keyr = false;
+				key_codes.push_back(key);
+			}
+			if (glfwGetKey(window, key) == GLFW_RELEASE) {
+				keyr = true;
+				keyRel_codes.push_back(key);
+			}
+		}
+		if (keyp) {
+			dispatcher->DispatchEvent(EventType::KeyPressed, window);
+		}
+
+		int leftMouseButtonState = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
+		if (leftMouseButtonState == GLFW_PRESS && !wasLeftMouseButtonPressed) {
+			wasLeftMouseButtonPressed = true;
+			dispatcher->DispatchEvent(EventType::MouseLeftButtonPressed, window);
+		}
+		else if (leftMouseButtonState == GLFW_RELEASE && wasLeftMouseButtonPressed) {
+			wasLeftMouseButtonPressed = false;
+			dispatcher->DispatchEvent(EventType::MouseLeftButtonReleased, window);
+		}
+
+		int rightMouseButtonState = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT);
+		if (rightMouseButtonState == GLFW_PRESS && !wasRightMouseButtonPressed) {
+			wasRightMouseButtonPressed = true;
+			dispatcher->DispatchEvent(EventType::MouseRightButtonPressed, window);
+		}
+		else if (rightMouseButtonState == GLFW_RELEASE && wasRightMouseButtonPressed) {
+			wasRightMouseButtonPressed = false;
+			dispatcher->DispatchEvent(EventType::MouseRightButtonReleased, window);
+		}
+
+		// Check mouse movement
+		double mouseX, mouseY;
+		glfwGetCursorPos(window, &mouseX, &mouseY);
+		if (mouseX != lastMouseX || mouseY != lastMouseY) {
+			lastMouseX = mouseX;
+			lastMouseY = mouseY;
+			dispatcher->DispatchEvent(EventType::MouseMoved, window);
 		}
 	}
 

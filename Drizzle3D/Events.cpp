@@ -43,20 +43,20 @@ namespace Drizzle3D {
         case Drizzle3D::EventType::KeyPressed:
             log.Info("Key Pressed.", "[Drizzle3D::Core::Events]");
             break;
-        case Drizzle3D::EventType::KeyReleased:
-            log.Info("Key Released.", "[Drizzle3D::Core::Events]");
-            break;
-        case Drizzle3D::EventType::MouseButtonPressed:
+        case Drizzle3D::EventType::MouseLeftButtonPressed:
             log.Info("Mouse Button Pressed.", "[Drizzle3D::Core::Events]");
             break;
-        case Drizzle3D::EventType::MouseButtonReleased:
+        case Drizzle3D::EventType::MouseLeftButtonReleased:
+            log.Info("Mouse Button Released.", "[Drizzle3D::Core::Events]");
+            break;
+        case Drizzle3D::EventType::MouseRightButtonPressed:
+            log.Info("Mouse Button Pressed.", "[Drizzle3D::Core::Events]");
+            break;
+        case Drizzle3D::EventType::MouseRightButtonReleased:
             log.Info("Mouse Button Released.", "[Drizzle3D::Core::Events]");
             break;
         case Drizzle3D::EventType::MouseMoved:
             log.Info("Mouse Moved.", "[Drizzle3D::Core::Events]");
-            break;
-        case Drizzle3D::EventType::MouseScrolled:
-            log.Info("Mouse Scrolled.", "[Drizzle3D::Core::Events]");
             break;
         default:
             break;
