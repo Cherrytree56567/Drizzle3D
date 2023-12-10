@@ -22,8 +22,8 @@ namespace Drizzle3D {
 		void clearKeyCodes() { key_codes.clear(); }
 		std::vector<int> returnKeyReleasedCodes() { return keyRel_codes; }
 		void clearKeyReleasedCodes() { keyRel_codes.clear(); }
-		int returnMouseX() { return lastMouseX; }
-		int returnMouseY() { return lastMouseY; }
+		double returnMouseX() { return lastMouseX; }
+		double returnMouseY() { return lastMouseY; }
 
 		void ProcessEvents();
 		void Render();

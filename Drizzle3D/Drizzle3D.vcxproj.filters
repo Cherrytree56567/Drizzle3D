@@ -9,9 +9,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Window">
-      <UniqueIdentifier>{aa439520-3655-47f6-a2a9-48af0baef570}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Events">
       <UniqueIdentifier>{1bb9d953-30b8-4351-8702-0690cc8b898b}</UniqueIdentifier>
     </Filter>
@@ -23,6 +20,21 @@
     </Filter>
     <Filter Include="Source Files\Imgui">
       <UniqueIdentifier>{26f54292-b11c-4eae-9c85-8c007c55cb89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Layers">
+      <UniqueIdentifier>{2dda3515-d449-4031-86ba-7e5061a94b52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering">
+      <UniqueIdentifier>{2e56a764-a819-4f6c-ac7a-47180eec5afb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\Shader">
+      <UniqueIdentifier>{391e6664-ed24-40b2-8f7a-fde64a48eb2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\Buffer">
+      <UniqueIdentifier>{3bad7381-83b5-479f-a1b6-a639953fa29c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Window">
+      <UniqueIdentifier>{aa439520-3655-47f6-a2a9-48af0baef570}</UniqueIdentifier>
     </Filter>
     <Filter Include="Vendor">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
@@ -36,12 +48,6 @@
     </Filter>
     <Filter Include="Vendor\Imgui\backend">
       <UniqueIdentifier>{adf47b5a-2561-4fde-9905-6a78f5957646}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Layers">
-      <UniqueIdentifier>{2dda3515-d449-4031-86ba-7e5061a94b52}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Rendering">
-      <UniqueIdentifier>{2e56a764-a819-4f6c-ac7a-47180eec5afb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +99,12 @@
     <ClCompile Include="RenderingLayer.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\Rendering\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffer.cpp">
+      <Filter>Source Files\Rendering\Buffer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -143,5 +155,18 @@
     <ClInclude Include="RenderingLayer.h">
       <Filter>Source Files\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Buffer.h">
+      <Filter>Source Files\Rendering\Buffer</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="VertexShader.glsl">
+      <Filter>Source Files\Rendering\Shader</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FragmentShader.glsl">
+      <Filter>Source Files\Rendering\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

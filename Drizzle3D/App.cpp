@@ -10,10 +10,9 @@ namespace Drizzle3D {
 	void App::Run() {
 		while (!glfwWindowShouldClose(D3DWindow.returnwindow())) {
 			D3DWindow.ProcessEvents();
-			dispatch.DispatchEvent(EventType::AppUpdate, D3DWindow.returnwindow());
+			update(this);
 			D3DWindow.Render();
 			LayerDispatcher.DispatchLayerRender();
-			dispatch.DispatchEvent(EventType::AppTick, D3DWindow.returnwindow());
 			D3DWindow.clearKeyCodes();
 			D3DWindow.clearKeyReleasedCodes();
 		}

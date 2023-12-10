@@ -31,15 +31,6 @@ namespace Drizzle3D {
         case Drizzle3D::EventType::WindowMoved:
             log.Info("Window Moved.", "[Drizzle3D::Core::Events]");
             break;
-        case Drizzle3D::EventType::AppTick:
-            log.Info("Application Tick.", "[Drizzle3D::Core::Events]");
-            break;
-        case Drizzle3D::EventType::AppUpdate:
-            log.Info("Application Update.", "[Drizzle3D::Core::Events]");
-            break;
-        case Drizzle3D::EventType::AppRender:
-            log.Info("Application Render.", "[Drizzle3D::Core::Events]");
-            break;
         case Drizzle3D::EventType::KeyPressed:
             log.Info("Key Pressed.", "[Drizzle3D::Core::Events]");
             break;

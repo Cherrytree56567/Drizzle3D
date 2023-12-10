@@ -24,11 +24,10 @@ namespace Drizzle3D {
     void LayerDispatch::DispatchLayerRender() {
         size_t i = 0;
         while (i < layers.size()) {
-            if (true) {
+            if (layers[i]->IsShown()) {
                 layers[i]->Render();
             }
-
-            ++i;
+            i++;
         }
     }
 
@@ -41,6 +40,46 @@ namespace Drizzle3D {
     void LayerDispatch::DispatchLayerAttach() {
         for (const auto& layer : layers) {
             layer->OnAttach();
+        }
+    }
+
+    void LayerDispatch::PushFront(const std::string& layerName) {
+        auto it = std::find_if(layers.begin(), layers.end(), [&layerName](const auto& layer) {
+            return layer->GetName() == layerName;
+            });
+
+        if (it != layers.end() && it != layers.begin()) {
+            std::iter_swap(it, layers.begin());
+        }
+    }
+
+    void LayerDispatch::PushBack(const std::string& layerName) {
+        auto it = std::find_if(layers.begin(), layers.end(), [&layerName](const auto& layer) {
+            return layer->GetName() == layerName;
+            });
+
+        if (it != layers.end() && it + 1 != layers.end()) {
+            std::iter_swap(it, layers.end() - 1);
+        }
+    }
+
+    void LayerDispatch::PushForward(const std::string& layerName) {
+        auto it = std::find_if(layers.begin(), layers.end(), [&layerName](const auto& layer) {
+            return layer->GetName() == layerName;
+            });
+
+        if (it != layers.end() && std::next(it) != layers.end()) {
+            std::iter_swap(it, std::next(it));
+        }
+    }
+
+    void LayerDispatch::PushBackward(const std::string& layerName) {
+        auto it = std::find_if(layers.begin(), layers.end(), [&layerName](const auto& layer) {
+            return layer->GetName() == layerName;
+            });
+
+        if (it != layers.end() && it != layers.begin()) {
+            std::iter_swap(it, std::prev(it));
         }
     }
 }

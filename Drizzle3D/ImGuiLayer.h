@@ -17,14 +17,12 @@ namespace Drizzle3D {
         void OnDetach() { }
         void Render() override;
 
-        bool IsShown() const { return show; }
-        const std::string& GetName() const { return name; }
-        void SetShow(bool value) { show = value; }
-
-    protected:
-        bool show;
+        bool IsShown() const override { return show; }
+        const std::string& GetName() const override { return name; }
+        void SetShow(bool value) override { show = value; }
 
     private:
+        bool show;
         std::string name;
         Window* pWindow;
     };

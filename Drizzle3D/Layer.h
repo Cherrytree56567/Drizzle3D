@@ -10,21 +10,18 @@ namespace Drizzle3D {
     public:
         Layer() {}
 
-        Layer(Window* window) : name("Layer"), show(true), pWindow(window) {}
+        Layer(Window* window) : name("Layer"), pWindow(window) {}
 
         virtual ~Layer() = default;
         virtual void OnAttach() { }
         virtual void OnDetach() { }
         virtual void Render() { }
 
-        bool IsShown() const { return show; }
-        const std::string& GetName() const { return name; }
-        void SetShow(bool value) { show = value; }
-
-    protected:
-        bool show;
-
+        virtual bool IsShown() const { return show; }
+        virtual const std::string& GetName() const { return name; }
+        virtual void SetShow(bool value) { show = value; }
     private:
+        bool show;
         std::string name;
         Window* pWindow;
     };
@@ -34,6 +31,10 @@ namespace Drizzle3D {
         void AddLayer(Layer* layer);
         void RemoveLayerByName(const std::string& name);
         void ShowHideLayerByName(const std::string& name, bool show);
+        void PushFront(const std::string& name);
+        void PushForward(const std::string& name);
+        void PushBack(const std::string& name);
+        void PushBackward(const std::string& name);
 
         void DispatchLayerRender();
         void DispatchLayerDetach();
