@@ -14,6 +14,7 @@ namespace Drizzle3D {
         std::vector<float> vertices;
         std::vector<unsigned int> indices;
         glm::mat4 modelMatrix;
+        char* name;
     };
 
     class RenderingLayer : public Layer {
@@ -29,7 +30,9 @@ namespace Drizzle3D {
         void SetShow(bool value) override { show = value; }
 
 		void Create_Shader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        void DrawVerts(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix = glm::mat4(1.0f));
+        Object DrawVerts(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix = glm::mat4(1.0f));
+        void AddObject(const char* name, Object theObject);
+        Object* returnObject(const char* name);
 
     protected:
         bool show = true;
@@ -38,7 +41,7 @@ namespace Drizzle3D {
         GLuint shaderProgram;
         std::string name;
         Window* pWindow;
-        Object objects;
+        std::vector<Object> Objects;
 
 		const char* vertexSrc = "(#version 330 core\n\nlayout(location = 0) in vec3 a_Position;\nout vec3 v_Position;\nvoid main()\n{\nv_Position = a_Position;\ngl_Position = vec4(a_Position, 1.0);\n}\n)";
 

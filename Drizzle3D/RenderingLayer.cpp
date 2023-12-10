@@ -75,7 +75,7 @@ namespace Drizzle3D {
         glUseProgram(0);
     }
 
-    void RenderingLayer::DrawVerts(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix) {
+    Object RenderingLayer::DrawVerts(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix) {
         Object myOBJ;
         myOBJ.vertices = vf.first;
         myOBJ.indices = vf.second;
@@ -104,7 +104,20 @@ namespace Drizzle3D {
         // Bind the EBO and set index data
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, myOBJ.IndexBuffer);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, myOBJ.indices.size() * sizeof(unsigned int), myOBJ.indices.data(), GL_STATIC_DRAW);
-        objects = myOBJ;
+        return myOBJ;
+    }
+
+    void RenderingLayer::AddObject(const char* name, Object theObject) {
+        theObject.name = (char*)name;
+        Objects.push_back(theObject);
+    }
+
+    Object* RenderingLayer::returnObject(const char* name) {
+        for (int i = 0; i < Objects.size(); i++) {
+            if (Objects[i].name == name) {
+                return &Objects[i];
+            }
+        }
     }
 
     void RenderingLayer::Render() {
@@ -121,12 +134,13 @@ namespace Drizzle3D {
         glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
         glUniformMatrix4fv(projectionMatrixLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
+        for (int i = 0; i < Objects.size(); i++) {
+            GLuint modelMatrixLoc = glGetUniformLocation(shaderProgram, "modelMatrix");
+            glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, glm::value_ptr(Objects[i].modelMatrix));
 
-        GLuint modelMatrixLoc = glGetUniformLocation(shaderProgram, "modelMatrix");
-        glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, glm::value_ptr(objects.modelMatrix));
-        
-        glBindVertexArray(objects.VertexArray);
-        glDrawElements(GL_TRIANGLES, objects.indices.size(), GL_UNSIGNED_INT, 0);
+            glBindVertexArray(Objects[i].VertexArray);
+            glDrawElements(GL_TRIANGLES, Objects[i].indices.size(), GL_UNSIGNED_INT, 0);
+        }
 
         glUseProgram(0);
     }

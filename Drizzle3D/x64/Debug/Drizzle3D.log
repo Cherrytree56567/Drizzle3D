@@ -1,7 +1,2 @@
 ﻿  main.cpp
-  RenderingLayer.cpp
-C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.cpp(129,58): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  Shader.cpp
-  Generating Code...
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Drizzle3D.vcxproj -> C:\Users\ronit\Desktop\Drizzle3D\x64\Debug\Drizzle3D.exe

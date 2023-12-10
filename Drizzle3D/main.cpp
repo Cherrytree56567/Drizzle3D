@@ -77,8 +77,7 @@ void Closed(GLFWwindow* window) {
 }
 
 void Update(Drizzle3D::App* app) {
-    std::pair<std::vector<float>, std::vector<unsigned int>> vf(vertices, indices);
-    app->GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("duck.obj"), modelMatrix);
+    app->GetRenderingLayer()->returnObject("Duck")->modelMatrix = modelMatrix;
 }
 
 void ImGUICode(Drizzle3D::ImGuiLayer* rend) {
@@ -90,7 +89,9 @@ void ImGUICode(Drizzle3D::ImGuiLayer* rend) {
     ImGui::SliderFloat("Rotation Z", &rotation.z, 0.0f, 360.0f);
 
     // Update the model matrix with the new rotation values
-    modelMatrix = glm::mat4_cast(glm::quat(glm::radians(rotation)));
+    modelMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+    modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+    modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 }
 
 int main() {
@@ -109,6 +110,9 @@ int main() {
     app.update = Update;
 
     app.ImguiLayer()->code = ImGUICode;
+
+    std::pair<std::vector<float>, std::vector<unsigned int>> vf(vertices, indices);
+    app.GetRenderingLayer()->AddObject("Duck", app.GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("duck.obj"), modelMatrix));
 
     //app.ImguiLayer()->SetShow(false);
 
