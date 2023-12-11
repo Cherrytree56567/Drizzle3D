@@ -145,10 +145,6 @@ namespace Drizzle3D {
 
         glUseProgram(shaderProgram);
 
-        // Set the lights uniform block index
-        GLuint lightsBlockIndex = glGetUniformBlockIndex(shaderProgram, "Light");
-        glUniformBlockBinding(shaderProgram, lightsBlockIndex, 0);
-
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
         glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 

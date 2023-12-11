@@ -26,11 +26,6 @@ namespace Drizzle3D {
         glm::vec3 specular;
         glm::vec3 diffuse;
 
-        bool isAmbient;
-        bool isDiffuse;
-        bool isSpecular;
-        bool isCombined;
-
         bool isDirectional;
         bool isPoint;
 
