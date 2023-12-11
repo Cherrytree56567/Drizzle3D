@@ -5,11 +5,6 @@
 #include <iostream>
 #include "App.h"
 
-/*
-* NOTE:
-* Allow changing the order of Layers.
-*/
-
 std::vector<float> vertices = {
     // Front face
     -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  // Vertex 0
@@ -95,6 +90,11 @@ void ImGUICode(Drizzle3D::ImGuiLayer* rend) {
 }
 
 int main() {
+
+    /*
+    * NOTE:
+    * Fragment Shader is Not Working for Lighting.
+    */
     Drizzle3D::App app;
 
     app.AddEventCallback(EWindowClose, [](GLFWwindow* window) {
@@ -103,7 +103,7 @@ int main() {
 
     app.AddEventCallback(EWindowMoved, [](GLFWwindow* window) {
         std::cout << "Moved\n";
-        });
+    });
 
     app.AddEventCallback(EWindowClose, Closed);
 

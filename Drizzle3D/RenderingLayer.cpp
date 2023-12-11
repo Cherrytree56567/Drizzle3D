@@ -67,6 +67,12 @@ namespace Drizzle3D {
         // Index Buffer
         // Shader (not needed)
 
+        glGenBuffers(1, &lightsBuffer);
+        glBindBuffer(GL_UNIFORM_BUFFER, lightsBuffer);
+        glBufferData(GL_UNIFORM_BUFFER, sizeof(Light) * 500, nullptr, GL_DYNAMIC_DRAW);
+        glBindBufferBase(GL_UNIFORM_BUFFER, 0, lightsBuffer);  // Binding to the binding point 0
+        glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
         GLuint projectionMatrixLoc = glGetUniformLocation(shaderProgram, "projectionMatrix");
@@ -104,8 +110,13 @@ namespace Drizzle3D {
         // Bind the EBO and set index data
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, myOBJ.IndexBuffer);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, myOBJ.indices.size() * sizeof(unsigned int), myOBJ.indices.data(), GL_STATIC_DRAW);
+
+        // Unbind VAO to prevent accidentally modifying it elsewhere
+        glBindVertexArray(0);
+
         return myOBJ;
     }
+
 
     void RenderingLayer::AddObject(const char* name, Object theObject) {
         theObject.name = (char*)name;
@@ -118,12 +129,25 @@ namespace Drizzle3D {
                 return &Objects[i];
             }
         }
+        return nullptr;
+    }
+
+    void RenderingLayer::RemoveObject(const char* name) {
+        for (int i = 0; i < Objects.size(); i++) {
+            if (Objects[i].name == name) {
+                Objects.erase(Objects.begin() + i);
+            }
+        }
     }
 
     void RenderingLayer::Render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glUseProgram(shaderProgram);
+
+        // Set the lights uniform block index
+        GLuint lightsBlockIndex = glGetUniformBlockIndex(shaderProgram, "Light");
+        glUniformBlockBinding(shaderProgram, lightsBlockIndex, 0);
 
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
         glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -134,15 +158,37 @@ namespace Drizzle3D {
         glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
         glUniformMatrix4fv(projectionMatrixLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
-        for (int i = 0; i < Objects.size(); i++) {
+        for (const auto& obje : Objects) {
             GLuint modelMatrixLoc = glGetUniformLocation(shaderProgram, "modelMatrix");
-            glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, glm::value_ptr(Objects[i].modelMatrix));
+            glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, glm::value_ptr(obje.modelMatrix));
 
-            glBindVertexArray(Objects[i].VertexArray);
-            glDrawElements(GL_TRIANGLES, Objects[i].indices.size(), GL_UNSIGNED_INT, 0);
+            glBindVertexArray(obje.VertexArray);
+            glDrawElements(GL_TRIANGLES, obje.indices.size(), GL_UNSIGNED_INT, 0);
         }
 
         glUseProgram(0);
     }
 
+    void RenderingLayer::AddLight(float id, Light theLight) {
+        Light a;
+        a.ID = id;
+        Lights.push_back(a);
+    }
+
+    Light* RenderingLayer::returnLight(float id) {
+        for (int i = 0; i < Lights.size(); i++) {
+            if (Lights[i].ID == id) {
+                return &Lights[i];
+            }
+        }
+        return nullptr;
+    }
+
+    void RenderingLayer::RemoveLight(float id) {
+        for (int i = 0; i < Lights.size(); i++) {
+            if (Lights[i].ID == id) {
+                Lights.erase(Lights.begin() + i);
+            }
+        }
+    }
 }

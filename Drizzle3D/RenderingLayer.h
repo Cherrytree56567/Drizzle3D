@@ -17,6 +17,31 @@ namespace Drizzle3D {
         char* name;
     };
 
+    struct Light {
+        glm::vec3 pos_or_dir;
+        glm::vec3 color;
+        float intensity;
+
+        glm::vec3 ambient;
+        glm::vec3 specular;
+        glm::vec3 diffuse;
+
+        bool isAmbient;
+        bool isDiffuse;
+        bool isSpecular;
+        bool isCombined;
+
+        bool isDirectional;
+        bool isPoint;
+
+        float constantPoint;
+        float linearPoint;
+        float quadraticPoint;
+
+        float ID;
+    };
+
+
     class RenderingLayer : public Layer {
     public:
         RenderingLayer(Window* window) : name("3DLayer"), show(true), pWindow(window) {}
@@ -33,6 +58,10 @@ namespace Drizzle3D {
         Object DrawVerts(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix = glm::mat4(1.0f));
         void AddObject(const char* name, Object theObject);
         Object* returnObject(const char* name);
+        void RemoveObject(const char* name);
+        void AddLight(float id, Light theLight);
+        Light* returnLight(float id);
+        void RemoveLight(float id);
 
     protected:
         bool show = true;
@@ -42,9 +71,7 @@ namespace Drizzle3D {
         std::string name;
         Window* pWindow;
         std::vector<Object> Objects;
-
-		const char* vertexSrc = "(#version 330 core\n\nlayout(location = 0) in vec3 a_Position;\nout vec3 v_Position;\nvoid main()\n{\nv_Position = a_Position;\ngl_Position = vec4(a_Position, 1.0);\n}\n)";
-
-		const char* fragmentSrc = "(#version 330 core\n\nlayout(location = 0) out vec4 color;\nin vec3 v_Position;\nvoid main()\n{\ncolor = vec4(v_Position * 0.5 + 0.5, 1.0);\n})";
+        std::vector<Light> Lights;
+        GLuint lightsBuffer;
 	};
 }
