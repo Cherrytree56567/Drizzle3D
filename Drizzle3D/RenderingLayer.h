@@ -36,7 +36,6 @@ namespace Drizzle3D {
         float ID;
     };
 
-
     class RenderingLayer : public Layer {
     public:
         RenderingLayer(Window* window) : name("3DLayer"), show(true), pWindow(window) {}
