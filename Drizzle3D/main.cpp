@@ -100,7 +100,7 @@ int main() {
     app.ImguiLayer()->code = ImGUICode;
 
     std::pair<std::vector<float>, std::vector<unsigned int>> vf(vertices, indices);
-    app.GetRenderingLayer()->AddObject("Duck", app.GetRenderingLayer()->DrawVerts(vf, modelMatrix));
+    app.GetRenderingLayer()->AddObject("Duck", app.GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("duck.obj"), modelMatrix));
 
     //app.ImguiLayer()->SetShow(false);    
 

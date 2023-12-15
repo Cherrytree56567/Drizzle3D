@@ -8,7 +8,7 @@
 #include "Layer.h"
 
 namespace Drizzle3D {
-    std::pair<std::vector<float>, std::vector<unsigned int>> LoadObjFile(const std::string& objFilePath, const std::string& materialFilePath = "");
+    std::pair<std::vector<float>, std::vector<unsigned int>> LoadObjFile(const std::string& objFilePath, const std::string& textureFilePath = "");
     struct Object {
         GLuint VertexArray, VertexBuffer, IndexBuffer;
         std::vector<float> vertices;
@@ -34,6 +34,17 @@ namespace Drizzle3D {
         float quadraticPoint;
 
         float ID;
+    };
+
+    struct Texture {
+        std::vector<float> colors;
+        int width;
+        int height;
+    };
+
+    struct Material {
+        std::string name;
+        std::vector<float> base_color;
     };
 
     class RenderingLayer : public Layer {

@@ -1,110 +1,133 @@
 #include "RenderingLayer.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb/stb_image.h>
+
 namespace Drizzle3D {
-    std::pair<std::vector<float>, std::vector<unsigned int>> LoadObjFile(const std::string& objFilePath, const std::string& materialFilePath) {
-        std::vector<float> vertices;
-        std::vector<unsigned int> indices;
-        std::vector<glm::vec3> normals;
+    Texture LoadTexture(const std::string& textureFilePath) {
+        Texture texture;
+        int channels; // Number of color channels in the image (RGB, RGBA, etc.)
+        stbi_uc* data = stbi_load(textureFilePath.c_str(), &texture.width, &texture.height, &channels, STBI_rgb);
 
-        // Default color (white)
-        float defaultColor[3] = { 1.0f, 1.0f, 1.0f };
+        if (data) {
+            // Convert image data to float and store in texture.colors
+            for (int i = 0; i < texture.width * texture.height * 3; ++i) {
+                texture.colors.push_back(static_cast<float>(data[i]) / 255.0f);
+            }
 
-        // Load material color if a material file is provided
-        if (!materialFilePath.empty()) {
-            std::ifstream materialFile(materialFilePath);
-            if (materialFile.is_open()) {
-                for (int i = 0; i < 3; ++i) {
-                    materialFile >> defaultColor[i];
-                }
-                materialFile.close();
-            }
-            else {
-                std::cerr << "Error: Unable to open material file " << materialFilePath << std::endl;
-            }
+            stbi_image_free(data);
+        }
+        else {
+            std::cerr << "Error: Unable to load texture file: " << textureFilePath << std::endl;
         }
 
-        // Load OBJ file
+        return texture;
+    }
+
+    std::pair<std::vector<float>, std::vector<unsigned int>> LoadObjFile(const std::string& objFilePath, const std::string& textureFilePath) {
+        std::vector<float> vertices;
+        std::vector<unsigned int> indices;
+
+        // Default color if material file is NULL or empty
+        float defaultColor[3] = { 1.0f, 1.0f, 1.0f };
+
+        Texture texture = LoadTexture(textureFilePath);
+
         std::ifstream objFile(objFilePath);
         if (objFile.is_open()) {
+            std::vector<glm::vec3> tempVertices;
+            std::vector<glm::vec3> tempNormals;
+            std::vector<glm::vec2> tempTexCoords;
+
             std::string line;
             while (std::getline(objFile, line)) {
                 std::istringstream iss(line);
                 std::string token;
-                iss >> token;
 
-                if (token == "v") {
-                    float x, y, z;
-                    iss >> x >> y >> z;
+                if (iss >> token) {
+                    if (token == "vn") {
+                        // Vertex normal information
+                        glm::vec3 normal;
+                        if (iss >> normal.x >> normal.y >> normal.z) {
+                            tempNormals.push_back(normal);
+                        }
+                    }
+                    else if (token == "vt") {
+                        // Texture coordinate information
+                        glm::vec2 texCoord;
+                        if (iss >> texCoord.s >> texCoord.t) {
+                            tempTexCoords.push_back(texCoord);
+                        }
+                    }
+                    else if (token == "f") {
+                        // Face information
+                        unsigned int v1, vn1, v2, vn2, v3, vn3;
+                        char slash;
 
-                    // Append vertex position to the vertices vector
-                    vertices.push_back(x);
-                    vertices.push_back(y);
-                    vertices.push_back(z);
-
-                    // Append default color to the vertices vector
-                    vertices.insert(vertices.end(), defaultColor, defaultColor + 3);
-
-                    // Initialize vertex normal to zero vector
-                    normals.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
-                }
-                else if (token == "vn") {
-                    float nx, ny, nz;
-                    iss >> nx >> ny >> nz;
-
-                    // Store vertex normals
-                    normals.push_back(glm::vec3(nx, ny, nz));
-                }
-                else if (token == "f") {
-                    // Parse face indices
-                    unsigned int index1, index2, index3;
-                    unsigned int normalIndex1, normalIndex2, normalIndex3;
-                    iss >> index1 >> std::ws;
-                    iss.ignore(); // skip the '/'
-                    iss >> normalIndex1;
-                    iss >> index2 >> std::ws;
-                    iss.ignore();
-                    iss >> normalIndex2;
-                    iss >> index3 >> std::ws;
-                    iss.ignore();
-                    iss >> normalIndex3;
-
-                    // Adjust indices (OBJ format uses 1-based indices)
-                    indices.push_back(index1 - 1);
-                    indices.push_back(index2 - 1);
-                    indices.push_back(index3 - 1);
+                        if (iss >> v1 >> slash >> slash >> vn1 >> v2 >> slash >> slash >> vn2 >> v3 >> slash >> slash >> vn3) {
+                            // Adjust indices to be 0-based
+                            indices.push_back(v1 - 1);
+                            indices.push_back(v2 - 1);
+                            indices.push_back(v3 - 1);
+                        }
+                    }
+                    else if (token == "o") {
+                        // Object name (you can handle it as needed)
+                        std::string objectName;
+                        iss >> objectName;
+                        std::cout << "Object Name: " << objectName << std::endl;
+                    }
+                    else if (token == "v") {
+                        // Vertex information
+                        glm::vec3 vertex;
+                        if (iss >> vertex.x >> vertex.y >> vertex.z) {
+                            tempVertices.push_back(vertex);
+                        }
+                    }
                 }
             }
-
             objFile.close();
 
-            // Normalize vertex normals
-            for (size_t i = 0; i < normals.size(); ++i) {
-                normals[i] = glm::normalize(normals[i]);
+            // Combine vertices, normals, and texture coordinates into the final vector
+            // Combine vertices, normals, and texture coordinates into the final vector
+            for (size_t i = 0; i < tempVertices.size(); ++i) {
+                // Append vertex coordinates
+                vertices.push_back(tempVertices[i].x);
+                vertices.push_back(tempVertices[i].y);
+                vertices.push_back(tempVertices[i].z);
+
+                // Append texture coordinates if available
+                if (!tempTexCoords.empty()) {
+                    vertices.push_back(tempTexCoords[i].s);
+                    vertices.push_back(tempTexCoords[i].t);
+                }
+
+                // Append texture colors if available
+                if (!texture.colors.empty()) {
+                    vertices.push_back(texture.colors[i * 4]);     // R
+                    vertices.push_back(texture.colors[i * 4 + 1]); // G
+                    vertices.push_back(texture.colors[i * 4 + 2]); // B
+                }
+                else {
+                    // Append default color
+                    vertices.push_back(defaultColor[0]);
+                    vertices.push_back(defaultColor[1]);
+                    vertices.push_back(defaultColor[2]);
+                }
+
+                // Append normal coordinates
+                vertices.push_back(tempNormals[i].x);
+                vertices.push_back(tempNormals[i].y);
+                vertices.push_back(tempNormals[i].z);
             }
+
         }
         else {
-            std::cerr << "Error: Unable to open OBJ file " << objFilePath << std::endl;
+            std::cerr << "Error: Unable to open OBJ file: " << objFilePath << std::endl;
         }
 
-        // Combine vertex positions and normals into a single vector
-        std::vector<float> combinedVertices;
-        for (size_t i = 0; i < indices.size(); ++i) {
-            size_t vertexIndex = indices[i] * 3; // Each vertex has 3 components (x, y, z)
-
-            combinedVertices.push_back(vertices[vertexIndex]);
-            combinedVertices.push_back(vertices[vertexIndex + 1]);
-            combinedVertices.push_back(vertices[vertexIndex + 2]);
-
-            size_t normalIndex = indices[i] * 3; // Each normal has 3 components (nx, ny, nz)
-
-            combinedVertices.push_back(normals[indices[i]].x);
-            combinedVertices.push_back(normals[indices[i]].y);
-            combinedVertices.push_back(normals[indices[i]].z);
-        }
-
-        return std::make_pair(combinedVertices, indices);
+        return std::make_pair(vertices, indices);
     }
-
 
     void RenderingLayer::OnAttach() {
         // Vertex Array
