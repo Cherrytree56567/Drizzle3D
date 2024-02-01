@@ -1,0 +1,9 @@
+[submodule "Drizzle3D/vendor/glm"]
+	path = Drizzle3D/vendor/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "Drizzle3D/vendor/stb"]
+	path = Drizzle3D/vendor/stb
+	url = https://github.com/nothings/stb.git
+[submodule "Drizzle3D/vendor/imgui"]
+	path = Drizzle3D/vendor/imgui
+	url = https://github.com/ocornut/imgui.git
