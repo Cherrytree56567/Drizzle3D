@@ -1,16 +1,26 @@
+/*
+***********************************************************************
+*                                                                     *
+* Drizzle3D © 2024 by Ronit D'silva is licensed under CC BY-NC-SA 4.0 *
+*                                                                     *
+***********************************************************************
+*/
 #pragma once
 #include <GLAD/glad.h>
 #include <vector>
 #include <iostream>
-#include "Events.h"
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
+#include "AppEvent.h"
+#include "KeyEvent.h"
+#include "MouseEvent.h"
+#include "base.h"
 
 namespace Drizzle3D {
 
-	class Window {
+	class Drizzle3D_API Window {
 	public:
-		Window(Events* dispatch, char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
+		Window(EventDispatcher* dispatch, char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
 		~Window();
 
 		GLFWwindow* returnwindow() { return window; };
@@ -28,7 +38,7 @@ namespace Drizzle3D {
 		void ProcessEvents();
 		void Render();
 
-		Events* dispatcher;
+		EventDispatcher* dispatcher;
 	private:
 		GLFWwindow* window = NULL;
 		int winwidth;
@@ -41,6 +51,8 @@ namespace Drizzle3D {
 		bool wasRightMouseButtonPressed = false;
 		double lastMouseX = 0.0;
 		double lastMouseY = 0.0;
+		double lastSMouseX = 0.0;
+		double lastSMouseY = 0.0;
 	};
 
 }

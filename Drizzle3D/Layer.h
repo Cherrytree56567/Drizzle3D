@@ -1,3 +1,10 @@
+/*
+***********************************************************************
+*                                                                     *
+* Drizzle3D © 2024 by Ronit D'silva is licensed under CC BY-NC-SA 4.0 *
+*                                                                     *
+***********************************************************************
+*/
 #pragma once
 #include <vector>
 #include <string>
@@ -6,7 +13,7 @@
 #include "Window.h"
 
 namespace Drizzle3D {
-    class Layer {
+    class Drizzle3D_API Layer {
     public:
         Layer() {}
 
@@ -26,7 +33,7 @@ namespace Drizzle3D {
         Window* pWindow;
     };
 
-    class LayerDispatch {
+    class Drizzle3D_API LayerDispatch {
     public:
         void AddLayer(Layer* layer);
         void RemoveLayerByName(const std::string& name);

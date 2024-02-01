@@ -49,6 +49,36 @@
     <Filter Include="Vendor\Imgui\backend">
       <UniqueIdentifier>{adf47b5a-2561-4fde-9905-6a78f5957646}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Rendering\FirstPersonCamera">
+      <UniqueIdentifier>{3afec6ac-2f27-4589-bcb8-cc3779ac7222}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Events\Mouse">
+      <UniqueIdentifier>{fa861113-b0d9-4bea-b254-e10c324176ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Events\Key">
+      <UniqueIdentifier>{4f153ab3-d37f-474b-8573-77df3b3842b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Events\App">
+      <UniqueIdentifier>{d5ec2b2d-ce29-4de5-92ec-21f4a7ef2789}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\Skybox">
+      <UniqueIdentifier>{0f98b883-d20a-4c7d-a13c-4a95407191cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ResourceManager">
+      <UniqueIdentifier>{41f50d1d-4c88-4701-a4f8-95dc86ac9b78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\Camera">
+      <UniqueIdentifier>{a65fb70a-4c79-4168-8dd8-de32fb586571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\Object">
+      <UniqueIdentifier>{f9fdecd7-beb9-4b0f-b132-bd91d445e62e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\Lights">
+      <UniqueIdentifier>{156949e9-c526-4a45-9430-febd9031ad5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\Material">
+      <UniqueIdentifier>{766b5aaf-57a2-477b-82c9-2cc16b3d97a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -102,8 +132,26 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files\Rendering\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="Buffer.cpp">
-      <Filter>Source Files\Rendering\Buffer</Filter>
+    <ClCompile Include="FirstPersonCamera.cpp">
+      <Filter>Source Files\Rendering\FirstPersonCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Source Files\Rendering\Skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Source Files\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\Rendering\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files\Rendering\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source Files\Rendering\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Source Files\Rendering\Material</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -155,8 +203,35 @@
     <ClInclude Include="RenderingLayer.h">
       <Filter>Source Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Buffer.h">
-      <Filter>Source Files\Rendering\Buffer</Filter>
+    <ClInclude Include="FirstPersonCamera.h">
+      <Filter>Source Files\Rendering\FirstPersonCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseCodes.h">
+      <Filter>Source Files\Events\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseEvent.h">
+      <Filter>Source Files\Events\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyCodes.h">
+      <Filter>Source Files\Events\Key</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyEvent.h">
+      <Filter>Source Files\Events\Key</Filter>
+    </ClInclude>
+    <ClInclude Include="AppEvent.h">
+      <Filter>Source Files\Events\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Source Files\Rendering\Skybox</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Source Files\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Source Files\Rendering\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="base.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

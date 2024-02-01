@@ -1,108 +1,135 @@
+/*
+***********************************************************************
+*                                                                     *
+* Drizzle3D © 2024 by Ronit D'silva is licensed under CC BY-NC-SA 4.0 *
+*                                                                     *
+***********************************************************************
+*/
 #include <GLAD/glad.h>
 #include <vector>
 #include <GLFW/glfw3.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include "App.h"
-
-std::vector<float> vertices = {
-    // Front face
-    -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f, 1.0f,
-
-    // Back face
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f, -1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f, -1.0f,
-     0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f, -1.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f, -1.0f,
-
-    // Top face
-    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,  0.0f, 1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,  0.0f, 1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,  0.0f, 1.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,  0.0f, 1.0f, 0.0f,
-
-    // Bottom face
-    -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f,  0.0f, -1.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f,  0.0f, -1.0f, 0.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f,  0.0f, -1.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f,  0.0f, -1.0f, 0.0f,
-
-    // Right face
-     0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 0.0f,  1.0f, 0.0f, 0.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f,  1.0f, 0.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f,  1.0f, 0.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f,  1.0f, 0.0f, 0.0f,
-
-     // Left face
-     -0.5f, -0.5f,  0.5f,  1.0f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f,
-     -0.5f, -0.5f, -0.5f,  1.0f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f,
-     -0.5f,  0.5f, -0.5f,  1.0f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f,
-     -0.5f,  0.5f,  0.5f,  1.0f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f,
-};
-
-// Indices for a simple cube
-std::vector<unsigned int> indices = {
-    0, 1, 2, 2, 3, 0,  // Front face
-    4, 5, 6, 6, 7, 4,  // Back face
-    8, 9, 10, 10, 11, 8,  // Top face
-    12, 13, 14, 14, 15, 12,  // Bottom face
-    16, 17, 18, 18, 19, 16,  // Right face
-    20, 21, 22, 22, 23, 20,  // Left face
-};
+#include "FirstPersonCamera.h"
+#include "Skybox.h"
 
 glm::mat4 modelMatrix = glm::mat4(1.0f);
+glm::mat4 modelMatrixa = glm::mat4(1.0f);
+glm::vec3 light_pos;
+glm::vec3 camera_pos;
+glm::vec3 camera_up_pos;
+glm::vec3 camera_la_pos;
+char* cam;
+float streg = 0.0f;
+
+bool use_ios = true;
 
 void Closed(GLFWwindow* window) {
     std::cout << "Closeda";
 }
 
 void Update(Drizzle3D::App* app) {
-    app->GetRenderingLayer()->returnObject("Duck")->modelMatrix = modelMatrix;
+    app->GetRenderingLayer()->returnObject("Cube")->modelMatrix = modelMatrix;
+
+    if (use_ios == true)
+        app->GetRenderingLayer()->returnObject("Cube")->textureID = Drizzle3D::GetTexture("ios.png");
+
+    if (use_ios == false)
+        app->GetRenderingLayer()->returnObject("Cube")->textureID = Drizzle3D::GetTexture("duck.png");
+
+    app->GetRenderingLayer()->returnLight(1)->position = light_pos;
+    app->GetRenderingLayer()->returnLight(1)->strength = streg;
+
+    app->GetRenderingLayer()->returnCamera("Acam")->position = camera_pos;
+    app->GetRenderingLayer()->returnCamera("Acam")->up = camera_up_pos;
+    app->GetRenderingLayer()->returnCamera("Acam")->look_at_position = camera_la_pos;
 }
 
 void ImGUICode(Drizzle3D::ImGuiLayer* rend) {
     glm::vec3 rotation = glm::degrees(glm::eulerAngles(glm::quat_cast(modelMatrix)));
+    glm::vec3 position = modelMatrix[3];
 
     // Create sliders for x, y, and z rotation values
     ImGui::SliderFloat("Rotation X", &rotation.x, 0.0f, 360.0f);
     ImGui::SliderFloat("Rotation Y", &rotation.y, 0.0f, 360.0f);
     ImGui::SliderFloat("Rotation Z", &rotation.z, 0.0f, 360.0f);
 
+    ImGui::SliderFloat("Position X", &position.x, 0.0f, 360.0f);
+    ImGui::SliderFloat("Position Y", &position.y, 0.0f, 360.0f);
+    ImGui::SliderFloat("Position Z", &position.z, -360.0f, 360.0f);
+
+    if (ImGui::Button("Ios Texture")) {
+        use_ios = true;
+    }
+
+    if (ImGui::Button("Duck Texture")) {
+        use_ios = false;
+    }
+
     // Update the model matrix with the new rotation values
     modelMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
     modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
     modelMatrix = glm::rotate(modelMatrix, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+
+    modelMatrix = glm::translate(modelMatrix, position);
+
+    ImGui::SliderFloat("Light X", &light_pos.x, -50.0f, 50.0f);
+    ImGui::SliderFloat("Light Y", &light_pos.y, -50.0f, 50.0f);
+    ImGui::SliderFloat("Light Z", &light_pos.z, -50.0f, 500.0f);
+
+    ImGui::SliderFloat("Light Intensity", &streg, 0.0f, 360.0f);
+
+    ImGui::SliderFloat("Camera X", &camera_pos.x, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera Y", &camera_pos.y, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera Z", &camera_pos.z, 0.0f, 50.0f);
+
+    ImGui::SliderFloat("Camera Up X", &camera_up_pos.x, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera Up Y", &camera_up_pos.y, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera Up Z", &camera_up_pos.z, 0.0f, 50.0f);
+
+    ImGui::SliderFloat("Camera Look-At X", &camera_la_pos.x, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera Look-At Y", &camera_la_pos.y, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera Look-At Z", &camera_la_pos.z, 0.0f, 50.0f);
 }
 
 int main() {
 
     /*
     * NOTE:
-    * Fragment Shader is Not Working for Lighting.
+    * Key Released and Mouse Released
     */
     Drizzle3D::App app;
+    Drizzle3D::FirstPersonCamera fpc(app);
+    Drizzle3D::Skybox sky(app, "skybox.png");
+    Drizzle3D::Material mat1(app.GetRenderingLayer()->getResourceManager(), "Scene1_vertex.glsl", "Scene1_fragment.glsl");
+    Drizzle3D::Material def(app.GetRenderingLayer()->getResourceManager(), "VertexShader.glsl", "FragmentShader.glsl");
 
-    app.AddEventCallback(EWindowClose, [](GLFWwindow* window) {
-        std::cout << "Closed";
+    app.dispatcher()->AddEventListener(EMouseMoved, [](GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
+        std::cout << "Mouse Moved\n";
     });
-
-    app.AddEventCallback(EWindowMoved, [](GLFWwindow* window) {
-        std::cout << "Moved\n";
-    });
-
-    app.AddEventCallback(EWindowClose, Closed);
 
     app.update = Update;
 
+    app.GetRenderingLayer()->Lighting = false;
+
     app.ImguiLayer()->code = ImGUICode;
+    app.GetRenderingLayer()->AddObject("Cube", app.GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Cube.obj"), modelMatrix));
+    app.GetRenderingLayer()->returnObject("Cube")->textureID = Drizzle3D::GetTexture("duck.png");
 
-    std::pair<std::vector<float>, std::vector<unsigned int>> vf(vertices, indices);
-    app.GetRenderingLayer()->AddObject("Duck", app.GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("duck.obj"), modelMatrix));
+    app.GetRenderingLayer()->AddObject("Plane", app.GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Plane.obj"), modelMatrix));
+    app.GetRenderingLayer()->returnObject("Plane")->textureID = Drizzle3D::GetTexture("duck.png");
 
+    app.GetRenderingLayer()->AddObject("Cylinder", app.GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Cylinder.obj"), modelMatrix));
+    app.GetRenderingLayer()->returnObject("Cylinder")->textureID = Drizzle3D::GetTexture("duck.png");
     //app.ImguiLayer()->SetShow(false);    
+
+    Drizzle3D::Camera aCamera = { glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f) };
+    camera_pos = glm::vec3(0.0f, 0.0f, 3.0f);
+    camera_up_pos = glm::vec3(0.0f, 1.0f, 0.0f);
+    app.GetRenderingLayer()->AddCamera("Acam", aCamera);
+    app.GetRenderingLayer()->SwitchCamera("Acam");
+    app.GetRenderingLayer()->SwitchCamera("FirstPersonCamera");
 
     app.Run();
 

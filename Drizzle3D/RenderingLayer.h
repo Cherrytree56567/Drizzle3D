@@ -1,3 +1,10 @@
+/*
+***********************************************************************
+*                                                                     *
+* Drizzle3D © 2024 by Ronit D'silva is licensed under CC BY-NC-SA 4.0 *
+*                                                                     *
+***********************************************************************
+*/
 #pragma once
 #include <fstream>
 #include <sstream>
@@ -6,50 +13,59 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Layer.h"
+#include "Material.h"
+#include "ResourceManager.h"
+#include "base.h"
 
 namespace Drizzle3D {
-    std::pair<std::vector<float>, std::vector<unsigned int>> LoadObjFile(const std::string& objFilePath, const std::string& textureFilePath = "");
+
+    Drizzle3D_API std::pair<std::vector<float>, std::vector<unsigned int>> LoadObjFile(const std::string& filePath);
+    Drizzle3D_API GLuint GetTexture(const char* texturePath);
+
+    enum Lights {
+        Directional,
+        Point
+    };
+
+    struct Light {
+        glm::vec3 direction;
+        glm::vec3 position;
+        glm::vec3 color;
+        float strength;
+        float SpecularStrength;
+
+        glm::vec3 ambient;
+        glm::vec3 diffuse;
+        glm::vec3 specular;
+
+        Lights type;
+        int id;
+
+        float constant;
+        float linear;
+        float quadratic;
+    };
+
     struct Object {
         GLuint VertexArray, VertexBuffer, IndexBuffer;
         std::vector<float> vertices;
         std::vector<unsigned int> indices;
         glm::mat4 modelMatrix;
+        GLuint textureID = NULL;
+        GLuint mat = NULL;
         char* name;
     };
 
-    struct Light {
-        glm::vec3 pos_or_dir;
-        glm::vec3 color;
-        float intensity;
-
-        glm::vec3 ambient;
-        glm::vec3 specular;
-        glm::vec3 diffuse;
-
-        bool isDirectional;
-        bool isPoint;
-
-        float constantPoint;
-        float linearPoint;
-        float quadraticPoint;
-
-        float ID;
+    struct Camera {
+        glm::vec3 position;
+        glm::vec3 look_at_position;
+        glm::vec3 up;
+        char* ID;
     };
 
-    struct Texture {
-        std::vector<float> colors;
-        int width;
-        int height;
-    };
-
-    struct Material {
-        std::string name;
-        std::vector<float> base_color;
-    };
-
-    class RenderingLayer : public Layer {
+    class Drizzle3D_API RenderingLayer : public Layer {
     public:
-        RenderingLayer(Window* window) : name("3DLayer"), show(true), pWindow(window) {}
+        RenderingLayer(Window* window, ResourceManager& resmgr) : name("3DLayer"), show(true), pWindow(window), resourcemgr(resmgr) {}
 
         void OnAttach() override;
         void OnDetach() override {}
@@ -67,16 +83,31 @@ namespace Drizzle3D {
         void AddLight(float id, Light theLight);
         Light* returnLight(float id);
         void RemoveLight(float id);
+        void SwitchCamera(const char* name);
+        void AddCamera(const char* id, Camera theCamera);
+        Camera* returnCamera(const char* id);
+        void RemoveCamera(const char* id);
+        char* GetActiveCamera() { return current_camera; }
+        Camera ReturnActiveCamera();
+        Camera GetCameraFromID(char* cam);
+        ResourceManager& getResourceManager() { return resourcemgr; }
+
+        bool Lighting = true;
 
     protected:
         bool show = true;
 
     private:
         GLuint shaderProgram;
+        GLuint OldshaderProgram;
         std::string name;
         Window* pWindow;
         std::vector<Object> Objects;
         std::vector<Light> Lights;
+        std::vector<Camera> Cameras;
+
         GLuint lightsBuffer;
+        char* current_camera;
+        ResourceManager& resourcemgr;
 	};
 }

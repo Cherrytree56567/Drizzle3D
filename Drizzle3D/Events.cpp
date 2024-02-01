@@ -1,56 +1,73 @@
+/*
+***********************************************************************
+*                                                                     *
+* Drizzle3D © 2024 by Ronit D'silva is licensed under CC BY-NC-SA 4.0 *
+*                                                                     *
+***********************************************************************
+*/
 #include "Events.h"
 
 namespace Drizzle3D {
-    void Events::AddEventListener(EventType eventType, EventCallback callback) {
-        eventCallbacks[eventType].emplace_back(std::move(callback));
+    void EventDispatcher::AddEvent(std::unique_ptr<Event> newEvent) {
+        events.push_back(std::move(newEvent));
     }
 
-    void Events::RemoveEventListener(EventType eventType, EventCallback callback) {
-        auto& callbacks = eventCallbacks[eventType];
-        callbacks.erase(std::remove(callbacks.begin(), callbacks.end(), callback), callbacks.end());
-    }
-
-    void Events::DispatchEvent(EventType eventType, GLFWwindow* window) {
-        auto& callbacks = eventCallbacks[eventType];
-        for (const auto& callback : callbacks) {
-            callback(window);
+    std::unique_ptr<Event> EventDispatcher::GetEvent(EventType eventType) {
+        int i = 0;
+        while (true) {
+            if (i > events.size()) {
+                break;
+            }
+            if (events[i]->GetEventType() == eventType && !events[i]->Handled) {
+                return std::move(events[i]);
+            }
         }
-        switch (eventType) {
-        case Drizzle3D::EventType::WindowClose:
-            log.Info("Window Closed.", "[Drizzle3D::Core::Events]");
-            break;
-        case Drizzle3D::EventType::WindowResize:
-            log.Info("Window Resized.", "[Drizzle3D::Core::Events]");
-            break;
-        case Drizzle3D::EventType::WindowFocus:
-            log.Info("Window is Focused.", "[Drizzle3D::Core::Events]");
-            break;
-        case Drizzle3D::EventType::WindowLostFocus:
-            log.Info("Window has Lost Focus.", "[Drizzle3D::Core::Events]");
-            break;
-        case Drizzle3D::EventType::WindowMoved:
-            log.Info("Window Moved.", "[Drizzle3D::Core::Events]");
-            break;
-        case Drizzle3D::EventType::KeyPressed:
-            log.Info("Key Pressed.", "[Drizzle3D::Core::Events]");
-            break;
-        case Drizzle3D::EventType::MouseLeftButtonPressed:
-            log.Info("Mouse Button Pressed.", "[Drizzle3D::Core::Events]");
-            break;
-        case Drizzle3D::EventType::MouseLeftButtonReleased:
-            log.Info("Mouse Button Released.", "[Drizzle3D::Core::Events]");
-            break;
-        case Drizzle3D::EventType::MouseRightButtonPressed:
-            log.Info("Mouse Button Pressed.", "[Drizzle3D::Core::Events]");
-            break;
-        case Drizzle3D::EventType::MouseRightButtonReleased:
-            log.Info("Mouse Button Released.", "[Drizzle3D::Core::Events]");
-            break;
-        case Drizzle3D::EventType::MouseMoved:
-            log.Info("Mouse Moved.", "[Drizzle3D::Core::Events]");
-            break;
-        default:
-            break;
+        return nullptr;
+    }
+
+    void EventDispatcher::RemoveHandledEvents() {
+        events.erase(
+            std::remove_if(events.begin(), events.end(), [](const std::unique_ptr<Event>& event) {
+                return event->Handled;
+                }),
+            events.end()
+        );
+    }
+
+    bool EventDispatcher::isUnhandledEvent(EventType eventType) {
+        for (auto& Eventa : events) {
+            if (Eventa->GetEventType() == eventType && !Eventa->Handled) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void EventDispatcher::AddEventListener(EventType eventType, EventCallback callback, std::any a) {
+        eventCallbacks[eventType].push_back(std::make_pair(callback, a));
+    }
+
+    void EventDispatcher::RemoveEventListener(EventType eventType, EventCallback callback) {
+        auto& callbacks = eventCallbacks[eventType];
+        callbacks.erase(std::remove_if(callbacks.begin(), callbacks.end(),
+            [callback](const std::pair<EventCallback, std::any>& listener) {
+                return listener.first == callback;
+            }), callbacks.end());
+    }
+
+    void EventDispatcher::DispatchEvent(GLFWwindow* window) {
+        for (auto& aevent : events) {
+            if (aevent == NULL) {
+                // Probably give a warning that it was empty.
+                continue;
+            }
+            if (!aevent->Handled) {
+                auto& callbacks = eventCallbacks[aevent->GetEventType()];
+                aevent->Handled = true;
+                for (const auto& callback : callbacks) {
+                    callback.first(window, std::move(aevent), callback.second);
+                }
+            }
         }
     }
 }

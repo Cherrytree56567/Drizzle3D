@@ -1,9 +1,17 @@
+/*
+***********************************************************************
+*                                                                     *
+* Drizzle3D © 2024 by Ronit D'silva is licensed under CC BY-NC-SA 4.0 *
+*                                                                     *
+***********************************************************************
+*/
 #pragma once
 #include <string>
 #include <iostream>
+#include "base.h"
 
 namespace Drizzle3D {
-	class Logging {
+	class Drizzle3D_API Logging {
 	public:
 		Logging() {}
 
