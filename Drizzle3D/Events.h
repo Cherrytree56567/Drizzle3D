@@ -1,7 +1,7 @@
 /*
 ***********************************************************************
 *                                                                     *
-* Drizzle3D © 2024 by Ronit D'silva is licensed under CC BY-NC-SA 4.0 *
+* Drizzle3D Â© 2024 by Ronit D'silva is licensed under CC BY-NC-SA 4.0 *
 *                                                                     *
 ***********************************************************************
 */
@@ -34,7 +34,7 @@ namespace Drizzle3D {
         virtual EventType GetEventType() = 0;
     };
 
-    class Drizzle3D_API EventDispatcher {
+    class EventDispatcher {
     public:
         typedef void (*EventCallback)(GLFWwindow* app, std::unique_ptr<Event> events, std::any);
         void AddEvent(std::unique_ptr<Event> newEvent);
