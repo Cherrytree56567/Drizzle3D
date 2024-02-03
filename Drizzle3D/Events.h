@@ -36,6 +36,11 @@ namespace Drizzle3D {
 
     class Drizzle3D_API EventDispatcher {
     public:
+        EventDispatcher(const EventDispatcher&) = delete;
+        EventDispatcher& operator=(const EventDispatcher&) = delete;
+        EventDispatcher() = default;
+        EventDispatcher& operator=(EventDispatcher&&) = default;
+        EventDispatcher(EventDispatcher&&) = default;
         typedef void (*EventCallback)(GLFWwindow* app, std::unique_ptr<Event> events, std::any);
         void AddEvent(std::unique_ptr<Event> newEvent);
         std::unique_ptr<Event> GetEvent(EventType eventType);

@@ -16,7 +16,6 @@ namespace Drizzle3D {
 	class Drizzle3D_API FirstPersonCamera {
 	public:
 		FirstPersonCamera(App& app);
-		void Update();
 
 		glm::vec3 position = glm::vec3(0, 0, 5);
 		float horizontalAngle = 0.0f;

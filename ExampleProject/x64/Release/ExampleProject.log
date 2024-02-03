@@ -1,0 +1,17 @@
+﻿  ExampleProject.cpp
+C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\Drizzle3D.h(384,54): warning C4251: 'Drizzle3D::ResourceManager::resources': class 'std::unordered_map<std::string,std::string,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::string>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ResourceManager'
+  (compiling source file 'ExampleProject.cpp')
+  C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\Drizzle3D.h(384,14):
+  see declaration of 'std::unordered_map<std::string,std::string,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::string>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\Drizzle3D.h(602,19): warning C4251: 'Drizzle3D::FirstPersonCamera::position': struct 'glm::vec<3,float,glm::packed_highp>' needs to have dll-interface to be used by clients of class 'Drizzle3D::FirstPersonCamera'
+  (compiling source file 'ExampleProject.cpp')
+  C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\glm\glm\fwd.hpp(420,10):
+  see declaration of 'glm::vec<3,float,glm::packed_highp>'
+  
+  Generating code
+  1 of 1260 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    16 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  ExampleProject.vcxproj -> C:\Users\ronit\Desktop\Drizzle3D\x64\Release\ExampleProject.exe

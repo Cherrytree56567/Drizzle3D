@@ -8,7 +8,7 @@
 #include "App.h"
 
 namespace Drizzle3D {
-	App::App(char* WindowName, int width, int height) : D3DWindow(&dispatch, WindowName, width, height), imguilayer(&D3DWindow), renderinglayer(&D3DWindow, resourcemgr) {
+	App::App(char* WindowName, int width, int height) : D3DWindow(&dispatch, WindowName, width, height), imguilayer(&D3DWindow), renderinglayer(&D3DWindow, &resourcemgr) {
 		LayerDispatcher.AddLayer(&renderinglayer);
 		LayerDispatcher.AddLayer(&imguilayer);
 		LayerDispatcher.DispatchLayerAttach();

@@ -10,11 +10,11 @@
 namespace Drizzle3D {
     void RenderingLayer::Create_Shader(const char* fname, const char* fgname) {
 
-        Resource frag = resourcemgr.loadFile(fname, "r");
+        Resource frag = resourcemgr->loadFile(fname, "r");
 
         const char* VSSource = frag.content.c_str();
 
-        Resource vert = resourcemgr.loadFile(fgname, "r");
+        Resource vert = resourcemgr->loadFile(fgname, "r");
 
         const char* FSSource = vert.content.c_str();
 

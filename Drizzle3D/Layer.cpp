@@ -31,12 +31,20 @@ namespace Drizzle3D {
     void LayerDispatch::DispatchLayerRender() {
         size_t i = 0;
         while (i < layers.size()) {
-            if (layers[i]->IsShown()) {
-                layers[i]->Render();
+            if (layers[i] != nullptr) {
+                std::cout << layers[i];
+                if (layers[i]->IsShown()) {
+                    layers[i]->Render();
+                }
+            }
+            else {
+                // Add debug output to identify which element is nullptr
+                std::cout << "Element " << i << " in layers vector is nullptr." << std::endl;
             }
             i++;
         }
     }
+
 
     void LayerDispatch::DispatchLayerDetach() {
         for (const auto& layer : layers) {
