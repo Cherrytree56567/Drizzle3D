@@ -94,7 +94,7 @@ void ImGUICode(std::shared_ptr<Drizzle3D::ImGuiLayer> rend) {
 }
 
 
-Drizzle3D_API int maina() {
+Drizzle3D_API int TestProgram() {
 
     /*
     * NOTE:

@@ -1,6 +1,6 @@
 #pragma once
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+//#include <glad/glad.h>
+//#include <GLFW/glfw3.h>
 #include <iostream>
 #include <functional>
 #include <glm/glm.hpp>
@@ -16,8 +16,8 @@
 #include <GLFW/glfw3.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_opengl3.h>
+//#include <backends/imgui_impl_glfw.h>
+//#include <backends/imgui_impl_opengl3.h>
 
 #define AddEventCallback dispatcher()->AddEventListener
 #define EWindowClose Drizzle3D::EventType::WindowClose
@@ -41,16 +41,8 @@
 #else
 #define Drizzle3D_API __declspec(dllimport)
 #endif
-Drizzle3D_API int maina();
+Drizzle3D_API int TestProgram();
 namespace Drizzle3D {
-    
-
-    /*
-    * GUI
-    */
-
-    Drizzle3D_API void GUISliderFloat(const char* label, float* v, float v_min, float v_max, const char* format = NULL, ImGuiSliderFlags flags = NULL);
-
     /*
     * Logging
     */
@@ -575,6 +567,15 @@ namespace Drizzle3D {
     * ImGui Layer
     */
 
+    struct SliderFloat {
+        const char* label;
+        float* v;
+        float v_min;
+        float v_max;
+        const char* format = NULL;
+        int flags = NULL;
+    };
+
     class Drizzle3D_API ImGuiLayer : public Layer {
     public:
         ImGuiLayer(Window* window) : name("ImGUI"), show(true), pWindow(window) {}
@@ -591,12 +592,15 @@ namespace Drizzle3D {
         const std::string& GetName() const override { return name; }
         void SetShow(bool value) override { show = value; }
         void setIGUI(std::shared_ptr<ImGuiLayer> ig) { igui = ig; }
+        void IterateSliderFloat();
+        void GUISliderFloat(const char* label, float* v, float v_min, float v_max, const char* format = NULL, int flags = NULL);
 
     private:
         bool show;
         std::string name;
         Window* pWindow;
         std::shared_ptr<ImGuiLayer> igui;
+        std::vector<SliderFloat> SliderFloats;
     };
 
     /*

@@ -137,25 +137,9 @@
   <ItemGroup>
     <ClCompile Include="ExampleProject.cpp" />
     <ClCompile Include="vendor\Glad\src\glad.c" />
-    <ClCompile Include="vendor\imgui\backends\imgui_impl_glfw.cpp" />
-    <ClCompile Include="vendor\imgui\backends\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="vendor\imgui\imgui.cpp" />
-    <ClCompile Include="vendor\imgui\imgui_demo.cpp" />
-    <ClCompile Include="vendor\imgui\imgui_draw.cpp" />
-    <ClCompile Include="vendor\imgui\imgui_tables.cpp" />
-    <ClCompile Include="vendor\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drizzle3D.h" />
-    <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h" />
-    <ClInclude Include="vendor\imgui\backends\imgui_impl_opengl3.h" />
-    <ClInclude Include="vendor\imgui\backends\imgui_impl_opengl3_loader.h" />
-    <ClInclude Include="vendor\imgui\imconfig.h" />
-    <ClInclude Include="vendor\imgui\imgui.h" />
-    <ClInclude Include="vendor\imgui\imgui_internal.h" />
-    <ClInclude Include="vendor\imgui\imstb_rectpack.h" />
-    <ClInclude Include="vendor\imgui\imstb_textedit.h" />
-    <ClInclude Include="vendor\imgui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Drizzle3D\Drizzle3D.vcxproj">
