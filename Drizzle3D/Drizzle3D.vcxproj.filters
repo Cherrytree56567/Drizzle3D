@@ -233,6 +233,9 @@
     <ClInclude Include="base.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Vendor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.glsl">

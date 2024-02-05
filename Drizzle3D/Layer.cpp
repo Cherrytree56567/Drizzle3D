@@ -8,7 +8,7 @@
 #include "Layer.h"
 
 namespace Drizzle3D {
-    void LayerDispatch::AddLayer(Layer* layer) {
+    void LayerDispatch::AddLayer(std::shared_ptr<Layer> layer) {
         layers.push_back(layer);
     }
 
@@ -29,22 +29,18 @@ namespace Drizzle3D {
     }
 
     void LayerDispatch::DispatchLayerRender() {
-        size_t i = 0;
-        while (i < layers.size()) {
-            if (layers[i] != nullptr) {
-                std::cout << layers[i];
-                if (layers[i]->IsShown()) {
-                    layers[i]->Render();
+        for (const auto& layer : layers) {
+            if (layer != nullptr) {
+                if (layer->IsShown()) {
+                    layer->Render();
                 }
             }
             else {
                 // Add debug output to identify which element is nullptr
-                std::cout << "Element " << i << " in layers vector is nullptr." << std::endl;
+                std::cout << "Element is nullptr." << std::endl;
             }
-            i++;
         }
     }
-
 
     void LayerDispatch::DispatchLayerDetach() {
         for (const auto& layer : layers) {

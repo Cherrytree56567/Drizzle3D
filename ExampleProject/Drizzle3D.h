@@ -41,8 +41,15 @@
 #else
 #define Drizzle3D_API __declspec(dllimport)
 #endif
-
+Drizzle3D_API int maina();
 namespace Drizzle3D {
+    
+
+    /*
+    * GUI
+    */
+
+    Drizzle3D_API void GUISliderFloat(const char* label, float* v, float v_min, float v_max, const char* format = NULL, ImGuiSliderFlags flags = NULL);
 
     /*
     * Logging
@@ -454,7 +461,7 @@ namespace Drizzle3D {
 
     class Drizzle3D_API LayerDispatch {
     public:
-        void AddLayer(Layer* layer);
+        void AddLayer(std::shared_ptr<Layer> layer);
         void RemoveLayerByName(const std::string& name);
         void ShowHideLayerByName(const std::string& name, bool show);
         void PushFront(const std::string& name);
@@ -465,8 +472,9 @@ namespace Drizzle3D {
         void DispatchLayerRender();
         void DispatchLayerDetach();
         void DispatchLayerAttach();
+
     private:
-        std::vector<Layer*> layers;
+        std::vector<std::shared_ptr<Layer>> layers;
     };
 
     /*
@@ -569,19 +577,26 @@ namespace Drizzle3D {
 
     class Drizzle3D_API ImGuiLayer : public Layer {
     public:
-        ImGuiLayer(Window* window);
+        ImGuiLayer(Window* window) : name("ImGUI"), show(true), pWindow(window) {}
 
-        typedef void (*ImGUICode)(ImGuiLayer* imguir);
+        typedef void (*ImGUICode)(std::shared_ptr<ImGuiLayer> igui);
 
-        ImGUICode code;
+        ImGUICode code = [](std::shared_ptr<ImGuiLayer> igui) {};
 
         void OnAttach() override;
-        void OnDetach();
+        void OnDetach() { }
         void Render() override;
 
-        bool IsShown() const override;
-        const std::string& GetName() const override;
-        void SetShow(bool value) override;
+        bool IsShown() const override { return show; }
+        const std::string& GetName() const override { return name; }
+        void SetShow(bool value) override { show = value; }
+        void setIGUI(std::shared_ptr<ImGuiLayer> ig) { igui = ig; }
+
+    private:
+        bool show;
+        std::string name;
+        Window* pWindow;
+        std::shared_ptr<ImGuiLayer> igui;
     };
 
     /*
@@ -595,8 +610,8 @@ namespace Drizzle3D {
         void Run();
 
         Window* window() { return &D3DWindow; }
-        ImGuiLayer* ImguiLayer() { return &imguilayer; }
-        RenderingLayer* GetRenderingLayer() { return &renderinglayer; }
+        std::shared_ptr<ImGuiLayer> ImguiLayer() { return imguilayer; }
+        std::shared_ptr<RenderingLayer> GetRenderingLayer() { return renderinglayer; }
         EventDispatcher* dispatcher() { return &dispatch; }
 
         typedef void(*UpdateFunc)(App* myApp);
@@ -606,8 +621,8 @@ namespace Drizzle3D {
         Window D3DWindow;
 
         // Layers
-        ImGuiLayer imguilayer;
-        RenderingLayer renderinglayer;
+        std::shared_ptr<ImGuiLayer> imguilayer;
+        std::shared_ptr<RenderingLayer> renderinglayer;
 
         // Dispatchers
         EventDispatcher dispatch;

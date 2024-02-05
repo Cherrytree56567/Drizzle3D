@@ -33,18 +33,18 @@ void Update(Drizzle3D::App* app) {
     app->GetRenderingLayer()->returnCamera("Acam")->look_at_position = camera_la_pos;
 }
 
-void ImGUICode(Drizzle3D::ImGuiLayer* rend) {
+void ImGUICode(std::shared_ptr<Drizzle3D::ImGuiLayer> rend) {
     glm::vec3 rotation = glm::degrees(glm::eulerAngles(glm::quat_cast(modelMatrix)));
     glm::vec3 position = modelMatrix[3];
 
     // Create sliders for x, y, and z rotation values
-    ImGui::SliderFloat("Rotation X", &rotation.x, 0.0f, 360.0f);
-    ImGui::SliderFloat("Rotation Y", &rotation.y, 0.0f, 360.0f);
-    ImGui::SliderFloat("Rotation Z", &rotation.z, 0.0f, 360.0f);
+    Drizzle3D::GUISliderFloat("Rotation X", &rotation.x, 0.0f, 360.0f);
+    Drizzle3D::GUISliderFloat("Rotation Y", &rotation.y, 0.0f, 360.0f);
+    Drizzle3D::GUISliderFloat("Rotation Z", &rotation.z, 0.0f, 360.0f);
 
-    ImGui::SliderFloat("Position X", &position.x, 0.0f, 360.0f);
-    ImGui::SliderFloat("Position Y", &position.y, 0.0f, 360.0f);
-    ImGui::SliderFloat("Position Z", &position.z, -360.0f, 360.0f);
+    Drizzle3D::GUISliderFloat("Position X", &position.x, 0.0f, 360.0f);
+    Drizzle3D::GUISliderFloat("Position Y", &position.y, 0.0f, 360.0f);
+    Drizzle3D::GUISliderFloat("Position Z", &position.z, -360.0f, 360.0f);
 
     if (ImGui::Button("Ios Texture")) {
         use_ios = true;
@@ -81,6 +81,9 @@ void ImGUICode(Drizzle3D::ImGuiLayer* rend) {
 }
 
 int main() {
+
+    maina();
+    return 0;
 
     /*
     * NOTE:

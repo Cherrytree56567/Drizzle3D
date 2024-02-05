@@ -55,6 +55,7 @@
     <ClInclude Include="KeyEvent.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Logging.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MouseCodes.h" />
     <ClInclude Include="MouseEvent.h" />

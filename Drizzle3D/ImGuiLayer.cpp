@@ -8,12 +8,22 @@
 #include "ImGuiLayer.h"
 
 namespace Drizzle3D {
+    void GUISliderFloat(const char* label, float* v, float v_min, float v_max, const char* format, ImGuiSliderFlags flags) {
+        if (format == NULL) {
+            if (flags == NULL) {
+                ImGui::SliderFloat(label, v, v_min, v_max);
+            }
+        }
+        else {
+            ImGui::SliderFloat(label, v, v_min, v_max);
+        }
+    }
 	void ImGuiLayer::Render() {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        code(this);
+        code(igui);
 
         // Rendering
         ImGui::Render();

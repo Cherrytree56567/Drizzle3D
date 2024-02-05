@@ -35,7 +35,7 @@ namespace Drizzle3D {
 
     class Drizzle3D_API LayerDispatch {
     public:
-        void AddLayer(Layer* layer);
+        void AddLayer(std::shared_ptr<Layer> layer);
         void RemoveLayerByName(const std::string& name);
         void ShowHideLayerByName(const std::string& name, bool show);
         void PushFront(const std::string& name);
@@ -48,7 +48,6 @@ namespace Drizzle3D {
         void DispatchLayerAttach();
 
     private:
-        std::vector<Layer*> layers;
-        
+        std::vector<std::shared_ptr<Layer>> layers;
     };
 }
