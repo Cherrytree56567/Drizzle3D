@@ -1,0 +1,9 @@
+{
+    "Version": "1.1",
+    "Data": {
+        "Source": "c:\\users\\ronit\\desktop\\drizzle3d\\drizzle3d\\vendor\\glm\\glm\\glm.h",
+        "ProvidedModule": "glm",
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

@@ -153,6 +153,9 @@
     <ClCompile Include="Material.cpp">
       <Filter>Source Files\Rendering\Material</Filter>
     </ClCompile>
+    <ClCompile Include="vendor\glm\glm\glm.cppm">
+      <Filter>Vendor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">

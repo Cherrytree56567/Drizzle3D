@@ -13,10 +13,11 @@
 #include <any>
 //#include <GLAD/glad.h>
 #include <vector>
-#include <GLFW/glfw3.h>
+//#include <GLFW/glfw3.h>
 #include <iostream>
 #include "imgui.h"
-
+typedef unsigned int GLuint;
+typedef struct GLFWwindow GLFWwindow;
 #define AddEventCallback dispatcher()->AddEventListener
 #define EWindowClose Drizzle3D::EventType::WindowClose
 #define EWindowResize Drizzle3D::EventType::WindowResize
