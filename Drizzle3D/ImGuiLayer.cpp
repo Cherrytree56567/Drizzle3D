@@ -47,10 +47,11 @@ namespace Drizzle3D {
 	}
 
     void ImGuiLayer::OnAttach() {
+
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
+        imguiContext = ImGui::GetCurrentContext();
         ImGuiIO& io = ImGui::GetIO(); (void)io;
-
         // Setup ImGui GLFW binding
         ImGui_ImplGlfw_InitForOpenGL(pWindow->returnwindow(), true);
 

@@ -16,21 +16,33 @@
     <Filter Include="Source Files\vendor">
       <UniqueIdentifier>{1eeacb21-c979-4bb2-b840-4dc6d51593ad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\vendor\GLAD">
-      <UniqueIdentifier>{dfffa1bb-9758-4fdc-bafd-a6d7355f7be5}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ExampleProject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\Glad\src\glad.c">
-      <Filter>Source Files\vendor\GLAD</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drizzle3D.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\imgui\imconfig.h">
+      <Filter>Source Files\vendor</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\imgui\imgui.h">
+      <Filter>Source Files\vendor</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\imgui\imgui_internal.h">
+      <Filter>Source Files\vendor</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\imgui\imstb_rectpack.h">
+      <Filter>Source Files\vendor</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\imgui\imstb_textedit.h">
+      <Filter>Source Files\vendor</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\imgui\imstb_truetype.h">
+      <Filter>Source Files\vendor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

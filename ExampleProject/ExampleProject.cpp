@@ -34,25 +34,26 @@ void Update(Drizzle3D::App* app) {
 }
 
 void ImGUICode(std::shared_ptr<Drizzle3D::ImGuiLayer> rend) {
+    ImGui::SetCurrentContext(rend->imguiContext);
     glm::vec3 rotation = glm::degrees(glm::eulerAngles(glm::quat_cast(modelMatrix)));
     glm::vec3 position = modelMatrix[3];
 
     // Create sliders for x, y, and z rotation values
-    rend->GUISliderFloat("Rotation X", &rotation.x, 0.0f, 360.0f);
-    rend->GUISliderFloat("Rotation Y", &rotation.y, 0.0f, 360.0f);
-    rend->GUISliderFloat("Rotation Z", &rotation.z, 0.0f, 360.0f);
+    ImGui::SliderFloat("Rotation X", &rotation.x, 0.0f, 360.0f);
+    ImGui::SliderFloat("Rotation Y", &rotation.y, 0.0f, 360.0f);
+    ImGui::SliderFloat("Rotation Z", &rotation.z, 0.0f, 360.0f);
 
-    rend->GUISliderFloat("Position X", &position.x, 0.0f, 360.0f);
-    rend->GUISliderFloat("Position Y", &position.y, 0.0f, 360.0f);
-    rend->GUISliderFloat("Position Z", &position.z, -360.0f, 360.0f);
-    /*
+    ImGui::SliderFloat("Position X", &position.x, 0.0f, 360.0f);
+    ImGui::SliderFloat("Position Y", &position.y, 0.0f, 360.0f);
+    ImGui::SliderFloat("Position Z", &position.z, -360.0f, 360.0f);
+  
     if (ImGui::Button("Ios Texture")) {
         use_ios = true;
     }
 
     if (ImGui::Button("Duck Texture")) {
         use_ios = false;
-    }*/
+    }
 
     // Update the model matrix with the new rotation values
     modelMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -61,23 +62,23 @@ void ImGUICode(std::shared_ptr<Drizzle3D::ImGuiLayer> rend) {
 
     modelMatrix = glm::translate(modelMatrix, position);
 
-    rend->GUISliderFloat("Light X", &light_pos.x, -50.0f, 50.0f);
-    rend->GUISliderFloat("Light Y", &light_pos.y, -50.0f, 50.0f);
-    rend->GUISliderFloat("Light Z", &light_pos.z, -50.0f, 500.0f);
+    ImGui::SliderFloat("Light X", &light_pos.x, -50.0f, 50.0f);
+    ImGui::SliderFloat("Light Y", &light_pos.y, -50.0f, 50.0f);
+    ImGui::SliderFloat("Light Z", &light_pos.z, -50.0f, 500.0f);
 
-    rend->GUISliderFloat("Light Intensity", &streg, 0.0f, 360.0f);
+    ImGui::SliderFloat("Light Intensity", &streg, 0.0f, 360.0f);
 
-    rend->GUISliderFloat("Camera X", &camera_pos.x, 0.0f, 50.0f);
-    rend->GUISliderFloat("Camera Y", &camera_pos.y, 0.0f, 50.0f);
-    rend->GUISliderFloat("Camera Z", &camera_pos.z, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera X", &camera_pos.x, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera Y", &camera_pos.y, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera Z", &camera_pos.z, 0.0f, 50.0f);
 
-    rend->GUISliderFloat("Camera Up X", &camera_up_pos.x, 0.0f, 50.0f);
-    rend->GUISliderFloat("Camera Up Y", &camera_up_pos.y, 0.0f, 50.0f);
-    rend->GUISliderFloat("Camera Up Z", &camera_up_pos.z, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera Up X", &camera_up_pos.x, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera Up Y", &camera_up_pos.y, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera Up Z", &camera_up_pos.z, 0.0f, 50.0f);
 
-    rend->GUISliderFloat("Camera Look-At X", &camera_la_pos.x, 0.0f, 50.0f);
-    rend->GUISliderFloat("Camera Look-At Y", &camera_la_pos.y, 0.0f, 50.0f);
-    rend->GUISliderFloat("Camera Look-At Z", &camera_la_pos.z, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera Look-At X", &camera_la_pos.x, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera Look-At Y", &camera_la_pos.y, 0.0f, 50.0f);
+    ImGui::SliderFloat("Camera Look-At Z", &camera_la_pos.z, 0.0f, 50.0f);
 }
 
 int main() {

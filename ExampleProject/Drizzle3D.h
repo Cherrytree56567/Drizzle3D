@@ -3,21 +3,19 @@
 //#include <GLFW/glfw3.h>
 #include <iostream>
 #include <functional>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+//#include <glm/glm.hpp>
+//#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <algorithm>
 #include <unordered_map>
 #include <vector>
 #include <string>
 #include <any>
-#include <GLAD/glad.h>
+//#include <GLAD/glad.h>
 #include <vector>
 #include <GLFW/glfw3.h>
-#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
-//#include <backends/imgui_impl_glfw.h>
-//#include <backends/imgui_impl_opengl3.h>
+#include "imgui.h"
 
 #define AddEventCallback dispatcher()->AddEventListener
 #define EWindowClose Drizzle3D::EventType::WindowClose
@@ -594,6 +592,7 @@ namespace Drizzle3D {
         void setIGUI(std::shared_ptr<ImGuiLayer> ig) { igui = ig; }
         void IterateSliderFloat();
         void GUISliderFloat(const char* label, float* v, float v_min, float v_max, const char* format = NULL, int flags = NULL);
+        ImGuiContext* imguiContext = ImGui::GetCurrentContext();
 
     private:
         bool show;
