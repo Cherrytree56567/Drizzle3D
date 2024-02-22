@@ -5,7 +5,13 @@
 #include <functional>
 //#include <glm/glm.hpp>
 //#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "glm/vec3.hpp"
+#include "glm/vec2.hpp"
+#include "glm/vec4.hpp"
+#include "glm/mat4x4.hpp"
+#include "glm/mat4x3.hpp"
+#include "glm/mat4x2.hpp"
+#include "glm/gtc/quaternion.hpp"
 #include <algorithm>
 #include <unordered_map>
 #include <vector>
@@ -40,7 +46,9 @@ typedef struct GLFWwindow GLFWwindow;
 #else
 #define Drizzle3D_API __declspec(dllimport)
 #endif
+
 Drizzle3D_API int TestProgram();
+
 namespace Drizzle3D {
     /*
     * Logging

@@ -26,23 +26,5 @@
     <ClInclude Include="Drizzle3D.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\imgui\imconfig.h">
-      <Filter>Source Files\vendor</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\imgui\imgui.h">
-      <Filter>Source Files\vendor</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\imgui\imgui_internal.h">
-      <Filter>Source Files\vendor</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\imgui\imstb_rectpack.h">
-      <Filter>Source Files\vendor</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\imgui\imstb_textedit.h">
-      <Filter>Source Files\vendor</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\imgui\imstb_truetype.h">
-      <Filter>Source Files\vendor</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
