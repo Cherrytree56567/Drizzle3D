@@ -24,7 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drizzle3D.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\vendor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

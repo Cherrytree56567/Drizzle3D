@@ -9,7 +9,6 @@ glm::vec3 camera_up_pos;
 glm::vec3 camera_la_pos;
 char* cam;
 float streg = 0.0f;
-
 bool use_ios = true;
 
 void Closed(GLFWwindow* window) {
