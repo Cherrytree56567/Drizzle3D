@@ -28,6 +28,7 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="vendor\Glad\src\glad.c" />
     <ClCompile Include="vendor\glm\glm\glm.cppm" />
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="vendor\imgui\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="vendor\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="vendor\imgui\imgui.cpp" />
@@ -51,6 +52,7 @@
     <ClInclude Include="MouseCodes.h" />
     <ClInclude Include="MouseEvent.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_dx11.h" />
     <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h" />
     <ClInclude Include="vendor\imgui\backends\imgui_impl_opengl3.h" />
     <ClInclude Include="vendor\imgui\backends\imgui_impl_opengl3_loader.h" />
@@ -157,7 +159,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>vendor\GLFW\lib-vc2022\glfw3.lib;vendor\GLFW\lib-vc2022\glfw3_mt.lib;vendor\GLFW\lib-vc2022\glfw3dll.lib;vendor\Assimp\lib\x64\assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vendor\GLFW\lib-vc2022\glfw3.lib;vendor\GLFW\lib-vc2022\glfw3_mt.lib;vendor\GLFW\lib-vc2022\glfw3dll.lib;vendor\Assimp\lib\x64\assimp-vc143-mt.lib;d3d11.lib;dxgi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

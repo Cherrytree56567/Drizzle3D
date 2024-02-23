@@ -105,6 +105,9 @@
     <ClCompile Include="vendor\glm\glm\glm.cppm">
       <Filter>Vendor</Filter>
     </ClCompile>
+    <ClCompile Include="vendor\imgui\backends\imgui_impl_dx11.cpp">
+      <Filter>Vendor\Imgui\backend</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -175,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="main.h">
       <Filter>Vendor</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\imgui\backends\imgui_impl_dx11.h">
+      <Filter>Vendor\Imgui\backend</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

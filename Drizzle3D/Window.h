@@ -6,15 +6,19 @@
 ***********************************************************************
 */
 #pragma once
-#include <GLAD/glad.h>
 #include <vector>
 #include <iostream>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
+#define GLFW_EXPOSE_NATIVE_WIN32
+#define GLFW_EXPOSE_NATIVE_WGL
+#include <GLFW/glfw3.h>
+#include <GLFW/glfw3native.h>
 #include "AppEvent.h"
 #include "KeyEvent.h"
 #include "MouseEvent.h"
 #include "base.h"
+#include <d3d11.h>
 
 namespace Drizzle3D {
 
@@ -53,6 +57,9 @@ namespace Drizzle3D {
 		double lastMouseY = 0.0;
 		double lastSMouseX = 0.0;
 		double lastSMouseY = 0.0;
+		ID3D11Device* device;
+		ID3D11DeviceContext* deviceContext;
+		IDXGISwapChain* swapChain;
 	};
 
 }

@@ -40,10 +40,10 @@ namespace Drizzle3D {
         ImGui::Render();
         int display_w, display_h;
         glfwGetFramebufferSize(pWindow->returnwindow(), &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
+        //glViewport(0, 0, display_w, display_h);
 
         // Render ImGui
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        //ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
     void ImGuiLayer::OnAttach() {

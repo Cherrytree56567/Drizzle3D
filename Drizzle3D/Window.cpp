@@ -20,20 +20,32 @@ namespace Drizzle3D {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		window = glfwCreateWindow(width, height, WindowName, NULL, NULL);
 		if (window == NULL) {
 			std::cout << "[Drizzle3D::Core::Window] Error: Failed to create GLFW window." << std::endl;
 			glfwTerminate();
 		}
 		glfwMakeContextCurrent(window);
-		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-			std::cout << "[Drizzle3D::Core::Window] Error: Failed to Load GL Loader." << std::endl;
-			exit(-1);
-		}
 		winwidth = width;
 		winheight = height;
 		glfwGetWindowPos(window, &winx, &winy);
 		glfwGetCursorPos(window, &lastMouseX, &lastMouseY);
+
+		DXGI_SWAP_CHAIN_DESC sd = { 0 };
+		sd.BufferCount = 1;
+		sd.BufferDesc.Width = 640;
+		sd.BufferDesc.Height = 480;
+		sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		sd.BufferDesc.RefreshRate.Numerator = 60;
+		sd.BufferDesc.RefreshRate.Denominator = 1;
+		sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+		sd.OutputWindow = glfwGetWin32Window(window); // For Windows platform
+		sd.SampleDesc.Count = 1;
+		sd.SampleDesc.Quality = 0;
+		sd.Windowed = TRUE;
+
+		D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0, D3D11_SDK_VERSION, &sd, &swapChain, &device, nullptr, &deviceContext);
 	}
 
 	Window::~Window() {
@@ -231,6 +243,6 @@ namespace Drizzle3D {
 	}
 
 	void Window::Render() {
-		
+		swapChain->Present(1, 0);
 	}
 }
