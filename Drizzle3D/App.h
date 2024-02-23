@@ -8,7 +8,6 @@
 #pragma once
 #include "Window.h"
 #include "ImGuiLayer.h"
-#include "RenderingLayer.h"
 #include "layer.h"
 #include "logging.h"
 #include "AppEvent.h"
@@ -42,7 +41,6 @@ namespace Drizzle3D {
 
 		Window* window() { return &D3DWindow; }
 		std::shared_ptr<ImGuiLayer> ImguiLayer() { return imguilayer; }
-		std::shared_ptr<RenderingLayer> GetRenderingLayer() { return renderinglayer; }
 		EventDispatcher* dispatcher() { return &dispatch; }
 
 		typedef void(*UpdateFunc)(App* myApp);
@@ -53,7 +51,6 @@ namespace Drizzle3D {
 
 		// Layers
 		std::shared_ptr<ImGuiLayer> imguilayer;
-		std::shared_ptr<RenderingLayer> renderinglayer;
 
 		// Dispatchers
 		EventDispatcher dispatch;

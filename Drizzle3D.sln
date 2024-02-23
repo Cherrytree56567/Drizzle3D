@@ -5,8 +5,6 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Drizzle3D", "Drizzle3D\Drizzle3D.vcxproj", "{9418676D-E791-4E18-9ADE-B95C3A85F803}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExampleProject", "ExampleProject\ExampleProject.vcxproj", "{A7BF67C7-5037-42E0-93E0-68E2856A15E0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -23,14 +21,6 @@ Global
 		{9418676D-E791-4E18-9ADE-B95C3A85F803}.Release|x64.Build.0 = Release|x64
 		{9418676D-E791-4E18-9ADE-B95C3A85F803}.Release|x86.ActiveCfg = Release|Win32
 		{9418676D-E791-4E18-9ADE-B95C3A85F803}.Release|x86.Build.0 = Release|Win32
-		{A7BF67C7-5037-42E0-93E0-68E2856A15E0}.Debug|x64.ActiveCfg = Debug|x64
-		{A7BF67C7-5037-42E0-93E0-68E2856A15E0}.Debug|x64.Build.0 = Debug|x64
-		{A7BF67C7-5037-42E0-93E0-68E2856A15E0}.Debug|x86.ActiveCfg = Debug|Win32
-		{A7BF67C7-5037-42E0-93E0-68E2856A15E0}.Debug|x86.Build.0 = Debug|Win32
-		{A7BF67C7-5037-42E0-93E0-68E2856A15E0}.Release|x64.ActiveCfg = Release|x64
-		{A7BF67C7-5037-42E0-93E0-68E2856A15E0}.Release|x64.Build.0 = Release|x64
-		{A7BF67C7-5037-42E0-93E0-68E2856A15E0}.Release|x86.ActiveCfg = Release|Win32
-		{A7BF67C7-5037-42E0-93E0-68E2856A15E0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
