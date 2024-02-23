@@ -12,6 +12,15 @@
 #include <iostream>
 #include "App.h"
 
+void ImGUICode(std::shared_ptr<Drizzle3D::ImGuiLayer> rend) {
+    float a = 0;
+    ImGui::SliderFloat("Test Slider", &a, 0.0f, 360.0f);
+
+    if (ImGui::Button("Test Button")) {
+        std::cout << "Test Button\n";
+    }
+}
+
 void Update(Drizzle3D::App* app) {
 
 }
@@ -25,6 +34,7 @@ Drizzle3D_API int main() {
     Drizzle3D::App app;
 
     app.update = Update;
+    app.ImguiLayer()->code = ImGUICode;
 
     app.Run();
 

@@ -46,6 +46,16 @@ namespace Drizzle3D {
 		sd.Windowed = TRUE;
 
 		D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0, D3D11_SDK_VERSION, &sd, &swapChain, &device, nullptr, &deviceContext);
+
+		// Get the back buffer from the swap chain
+		ID3D11Texture2D* backBuffer;
+		swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBuffer);
+
+		// Create a render target view for the back buffer
+		device->CreateRenderTargetView(backBuffer, nullptr, &swapChainRenderTargetView);
+
+		// Release the back buffer as we no longer need it after creating the render target view
+		backBuffer->Release();
 	}
 
 	Window::~Window() {

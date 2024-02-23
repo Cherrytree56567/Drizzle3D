@@ -38,6 +38,9 @@ namespace Drizzle3D {
 		void clearKeyReleasedCodes() { keyRel_codes.clear(); }
 		double returnMouseX() { return lastMouseX; }
 		double returnMouseY() { return lastMouseY; }
+		ID3D11Device* returnDX11Device() { return device; }
+		ID3D11DeviceContext* returnDX11DeviceContext() { return deviceContext; }
+		IDXGISwapChain* returnDXGISwapChain() { return swapChain; }
 
 		void ProcessEvents();
 		void Render();
@@ -60,6 +63,7 @@ namespace Drizzle3D {
 		ID3D11Device* device;
 		ID3D11DeviceContext* deviceContext;
 		IDXGISwapChain* swapChain;
+		ID3D11RenderTargetView* swapChainRenderTargetView;
 	};
 
 }

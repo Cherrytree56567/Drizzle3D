@@ -27,14 +27,20 @@ namespace Drizzle3D {
     }
 
 	void ImGuiLayer::Render() {
-        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplDX11_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        code(igui);
+        // Begin ImGui window
+        ImGui::Begin("ImGui Window");
 
-        IterateSliderFloat();
-        SliderFloats.clear();
+        // Add ImGui button
+        if (ImGui::Button("Click Me")) {
+            // Button click action
+        }
+
+        // End ImGui window
+        ImGui::End();
 
         // Rendering
         ImGui::Render();
@@ -44,6 +50,7 @@ namespace Drizzle3D {
 
         // Render ImGui
         //ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	}
 
     void ImGuiLayer::OnAttach() {
@@ -57,5 +64,6 @@ namespace Drizzle3D {
 
         // Setup ImGui OpenGL binding
         ImGui_ImplOpenGL3_Init("#version 330 core");
+        ImGui_ImplDX11_Init(pWindow->returnDX11Device(), pWindow->returnDX11DeviceContext());
     }
 }
