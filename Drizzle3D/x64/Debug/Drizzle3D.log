@@ -1,23 +1,45 @@
 ﻿  Scanning sources for module dependencies...
-  Window.cpp
+  RenderingLayer.cpp
 C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Events.h(53,45): warning C4251: 'Drizzle3D::EventDispatcher::events': class 'std::vector<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>,std::allocator<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::EventDispatcher'
-  (compiling source file 'Window.cpp')
+  (compiling source file 'RenderingLayer.cpp')
   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
   see declaration of 'std::vector<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>,std::allocator<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>>>'
   
 C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Events.h(54,88): warning C4251: 'Drizzle3D::EventDispatcher::eventCallbacks': class 'std::unordered_map<Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>,std::hash<Drizzle3D::EventType>,std::equal_to<Drizzle3D::EventType>,std::allocator<std::pair<const Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::EventDispatcher'
-  (compiling source file 'Window.cpp')
+  (compiling source file 'RenderingLayer.cpp')
   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\unordered_map(66,7):
   see declaration of 'std::unordered_map<Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>,std::hash<Drizzle3D::EventType>,std::equal_to<Drizzle3D::EventType>,std::allocator<std::pair<const Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>>>>'
   
-C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Window.h(55,20): warning C4251: 'Drizzle3D::Window::key_codes': class 'std::vector<int,std::allocator<int>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Window'
-  (compiling source file 'Window.cpp')
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Window.h(56,20): warning C4251: 'Drizzle3D::Window::key_codes': class 'std::vector<int,std::allocator<int>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Window'
+  (compiling source file 'RenderingLayer.cpp')
   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
   see declaration of 'std::vector<int,std::allocator<int>>'
   
-C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Window.h(56,20): warning C4251: 'Drizzle3D::Window::keyRel_codes': class 'std::vector<int,std::allocator<int>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Window'
-  (compiling source file 'Window.cpp')
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Window.h(57,20): warning C4251: 'Drizzle3D::Window::keyRel_codes': class 'std::vector<int,std::allocator<int>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Window'
+  (compiling source file 'RenderingLayer.cpp')
   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
   see declaration of 'std::vector<int,std::allocator<int>>'
   
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Layer.h(32,21): warning C4251: 'Drizzle3D::Layer::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Layer'
+  (compiling source file 'RenderingLayer.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring(2337,7):
+  see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Layer.h(51,45): warning C4251: 'Drizzle3D::LayerDispatch::layers': class 'std::vector<std::shared_ptr<Drizzle3D::Layer>,std::allocator<std::shared_ptr<Drizzle3D::Layer>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::LayerDispatch'
+  (compiling source file 'RenderingLayer.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<std::shared_ptr<Drizzle3D::Layer>,std::allocator<std::shared_ptr<Drizzle3D::Layer>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(18,15): warning C4251: 'Drizzle3D::RenderingLayer::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'RenderingLayer.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring(2337,7):
+  see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(20,35): warning C4251: 'Drizzle3D::RenderingLayer::rlay': class 'std::shared_ptr<Drizzle3D::RenderingLayer>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'RenderingLayer.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::RenderingLayer>'
+  
+     Creating library C:\Users\ronit\Desktop\Drizzle3D\x64\Debug\Drizzle3D.lib and object C:\Users\ronit\Desktop\Drizzle3D\x64\Debug\Drizzle3D.exp
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Drizzle3D.vcxproj -> C:\Users\ronit\Desktop\Drizzle3D\x64\Debug\Drizzle3D.exe

@@ -41,6 +41,7 @@ namespace Drizzle3D {
 		ID3D11Device* returnDX11Device() { return device; }
 		ID3D11DeviceContext* returnDX11DeviceContext() { return deviceContext; }
 		IDXGISwapChain* returnDXGISwapChain() { return swapChain; }
+		ID3D11RenderTargetView* returnD3D11RenderTargetView() { return swapChainRenderTargetView; }
 
 		void ProcessEvents();
 		void Render();

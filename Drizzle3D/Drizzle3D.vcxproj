@@ -25,12 +25,12 @@
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Logging.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RenderingLayer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="vendor\Glad\src\glad.c" />
     <ClCompile Include="vendor\glm\glm\glm.cppm" />
     <ClCompile Include="vendor\imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="vendor\imgui\backends\imgui_impl_glfw.cpp" />
-    <ClCompile Include="vendor\imgui\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="vendor\imgui\imgui.cpp" />
     <ClCompile Include="vendor\imgui\imgui_demo.cpp" />
     <ClCompile Include="vendor\imgui\imgui_draw.cpp" />
@@ -51,11 +51,10 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="MouseCodes.h" />
     <ClInclude Include="MouseEvent.h" />
+    <ClInclude Include="RenderingLayer.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="vendor\imgui\backends\imgui_impl_dx11.h" />
     <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h" />
-    <ClInclude Include="vendor\imgui\backends\imgui_impl_opengl3.h" />
-    <ClInclude Include="vendor\imgui\backends\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="vendor\imgui\imconfig.h" />
     <ClInclude Include="vendor\imgui\imgui.h" />
     <ClInclude Include="vendor\imgui\imgui_internal.h" />

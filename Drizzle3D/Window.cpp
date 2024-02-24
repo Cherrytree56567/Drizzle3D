@@ -253,6 +253,5 @@ namespace Drizzle3D {
 	}
 
 	void Window::Render() {
-		swapChain->Present(1, 0);
 	}
 }

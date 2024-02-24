@@ -31,16 +31,7 @@ namespace Drizzle3D {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        // Begin ImGui window
-        ImGui::Begin("ImGui Window");
-
-        // Add ImGui button
-        if (ImGui::Button("Click Me")) {
-            // Button click action
-        }
-
-        // End ImGui window
-        ImGui::End();
+        code(igui);
 
         // Rendering
         ImGui::Render();
@@ -60,10 +51,9 @@ namespace Drizzle3D {
         imguiContext = ImGui::GetCurrentContext();
         ImGuiIO& io = ImGui::GetIO(); (void)io;
         // Setup ImGui GLFW binding
-        ImGui_ImplGlfw_InitForOpenGL(pWindow->returnwindow(), true);
+        ImGui_ImplGlfw_InitForOther(pWindow->returnwindow(), true);
 
         // Setup ImGui OpenGL binding
-        ImGui_ImplOpenGL3_Init("#version 330 core");
         ImGui_ImplDX11_Init(pWindow->returnDX11Device(), pWindow->returnDX11DeviceContext());
     }
 }

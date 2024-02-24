@@ -52,6 +52,9 @@
     <Filter Include="Source Files\ResourceManager">
       <UniqueIdentifier>{41f50d1d-4c88-4701-a4f8-95dc86ac9b78}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\RenderingLayer">
+      <UniqueIdentifier>{3f70a39a-87aa-4f04-ba59-63b9e591acef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -93,9 +96,6 @@
     <ClCompile Include="vendor\imgui\backends\imgui_impl_glfw.cpp">
       <Filter>Vendor\Imgui\backend</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\imgui\backends\imgui_impl_opengl3.cpp">
-      <Filter>Vendor\Imgui\backend</Filter>
-    </ClCompile>
     <ClCompile Include="Layer.cpp">
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
@@ -107,6 +107,9 @@
     </ClCompile>
     <ClCompile Include="vendor\imgui\backends\imgui_impl_dx11.cpp">
       <Filter>Vendor\Imgui\backend</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderingLayer.cpp">
+      <Filter>Source Files\RenderingLayer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,12 +149,6 @@
     <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h">
       <Filter>Vendor\Imgui\backend</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\imgui\backends\imgui_impl_opengl3.h">
-      <Filter>Vendor\Imgui\backend</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\imgui\backends\imgui_impl_opengl3_loader.h">
-      <Filter>Vendor\Imgui\backend</Filter>
-    </ClInclude>
     <ClInclude Include="Layer.h">
       <Filter>Source Files\Layers</Filter>
     </ClInclude>
@@ -173,14 +170,17 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>Source Files\ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="base.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
       <Filter>Vendor</Filter>
     </ClInclude>
     <ClInclude Include="vendor\imgui\backends\imgui_impl_dx11.h">
       <Filter>Vendor\Imgui\backend</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderingLayer.h">
+      <Filter>Source Files\RenderingLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="base.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

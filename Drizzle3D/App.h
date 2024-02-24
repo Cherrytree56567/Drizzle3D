@@ -14,6 +14,7 @@
 #include "KeyEvent.h"
 #include "MouseEvent.h"
 #include "ResourceManager.h"
+#include "RenderingLayer.h"
 
 #define AddEventCallback dispatcher()->AddEventListener
 #define EWindowClose Drizzle3D::EventType::WindowClose
@@ -41,6 +42,7 @@ namespace Drizzle3D {
 
 		Window* window() { return &D3DWindow; }
 		std::shared_ptr<ImGuiLayer> ImguiLayer() { return imguilayer; }
+		std::shared_ptr<RenderingLayer> RenderLayer() { return renderlayer; }
 		EventDispatcher* dispatcher() { return &dispatch; }
 
 		typedef void(*UpdateFunc)(App* myApp);
@@ -51,6 +53,7 @@ namespace Drizzle3D {
 
 		// Layers
 		std::shared_ptr<ImGuiLayer> imguilayer;
+		std::shared_ptr<RenderingLayer> renderlayer;
 
 		// Dispatchers
 		EventDispatcher dispatch;
