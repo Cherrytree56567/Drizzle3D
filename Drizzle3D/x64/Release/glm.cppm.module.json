@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "x64\\Release\\glm.cppm.obj",
+            "outputs": [
+                "C:\\Users\\ronit\\Desktop\\Drizzle3D\\Drizzle3D\\x64\\Release\\vc143.pdb",
+                "x64\\Release\\",
+                "C:\\Users\\ronit\\Desktop\\Drizzle3D\\Drizzle3D\\x64\\Release\\glm.cppm.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "glm",
+                    "source-path": "c:\\users\\ronit\\desktop\\drizzle3d\\drizzle3d\\vendor\\glm\\glm\\glm.cppm",
+                    "is-interface": true
+                }
+            ],
+            "requires": []
+        }
+    ]
+}
