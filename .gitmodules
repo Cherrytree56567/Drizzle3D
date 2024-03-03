@@ -5,6 +5,7 @@
 	path = Drizzle3D/vendor/stb
 	url = https://github.com/nothings/stb.git
 [submodule "Drizzle3D/vendor/imgui"]
+        branch = master
 	path = Drizzle3D/vendor/imgui
 	url = https://github.com/Cherrytree56567/imgui
 [submodule "ExampleProject/vendor/glm"]
