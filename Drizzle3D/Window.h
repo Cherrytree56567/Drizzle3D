@@ -6,7 +6,7 @@
 ***********************************************************************
 */
 #pragma once
-#include <GLAD/glad.h>
+#include <glad/glad.h>
 #include <vector>
 #include <iostream>
 #include <backends/imgui_impl_glfw.h>

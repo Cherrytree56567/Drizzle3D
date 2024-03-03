@@ -7,6 +7,7 @@
 */
 #pragma once
 #include "ResourceManager.h"
+#include <vector>
 #include <iostream>
 #include <fstream>
 #include <glad/glad.h>
