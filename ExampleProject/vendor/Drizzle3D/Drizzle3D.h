@@ -2,24 +2,29 @@
 //#include <glad/glad.h>
 //#include <GLFW/glfw3.h>
 #include <iostream>
+#include <memory>
 #include <functional>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+//#include <glm/glm.hpp>
+//#include <glm/gtc/matrix_transform.hpp>
+#include "glm/vec3.hpp"
+#include "glm/vec2.hpp"
+#include "glm/vec4.hpp"
+#include "glm/mat4x4.hpp"
+#include "glm/mat4x3.hpp"
+#include "glm/mat4x2.hpp"
+#include "glm/gtc/quaternion.hpp"
 #include <algorithm>
 #include <unordered_map>
 #include <vector>
 #include <string>
 #include <any>
-#include <GLAD/glad.h>
+//#include <GLAD/glad.h>
 #include <vector>
-#include <GLFW/glfw3.h>
-#include <glm/gtc/type_ptr.hpp>
+//#include <GLFW/glfw3.h>
 #include <iostream>
 #include "imgui.h"
-//#include <backends/imgui_impl_glfw.h>
-//#include <backends/imgui_impl_opengl3.h>
-
+typedef unsigned int GLuint;
+typedef struct GLFWwindow GLFWwindow;
 #define AddEventCallback dispatcher()->AddEventListener
 #define EWindowClose Drizzle3D::EventType::WindowClose
 #define EWindowResize Drizzle3D::EventType::WindowResize
@@ -36,13 +41,18 @@
 #define EMouseRightButtonPressed Drizzle3D::EventType::MouseRightButtonPressed
 #define EMouseRightButtonReleased Drizzle3D::EventType::MouseRightButtonReleased
 #define EMouseMoved Drizzle3D::EventType::MouseMoved
-
-#ifdef Drizzle3D_EXPORTS
-#define Drizzle3D_API __declspec(dllexport)
+#ifdef Drizzle3D_LINUX
+    #define Drizzle3D_API 
 #else
-#define Drizzle3D_API __declspec(dllimport)
+    #ifdef Drizzle3D_EXPORTS
+    #define Drizzle3D_API __declspec(dllexport)
+    #else
+    #define Drizzle3D_API __declspec(dllimport)
+    #endif
 #endif
+
 Drizzle3D_API int TestProgram();
+
 namespace Drizzle3D {
     /*
     * Logging
@@ -250,7 +260,7 @@ namespace Drizzle3D {
         ButtonRight = Button2,
         ButtonMiddle = Button3
     };
-    
+
     class Drizzle3D_API WindowResizeEvent : public Event {
     public:
         WindowResizeEvent(unsigned int width, unsigned int height) : m_Width(width), m_Height(height) {}
