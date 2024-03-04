@@ -138,9 +138,6 @@
     <ClCompile Include="ExampleProject.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Drizzle3D.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Drizzle3D\Drizzle3D.vcxproj">
       <Project>{9418676d-e791-4e18-9ade-b95c3a85f803}</Project>
     </ProjectReference>
