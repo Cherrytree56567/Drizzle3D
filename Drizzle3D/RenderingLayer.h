@@ -52,7 +52,7 @@ namespace Drizzle3D {
         std::vector<unsigned int> indices;
         glm::mat4 modelMatrix;
         GLuint textureID = NULL;
-        GLuint mat = NULL;
+        GLuint mat = 0;
         char* name;
     };
 

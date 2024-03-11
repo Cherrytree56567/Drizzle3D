@@ -80,7 +80,7 @@ void ImGUICode(std::shared_ptr<Drizzle3D::ImGuiLayer> rend) {
     ImGui::SliderFloat("Camera Look-At Z", &camera_la_pos.z, 0.0f, 50.0f);
 }
 
-int main() {
+int maina() {
 
     /*
     * NOTE:
@@ -119,4 +119,8 @@ int main() {
     app.Run();
 
     return 0;
+}
+
+int main() {
+    TestProgram();
 }

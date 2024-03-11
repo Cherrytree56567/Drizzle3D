@@ -117,6 +117,7 @@ Drizzle3D_API int TestProgram() {
     app.ImguiLayer()->code = ImGUICode;
     app.GetRenderingLayer()->AddObject("Cube", app.GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Cube.obj"), modelMatrix));
     app.GetRenderingLayer()->returnObject("Cube")->textureID = Drizzle3D::GetTexture("duck.png");
+    app.GetRenderingLayer()->returnObject("Cube")->mat = mat1.GetShaderProgram();
 
     app.GetRenderingLayer()->AddObject("Plane", app.GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Plane.obj"), modelMatrix));
     app.GetRenderingLayer()->returnObject("Plane")->textureID = Drizzle3D::GetTexture("duck.png");

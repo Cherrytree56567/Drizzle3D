@@ -116,6 +116,7 @@ namespace Drizzle3D {
         myOBJ.vertices = vf.first;
         myOBJ.indices = vf.second;
         myOBJ.modelMatrix = modelMatrix;
+        myOBJ.mat = shaderProgram;
 
         // Create Vertex Array Object (VAO), Vertex Buffer Object (VBO), and Element Buffer Object (EBO)
         glGenVertexArrays(1, &myOBJ.VertexArray);
@@ -192,29 +193,86 @@ namespace Drizzle3D {
             glUniform1f(glGetUniformLocation(shaderProgram, (lightPrefix + ".linear").c_str()), Lights[i].linear);
             glUniform1f(glGetUniformLocation(shaderProgram, (lightPrefix + ".quadratic").c_str()), Lights[i].quadratic);
         }
-
-
         for (const auto& obje : Objects) {
-            if (obje.name == "Skybox") {
-                GLuint IsSkyBox = glGetUniformLocation(shaderProgram, "IsSkyBox");
+            if (obje.mat != shaderProgram) {
+                glUseProgram(obje.mat);
+                GLuint viewMatrixLoc = glGetUniformLocation(obje.mat, "viewMatrix");
+                GLuint projectionMatrixLoc = glGetUniformLocation(obje.mat, "projectionMatrix");
+                GLuint viewPos = glGetUniformLocation(obje.mat, "viewPos");
 
-                glUniform1i(IsSkyBox, static_cast<bool>(true));
-            } else {
-                GLuint IsSkyBox = glGetUniformLocation(shaderProgram, "IsSkyBox");
+                glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
+                glUniformMatrix4fv(projectionMatrixLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+                glUniformMatrix4fv(viewPos, 1, GL_FALSE, glm::value_ptr(cameraPosition));
 
-                glUniform1i(IsSkyBox, static_cast<bool>(false));
+                GLuint numLightsLoc = glGetUniformLocation(obje.mat, "numLights");
+                GLuint lightsArrayLoc = glGetUniformLocation(obje.mat, "lights");
+
+                // Set the uniform values for the number of lights
+                glUniform1i(numLightsLoc, static_cast<int>(Lights.size()));
+
+                // Loop through each light in the array and set its values
+                for (size_t i = 0; i < Lights.size(); ++i) {
+                    std::string lightPrefix = "lights[" + std::to_string(i) + "]";
+
+                    glUniform3fv(glGetUniformLocation(obje.mat, (lightPrefix + ".direction").c_str()), 1, glm::value_ptr(Lights[i].direction));
+                    glUniform3fv(glGetUniformLocation(obje.mat, (lightPrefix + ".position").c_str()), 1, glm::value_ptr(Lights[i].position));
+                    glUniform3fv(glGetUniformLocation(obje.mat, (lightPrefix + ".color").c_str()), 1, glm::value_ptr(Lights[i].color));
+                    glUniform1f(glGetUniformLocation(obje.mat, (lightPrefix + ".strength").c_str()), Lights[i].strength);
+                    glUniform1f(glGetUniformLocation(obje.mat, (lightPrefix + ".specularStrength").c_str()), Lights[i].SpecularStrength);
+                    glUniform3fv(glGetUniformLocation(obje.mat, (lightPrefix + ".ambient").c_str()), 1, glm::value_ptr(Lights[i].ambient));
+                    glUniform3fv(glGetUniformLocation(obje.mat, (lightPrefix + ".diffuse").c_str()), 1, glm::value_ptr(Lights[i].diffuse));
+                    glUniform3fv(glGetUniformLocation(obje.mat, (lightPrefix + ".specular").c_str()), 1, glm::value_ptr(Lights[i].specular));
+                    glUniform1i(glGetUniformLocation(obje.mat, (lightPrefix + ".type").c_str()), Lights[i].type);
+                    glUniform1i(glGetUniformLocation(obje.mat, (lightPrefix + ".id").c_str()), Lights[i].id);
+                    glUniform1f(glGetUniformLocation(obje.mat, (lightPrefix + ".constant").c_str()), Lights[i].constant);
+                    glUniform1f(glGetUniformLocation(obje.mat, (lightPrefix + ".linear").c_str()), Lights[i].linear);
+                    glUniform1f(glGetUniformLocation(obje.mat, (lightPrefix + ".quadratic").c_str()), Lights[i].quadratic);
+                }
+                if (obje.name == "Skybox") {
+                    GLuint IsSkyBox = glGetUniformLocation(obje.mat, "IsSkyBox");
+
+                    glUniform1i(IsSkyBox, static_cast<bool>(true));
+                }
+                else {
+                    GLuint IsSkyBox = glGetUniformLocation(obje.mat, "IsSkyBox");
+
+                    glUniform1i(IsSkyBox, static_cast<bool>(false));
+                }
+                if (Lighting == false) {
+                    GLuint IsSkyBox = glGetUniformLocation(obje.mat, "IsSkyBox");
+
+                    glUniform1i(IsSkyBox, static_cast<bool>(true));
+                }
+                glBindTexture(GL_TEXTURE_2D, obje.textureID);
+                glUniform1i(glGetUniformLocation(obje.mat, "textureSampler"), 0);
+
+                GLuint modelMatrixLoc = glGetUniformLocation(obje.mat, "modelMatrix");
+                glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, glm::value_ptr(obje.modelMatrix));
             }
+            else {
+                glUseProgram(shaderProgram);
+                if (obje.name == "Skybox") {
+                    GLuint IsSkyBox = glGetUniformLocation(shaderProgram, "IsSkyBox");
 
-            if (Lighting == false) {
-                GLuint IsSkyBox = glGetUniformLocation(shaderProgram, "IsSkyBox");
+                    glUniform1i(IsSkyBox, static_cast<bool>(true));
+                }
+                else {
+                    GLuint IsSkyBox = glGetUniformLocation(shaderProgram, "IsSkyBox");
 
-                glUniform1i(IsSkyBox, static_cast<bool>(true));
+                    glUniform1i(IsSkyBox, static_cast<bool>(false));
+                }
+
+                if (Lighting == false) {
+                    GLuint IsSkyBox = glGetUniformLocation(shaderProgram, "IsSkyBox");
+
+                    glUniform1i(IsSkyBox, static_cast<bool>(true));
+                }
+                glBindTexture(GL_TEXTURE_2D, obje.textureID);
+                glUniform1i(glGetUniformLocation(shaderProgram, "textureSampler"), 0);
+
+                GLuint modelMatrixLoc = glGetUniformLocation(shaderProgram, "modelMatrix");
+                glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, glm::value_ptr(obje.modelMatrix));
             }
-            glBindTexture(GL_TEXTURE_2D, obje.textureID);
-            glUniform1i(glGetUniformLocation(shaderProgram, "textureSampler"), 0);
-
-            GLuint modelMatrixLoc = glGetUniformLocation(shaderProgram, "modelMatrix");
-            glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, glm::value_ptr(obje.modelMatrix));
 
             glBindVertexArray(obje.VertexArray);
             glDrawElements(GL_TRIANGLES, obje.indices.size(), GL_UNSIGNED_INT, 0);

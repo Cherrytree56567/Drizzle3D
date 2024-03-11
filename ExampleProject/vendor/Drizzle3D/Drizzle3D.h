@@ -628,6 +628,7 @@ namespace Drizzle3D {
         Window* window() { return &D3DWindow; }
         std::shared_ptr<ImGuiLayer> ImguiLayer() { return imguilayer; }
         std::shared_ptr<RenderingLayer> GetRenderingLayer() { return renderinglayer; }
+        ResourceManager& GetResourceManager() { return resourcemgr; }
         EventDispatcher* dispatcher() { return &dispatch; }
 
         typedef void(*UpdateFunc)(App* myApp);
