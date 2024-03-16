@@ -80,7 +80,7 @@ void ImGUICode(std::shared_ptr<Drizzle3D::ImGuiLayer> rend) {
     ImGui::SliderFloat("Camera Look-At Z", &camera_la_pos.z, 0.0f, 50.0f);
 }
 
-int maina() {
+int main() {
 
     /*
     * NOTE:
@@ -89,6 +89,8 @@ int maina() {
     Drizzle3D::App app;
     Drizzle3D::FirstPersonCamera fpc(app);
     Drizzle3D::Skybox sky(app, "skybox.png");
+    Drizzle3D::Material mat1(app.GetRenderingLayer()->getResourceManager(), "Scene1_vertex.glsl", "Scene1_fragment.glsl");
+    Drizzle3D::Material def(app.GetRenderingLayer()->getResourceManager(), "VertexShader.glsl", "FragmentShader.glsl");
 
     app.dispatcher()->AddEventListener(EMouseMoved, [](GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
         std::cout << "Mouse Moved\n";
@@ -101,6 +103,7 @@ int maina() {
     app.ImguiLayer()->code = ImGUICode;
     app.GetRenderingLayer()->AddObject("Cube", app.GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Cube.obj"), modelMatrix));
     app.GetRenderingLayer()->returnObject("Cube")->textureID = Drizzle3D::GetTexture("duck.png");
+    app.GetRenderingLayer()->returnObject("Cube")->mat = mat1.GetShaderProgram();
 
     app.GetRenderingLayer()->AddObject("Plane", app.GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Plane.obj"), modelMatrix));
     app.GetRenderingLayer()->returnObject("Plane")->textureID = Drizzle3D::GetTexture("duck.png");
@@ -121,6 +124,6 @@ int maina() {
     return 0;
 }
 
-int main() {
+int maina() {
     TestProgram();
 }
