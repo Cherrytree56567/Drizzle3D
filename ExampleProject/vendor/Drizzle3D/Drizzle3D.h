@@ -42,13 +42,13 @@ typedef struct GLFWwindow GLFWwindow;
 #define EMouseRightButtonReleased Drizzle3D::EventType::MouseRightButtonReleased
 #define EMouseMoved Drizzle3D::EventType::MouseMoved
 #ifdef Drizzle3D_LINUX
-    #define Drizzle3D_API 
+#define Drizzle3D_API 
 #else
-    #ifdef Drizzle3D_EXPORTS
-    #define Drizzle3D_API __declspec(dllexport)
-    #else
-    #define Drizzle3D_API __declspec(dllimport)
-    #endif
+#ifdef Drizzle3D_EXPORTS
+#define Drizzle3D_API __declspec(dllexport)
+#else
+#define Drizzle3D_API __declspec(dllimport)
+#endif
 #endif
 
 Drizzle3D_API int TestProgram();
@@ -689,7 +689,7 @@ namespace Drizzle3D {
 
     class Drizzle3D_API Material {
     public:
-        Material(ResourceManager resourcemgr, const char* fname, const char* fgname);
+        Material(ResourceManager& resourcemgr, const char* fname, const char* fgname);
         GLuint GetShaderProgram();
     };
 }

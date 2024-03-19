@@ -16,7 +16,7 @@
 namespace Drizzle3D {
 	class Drizzle3D_API Material {
 	public:
-		Material(ResourceManager resourcemgr, const char* fname, const char* fgname);
+		Material(ResourceManager& resourcemgr, const char* fname, const char* fgname);
 		GLuint GetShaderProgram() { return shaderProgram; }
 	private:
 		GLuint shaderProgram;

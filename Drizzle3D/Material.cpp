@@ -8,7 +8,7 @@
 #include "Material.h"
 
 namespace Drizzle3D {
-	Material::Material(ResourceManager resourcemgr, const char* fname, const char* fgname) {
+	Material::Material(ResourceManager& resourcemgr, const char* fname, const char* fgname) {
         Resource frag = resourcemgr.loadFile(fname, "r");
 
         const char* VSSource = frag.content.c_str();

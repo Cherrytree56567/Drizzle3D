@@ -45,7 +45,7 @@ void ImGUICode(std::shared_ptr<Drizzle3D::ImGuiLayer> rend) {
     ImGui::SliderFloat("Position X", &position.x, 0.0f, 360.0f);
     ImGui::SliderFloat("Position Y", &position.y, 0.0f, 360.0f);
     ImGui::SliderFloat("Position Z", &position.z, -360.0f, 360.0f);
-  
+
     if (ImGui::Button("Ios Texture")) {
         use_ios = true;
     }
@@ -89,8 +89,8 @@ int main() {
     Drizzle3D::App app;
     Drizzle3D::FirstPersonCamera fpc(app);
     Drizzle3D::Skybox sky(app, "skybox.png");
-    Drizzle3D::Material mat1(app.GetRenderingLayer()->getResourceManager(), "Scene1_vertex.glsl", "Scene1_fragment.glsl");
-    Drizzle3D::Material def(app.GetRenderingLayer()->getResourceManager(), "VertexShader.glsl", "FragmentShader.glsl");
+    Drizzle3D::ResourceManager resman;
+    Drizzle3D::Material mat1(resman, "Scene1_vertex.glsl", "Scene1_fragment.glsl");
 
     app.dispatcher()->AddEventListener(EMouseMoved, [](GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
         std::cout << "Mouse Moved\n";
@@ -126,4 +126,5 @@ int main() {
 
 int maina() {
     TestProgram();
+    return 0;
 }
