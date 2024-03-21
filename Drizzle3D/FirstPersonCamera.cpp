@@ -8,7 +8,7 @@
 #include "FirstPersonCamera.h"
 
 namespace Drizzle3D {
-	FirstPersonCamera::FirstPersonCamera(App& app) : application(app) {
+	FirstPersonCamera::FirstPersonCamera(std::shared_ptr<App> app) : application(app) {
 		// Initialize the camera
 		// Switch to the FPS Camera
 		// Make functions for returning the camera pos, up and look-at vectors
@@ -48,28 +48,28 @@ namespace Drizzle3D {
 		glm::vec3 up = glm::cross(right, direction);
 
 		// Move forward
-		if (glfwGetKey(application.window()->returnwindow(), GLFW_KEY_UP) == GLFW_PRESS) {
+		if (glfwGetKey(application->window()->returnwindow(), GLFW_KEY_UP) == GLFW_PRESS) {
 			position += direction * deltaTime * speed;
 		}
 		// Move backward
-		if (glfwGetKey(application.window()->returnwindow(), GLFW_KEY_DOWN) == GLFW_PRESS) {
+		if (glfwGetKey(application->window()->returnwindow(), GLFW_KEY_DOWN) == GLFW_PRESS) {
 			position -= direction * deltaTime * speed;
 		}
 		// Strafe right
-		if (glfwGetKey(application.window()->returnwindow(), GLFW_KEY_RIGHT) == GLFW_PRESS) {
+		if (glfwGetKey(application->window()->returnwindow(), GLFW_KEY_RIGHT) == GLFW_PRESS) {
 			position += right * deltaTime * speed;
 		}
 		// Strafe left
-		if (glfwGetKey(application.window()->returnwindow(), GLFW_KEY_LEFT) == GLFW_PRESS) {
+		if (glfwGetKey(application->window()->returnwindow(), GLFW_KEY_LEFT) == GLFW_PRESS) {
 			position -= right * deltaTime * speed;
 		}
 
 		Camera cam{ {0,0,3}, {0,0,0}, {0,1,0}, (char*)"FirstPersonCamera"};
 
-		application.GetRenderingLayer()->AddCamera("FirstPersonCamera", cam);
-		application.GetRenderingLayer()->SwitchCamera("FirstPersonCamera");
+		application->GetRenderingLayer()->AddCamera("FirstPersonCamera", cam);
+		application->GetRenderingLayer()->SwitchCamera("FirstPersonCamera");
 
-		application.dispatcher()->AddEventListener(EventType::AppUpdate, [](GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
+		application->dispatcher()->AddEventListener(EventType::AppUpdate, [](GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
 			std::cout << "VENN: " << a.type().name();
 			FirstPersonCamera* al = std::any_cast<FirstPersonCamera*>(a);
 			std::cout << al << std::endl;
@@ -108,29 +108,29 @@ namespace Drizzle3D {
 			glm::vec3 up = glm::cross(right, direction);
 
 			// Move forward
-			if (glfwGetKey(al->application.window()->returnwindow(), GLFW_KEY_UP) == GLFW_PRESS) {
+			if (glfwGetKey(al->application->window()->returnwindow(), GLFW_KEY_UP) == GLFW_PRESS) {
 				al->position += direction * al->speed;
 			}
 			// Move backward
-			if (glfwGetKey(al->application.window()->returnwindow(), GLFW_KEY_DOWN) == GLFW_PRESS) {
+			if (glfwGetKey(al->application->window()->returnwindow(), GLFW_KEY_DOWN) == GLFW_PRESS) {
 				al->position -= direction * al->speed;
 			}
 			// Strafe right
-			if (glfwGetKey(al->application.window()->returnwindow(), GLFW_KEY_RIGHT) == GLFW_PRESS) {
+			if (glfwGetKey(al->application->window()->returnwindow(), GLFW_KEY_RIGHT) == GLFW_PRESS) {
 				al->position += right * al->speed;
 			}
 			// Strafe left
-			if (glfwGetKey(al->application.window()->returnwindow(), GLFW_KEY_LEFT) == GLFW_PRESS) {
+			if (glfwGetKey(al->application->window()->returnwindow(), GLFW_KEY_LEFT) == GLFW_PRESS) {
 				al->position -= right * al->speed;
 			}
 
-			if (glfwGetKey(al->application.window()->returnwindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+			if (glfwGetKey(al->application->window()->returnwindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 				al->capture = false;
 			}
 
-			al->application.GetRenderingLayer()->returnCamera("FirstPersonCamera")->position = al->position;
-			al->application.GetRenderingLayer()->returnCamera("FirstPersonCamera")->up = up;
-			al->application.GetRenderingLayer()->returnCamera("FirstPersonCamera")->look_at_position = al->position + direction;
+			al->application->GetRenderingLayer()->returnCamera("FirstPersonCamera")->position = al->position;
+			al->application->GetRenderingLayer()->returnCamera("FirstPersonCamera")->up = up;
+			al->application->GetRenderingLayer()->returnCamera("FirstPersonCamera")->look_at_position = al->position + direction;
 		}, this);
 	}
 

@@ -15,7 +15,7 @@
 namespace Drizzle3D {
 	class Drizzle3D_API FirstPersonCamera {
 	public:
-		FirstPersonCamera(App& app);
+		FirstPersonCamera(std::shared_ptr<App> app);
 
 		glm::vec3 position = glm::vec3(0, 0, 5);
 		float horizontalAngle = 0.0f;
@@ -24,7 +24,7 @@ namespace Drizzle3D {
 
 		float speed = 1.0f; // 3 units / second
 		float mouseSpeed = 0.005f;
-		App& application;
+		std::shared_ptr<App> application;
 		bool capture = true;
 		double xpos, ypos = 0.0;
 	};

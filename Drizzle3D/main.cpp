@@ -100,40 +100,39 @@ Drizzle3D_API int TestProgram() {
     * NOTE:
     * Key Released and Mouse Released
     */
-    Drizzle3D::App app;
+    std::shared_ptr<Drizzle3D::App> app = std::make_shared<Drizzle3D::App>();
     Drizzle3D::FirstPersonCamera fpc(app);
-    Drizzle3D::Skybox sky(app, "skybox.png");
-    Drizzle3D::Material mat1(app.GetResourceManager(), "Scene1_vertex.glsl", "Scene1_fragment.glsl");
-    Drizzle3D::Material def(app.GetResourceManager(), "VertexShader.glsl", "FragmentShader.glsl");
-    
-    app.dispatcher()->AddEventListener(EMouseMoved, [](GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
+    Drizzle3D::Skybox sky(*app.get(), "skybox.png");
+    Drizzle3D::Material mat1(app->GetResourceManager(), "Scene1_vertex.glsl", "Scene1_fragment.glsl");
+
+    app->dispatcher()->AddEventListener(EMouseMoved, [](GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
         std::cout << "Mouse Moved\n";
-    });
+        });
 
-    app.update = Update;
+    app->update = Update;
 
-    app.GetRenderingLayer()->Lighting = false;
+    app->GetRenderingLayer()->Lighting = false;
 
-    app.ImguiLayer()->code = ImGUICode;
-    app.GetRenderingLayer()->AddObject("Cube", app.GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Cube.obj"), modelMatrix));
-    app.GetRenderingLayer()->returnObject("Cube")->textureID = Drizzle3D::GetTexture("duck.png");
-    app.GetRenderingLayer()->returnObject("Cube")->mat = mat1.GetShaderProgram();
+    app->ImguiLayer()->code = ImGUICode;
+    app->GetRenderingLayer()->AddObject("Cube", app->GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Cube.obj"), modelMatrix));
+    app->GetRenderingLayer()->returnObject("Cube")->textureID = Drizzle3D::GetTexture("duck.png");
+    app->GetRenderingLayer()->returnObject("Cube")->mat = mat1.GetShaderProgram();
 
-    app.GetRenderingLayer()->AddObject("Plane", app.GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Plane.obj"), modelMatrix));
-    app.GetRenderingLayer()->returnObject("Plane")->textureID = Drizzle3D::GetTexture("duck.png");
+    app->GetRenderingLayer()->AddObject("Plane", app->GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Plane.obj"), modelMatrix));
+    app->GetRenderingLayer()->returnObject("Plane")->textureID = Drizzle3D::GetTexture("duck.png");
 
-    app.GetRenderingLayer()->AddObject("Cylinder", app.GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Cylinder.obj"), modelMatrix));
-    app.GetRenderingLayer()->returnObject("Cylinder")->textureID = Drizzle3D::GetTexture("duck.png");
+    app->GetRenderingLayer()->AddObject("Cylinder", app->GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Cylinder.obj"), modelMatrix));
+    app->GetRenderingLayer()->returnObject("Cylinder")->textureID = Drizzle3D::GetTexture("duck.png");
     //app.ImguiLayer()->SetShow(false);    
 
     Drizzle3D::Camera aCamera = { glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f) };
     camera_pos = glm::vec3(0.0f, 0.0f, 3.0f);
     camera_up_pos = glm::vec3(0.0f, 1.0f, 0.0f);
-    app.GetRenderingLayer()->AddCamera("Acam", aCamera);
-    app.GetRenderingLayer()->SwitchCamera("Acam");
-    app.GetRenderingLayer()->SwitchCamera("FirstPersonCamera");
+    app->GetRenderingLayer()->AddCamera("Acam", aCamera);
+    //app.GetRenderingLayer()->SwitchCamera("Acam");
+    app->GetRenderingLayer()->SwitchCamera("FirstPersonCamera");
 
-    app.Run();
+    app->Run();
 
     return 0;
 }
