@@ -43,13 +43,16 @@ namespace Drizzle3D {
 		Window* window() { return &D3DWindow; }
 		std::shared_ptr<ImGuiLayer> ImguiLayer() { return imguilayer; }
 		std::shared_ptr<RenderingLayer> GetRenderingLayer() { return renderinglayer; }
-		ResourceManager& GetResourceManager() { return resourcemgr; }
+		std::shared_ptr<ResourceManager> GetResourceManager() { return resourcemgr; }
 		EventDispatcher* dispatcher() { return &dispatch; }
 
 		typedef void(*UpdateFunc)(App* myApp);
 		UpdateFunc update = [](App* myApp){};
 
 	private:
+		// Managers
+		std::shared_ptr<ResourceManager> resourcemgr;
+
 		Window D3DWindow;
 
 		// Layers
@@ -59,8 +62,5 @@ namespace Drizzle3D {
 		// Dispatchers
 		EventDispatcher dispatch;
 		LayerDispatch LayerDispatcher;
-
-		// Managers
-		ResourceManager resourcemgr;
 	};
 }

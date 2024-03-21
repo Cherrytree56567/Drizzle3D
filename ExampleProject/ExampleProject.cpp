@@ -89,8 +89,7 @@ int main() {
     Drizzle3D::App app;
     Drizzle3D::FirstPersonCamera fpc(app);
     Drizzle3D::Skybox sky(app, "skybox.png");
-    Drizzle3D::ResourceManager resman;
-    Drizzle3D::Material mat1(resman, "Scene1_vertex.glsl", "Scene1_fragment.glsl");
+    Drizzle3D::Material mat1(app.GetResourceManager(), "Scene1_vertex.glsl", "Scene1_fragment.glsl");
 
     app.dispatcher()->AddEventListener(EMouseMoved, [](GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
         std::cout << "Mouse Moved\n";

@@ -530,7 +530,7 @@ namespace Drizzle3D {
 
     class Drizzle3D_API RenderingLayer : public Layer {
     public:
-        RenderingLayer(Window* window, ResourceManager* resmgr);
+        RenderingLayer(Window* window, std::shared_ptr<ResourceManager> resmgr);
 
         void OnAttach() override;
         void OnDetach() override;
@@ -555,7 +555,6 @@ namespace Drizzle3D {
         char* GetActiveCamera();
         Camera ReturnActiveCamera();
         Camera GetCameraFromID(char* cam);
-        ResourceManager& getResourceManager();
 
         bool Lighting = true;
 
@@ -571,7 +570,7 @@ namespace Drizzle3D {
 
         GLuint lightsBuffer;
         char* current_camera;
-        ResourceManager* resourcemgr;
+        std::shared_ptr<ResourceManager> resourcemgr;
     };
 
     /*
@@ -628,13 +627,16 @@ namespace Drizzle3D {
         Window* window() { return &D3DWindow; }
         std::shared_ptr<ImGuiLayer> ImguiLayer() { return imguilayer; }
         std::shared_ptr<RenderingLayer> GetRenderingLayer() { return renderinglayer; }
-        ResourceManager& GetResourceManager() { return resourcemgr; }
+        std::shared_ptr<ResourceManager> GetResourceManager() { return resourcemgr; }
         EventDispatcher* dispatcher() { return &dispatch; }
 
         typedef void(*UpdateFunc)(App* myApp);
         UpdateFunc update = [](App* myApp) {};
 
     private:
+        // Managers
+        std::shared_ptr<ResourceManager> resourcemgr;
+
         Window D3DWindow;
 
         // Layers
@@ -644,9 +646,6 @@ namespace Drizzle3D {
         // Dispatchers
         EventDispatcher dispatch;
         LayerDispatch LayerDispatcher;
-
-        // Managers
-        ResourceManager resourcemgr;
     };
 
     /*
@@ -689,7 +688,7 @@ namespace Drizzle3D {
 
     class Drizzle3D_API Material {
     public:
-        Material(ResourceManager& resourcemgr, const char* fname, const char* fgname);
+        Material(std::shared_ptr<ResourceManager> resourcemgr, const char* fname, const char* fgname);
         GLuint GetShaderProgram();
     };
 }

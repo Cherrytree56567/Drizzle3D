@@ -65,7 +65,7 @@ namespace Drizzle3D {
 
     class Drizzle3D_API RenderingLayer : public Layer {
     public:
-        RenderingLayer(Window* window, ResourceManager* resmgr) : name("3DLayer"), show(true), pWindow(window), resourcemgr(resmgr) {}
+        RenderingLayer(Window* window, std::shared_ptr<ResourceManager> resmgr) : name("3DLayer"), show(true), pWindow(window), resourcemgr(resmgr) {}
 
         void OnAttach() override;
         void OnDetach() override {}
@@ -90,7 +90,6 @@ namespace Drizzle3D {
         char* GetActiveCamera() { return current_camera; }
         Camera ReturnActiveCamera();
         Camera GetCameraFromID(char* cam);
-        ResourceManager& getResourceManager() { return *resourcemgr; }
 
         bool Lighting = true;
 
@@ -106,6 +105,6 @@ namespace Drizzle3D {
 
         GLuint lightsBuffer;
         char* current_camera;
-        ResourceManager* resourcemgr;
+        std::shared_ptr<ResourceManager> resourcemgr;
 	};
 }
