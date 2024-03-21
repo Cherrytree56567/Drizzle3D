@@ -50,44 +50,17 @@ C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.h(573
   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
   see declaration of 'std::shared_ptr<Drizzle3D::ResourceManager>'
   
-C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.h(611,21): warning C4251: 'Drizzle3D::ImGuiLayer::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ImGuiLayer'
-  (compiling source file 'ExampleProject.cpp')
-  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring(2337,7):
-  see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-  
-C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.h(613,37): warning C4251: 'Drizzle3D::ImGuiLayer::igui': class 'std::shared_ptr<Drizzle3D::ImGuiLayer>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ImGuiLayer'
-  (compiling source file 'ExampleProject.cpp')
-  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
-  see declaration of 'std::shared_ptr<Drizzle3D::ImGuiLayer>'
-  
-C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.h(614,34): warning C4251: 'Drizzle3D::ImGuiLayer::SliderFloats': class 'std::vector<Drizzle3D::SliderFloat,std::allocator<Drizzle3D::SliderFloat>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ImGuiLayer'
-  (compiling source file 'ExampleProject.cpp')
-  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
-  see declaration of 'std::vector<Drizzle3D::SliderFloat,std::allocator<Drizzle3D::SliderFloat>>'
-  
-C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.h(638,42): warning C4251: 'Drizzle3D::App::resourcemgr': class 'std::shared_ptr<Drizzle3D::ResourceManager>' needs to have dll-interface to be used by clients of class 'Drizzle3D::App'
-  (compiling source file 'ExampleProject.cpp')
-  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
-  see declaration of 'std::shared_ptr<Drizzle3D::ResourceManager>'
-  
-C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.h(643,37): warning C4251: 'Drizzle3D::App::imguilayer': class 'std::shared_ptr<Drizzle3D::ImGuiLayer>' needs to have dll-interface to be used by clients of class 'Drizzle3D::App'
-  (compiling source file 'ExampleProject.cpp')
-  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
-  see declaration of 'std::shared_ptr<Drizzle3D::ImGuiLayer>'
-  
-C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.h(644,41): warning C4251: 'Drizzle3D::App::renderinglayer': class 'std::shared_ptr<Drizzle3D::RenderingLayer>' needs to have dll-interface to be used by clients of class 'Drizzle3D::App'
-  (compiling source file 'ExampleProject.cpp')
-  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
-  see declaration of 'std::shared_ptr<Drizzle3D::RenderingLayer>'
-  
-C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.h(659,19): warning C4251: 'Drizzle3D::FirstPersonCamera::position': struct 'glm::vec<3,float,glm::packed_highp>' needs to have dll-interface to be used by clients of class 'Drizzle3D::FirstPersonCamera'
+C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.h(638,19): warning C4251: 'Drizzle3D::FirstPersonCamera::position': struct 'glm::vec<3,float,glm::packed_highp>' needs to have dll-interface to be used by clients of class 'Drizzle3D::FirstPersonCamera'
   (compiling source file 'ExampleProject.cpp')
   C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\glm\detail\qualifier.hpp(35,66):
   see declaration of 'glm::vec<3,float,glm::packed_highp>'
   
-C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.h(682,19): warning C4251: 'Drizzle3D::Skybox::pos': struct 'glm::vec<3,float,glm::packed_highp>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Skybox'
+C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.h(661,19): warning C4251: 'Drizzle3D::Skybox::pos': struct 'glm::vec<3,float,glm::packed_highp>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Skybox'
   (compiling source file 'ExampleProject.cpp')
   C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\glm\detail\qualifier.hpp(35,66):
   see declaration of 'glm::vec<3,float,glm::packed_highp>'
   
-  ExampleProject.vcxproj -> C:\Users\ronit\Desktop\Drizzle3D\x64\Debug\ExampleProject.exe
+C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\ExampleProject.cpp(89,20): error C2512: 'Drizzle3D::App': no appropriate default constructor available
+  C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.h(614,25):
+  see declaration of 'Drizzle3D::App'
+  

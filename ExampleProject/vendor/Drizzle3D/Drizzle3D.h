@@ -588,30 +588,23 @@ namespace Drizzle3D {
 
     class Drizzle3D_API ImGuiLayer : public Layer {
     public:
-        ImGuiLayer(Window* window) : name("ImGUI"), show(true), pWindow(window) {}
+        ImGuiLayer(Window* window);
 
         typedef void (*ImGUICode)(std::shared_ptr<ImGuiLayer> igui);
 
-        ImGUICode code = [](std::shared_ptr<ImGuiLayer> igui) {};
+        ImGUICode code;
 
         void OnAttach() override;
-        void OnDetach() { }
+        void OnDetach();
         void Render() override;
 
-        bool IsShown() const override { return show; }
-        const std::string& GetName() const override { return name; }
-        void SetShow(bool value) override { show = value; }
-        void setIGUI(std::shared_ptr<ImGuiLayer> ig) { igui = ig; }
+        bool IsShown() const override;
+        const std::string& GetName() const override;
+        void SetShow(bool value) override;
+        void setIGUI(std::shared_ptr<ImGuiLayer> ig);
         void IterateSliderFloat();
         void GUISliderFloat(const char* label, float* v, float v_min, float v_max, const char* format = NULL, int flags = NULL);
-        ImGuiContext* imguiContext = ImGui::GetCurrentContext();
-
-    private:
-        bool show;
-        std::string name;
-        Window* pWindow;
-        std::shared_ptr<ImGuiLayer> igui;
-        std::vector<SliderFloat> SliderFloats;
+        ImGuiContext* imguiContext;
     };
 
     /*
@@ -624,28 +617,14 @@ namespace Drizzle3D {
 
         void Run();
 
-        Window* window() { return &D3DWindow; }
-        std::shared_ptr<ImGuiLayer> ImguiLayer() { return imguilayer; }
-        std::shared_ptr<RenderingLayer> GetRenderingLayer() { return renderinglayer; }
-        std::shared_ptr<ResourceManager> GetResourceManager() { return resourcemgr; }
-        EventDispatcher* dispatcher() { return &dispatch; }
+        Window* window();
+        std::shared_ptr<ImGuiLayer> ImguiLayer();
+        std::shared_ptr<RenderingLayer> GetRenderingLayer();
+        std::shared_ptr<ResourceManager> GetResourceManager();
+        EventDispatcher* dispatcher();
 
         typedef void(*UpdateFunc)(App* myApp);
-        UpdateFunc update = [](App* myApp) {};
-
-    private:
-        // Managers
-        std::shared_ptr<ResourceManager> resourcemgr;
-
-        Window D3DWindow;
-
-        // Layers
-        std::shared_ptr<ImGuiLayer> imguilayer;
-        std::shared_ptr<RenderingLayer> renderinglayer;
-
-        // Dispatchers
-        EventDispatcher dispatch;
-        LayerDispatch LayerDispatcher;
+        UpdateFunc update;
     };
 
     /*
