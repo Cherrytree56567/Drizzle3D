@@ -14,11 +14,11 @@
 namespace Drizzle3D {
 	class Drizzle3D_API Skybox {
 	public:
-		Skybox(App& app, const char* skyboxtex, float size = 100.0f);
+		Skybox(std::shared_ptr<App> app, const char* skyboxtex, float size = 100.0f);
 		void Update();
 
 	private:
-		App& application;
+		std::shared_ptr<App> application;
 		glm::vec3 pos;
 	};
 }

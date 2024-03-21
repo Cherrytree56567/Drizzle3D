@@ -102,7 +102,7 @@ Drizzle3D_API int TestProgram() {
     */
     std::shared_ptr<Drizzle3D::App> app = std::make_shared<Drizzle3D::App>();
     Drizzle3D::FirstPersonCamera fpc(app);
-    Drizzle3D::Skybox sky(*app.get(), "skybox.png");
+    Drizzle3D::Skybox sky(app, "skybox.png");
     Drizzle3D::Material mat1(app->GetResourceManager(), "Scene1_vertex.glsl", "Scene1_fragment.glsl");
 
     app->dispatcher()->AddEventListener(EMouseMoved, [](GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {

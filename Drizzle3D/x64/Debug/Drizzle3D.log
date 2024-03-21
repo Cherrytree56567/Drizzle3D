@@ -1,4 +1,343 @@
 ﻿  Scanning sources for module dependencies...
+  App.cpp
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Events.h(55,45): warning C4251: 'Drizzle3D::EventDispatcher::events': class 'std::vector<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>,std::allocator<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::EventDispatcher'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>,std::allocator<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Events.h(56,88): warning C4251: 'Drizzle3D::EventDispatcher::eventCallbacks': class 'std::unordered_map<Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>,std::hash<Drizzle3D::EventType>,std::equal_to<Drizzle3D::EventType>,std::allocator<std::pair<const Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::EventDispatcher'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\unordered_map(66,7):
+  see declaration of 'std::unordered_map<Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>,std::hash<Drizzle3D::EventType>,std::equal_to<Drizzle3D::EventType>,std::allocator<std::pair<const Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Window.h(48,20): warning C4251: 'Drizzle3D::Window::key_codes': class 'std::vector<int,std::allocator<int>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Window'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<int,std::allocator<int>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Window.h(49,20): warning C4251: 'Drizzle3D::Window::keyRel_codes': class 'std::vector<int,std::allocator<int>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Window'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<int,std::allocator<int>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Layer.h(32,21): warning C4251: 'Drizzle3D::Layer::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Layer'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring(2337,7):
+  see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Layer.h(51,45): warning C4251: 'Drizzle3D::LayerDispatch::layers': class 'std::vector<std::shared_ptr<Drizzle3D::Layer>,std::allocator<std::shared_ptr<Drizzle3D::Layer>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::LayerDispatch'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<std::shared_ptr<Drizzle3D::Layer>,std::allocator<std::shared_ptr<Drizzle3D::Layer>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\ImGuiLayer.h(46,21): warning C4251: 'Drizzle3D::ImGuiLayer::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ImGuiLayer'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring(2337,7):
+  see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\ImGuiLayer.h(48,37): warning C4251: 'Drizzle3D::ImGuiLayer::igui': class 'std::shared_ptr<Drizzle3D::ImGuiLayer>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ImGuiLayer'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::ImGuiLayer>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\ImGuiLayer.h(49,34): warning C4251: 'Drizzle3D::ImGuiLayer::SliderFloats': class 'std::vector<Drizzle3D::SliderFloat,std::allocator<Drizzle3D::SliderFloat>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ImGuiLayer'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<Drizzle3D::SliderFloat,std::allocator<Drizzle3D::SliderFloat>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\ResourceManager.h(32,48): warning C4251: 'Drizzle3D::ResourceManager::resources': class 'std::unordered_map<std::string,std::string,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::string>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ResourceManager'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\unordered_map(66,7):
+  see declaration of 'std::unordered_map<std::string,std::string,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::string>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(100,21): warning C4251: 'Drizzle3D::RenderingLayer::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring(2337,7):
+  see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(102,29): warning C4251: 'Drizzle3D::RenderingLayer::Objects': class 'std::vector<Drizzle3D::Object,std::allocator<Drizzle3D::Object>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<Drizzle3D::Object,std::allocator<Drizzle3D::Object>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(103,28): warning C4251: 'Drizzle3D::RenderingLayer::Lights': class 'std::vector<Drizzle3D::Light,std::allocator<Drizzle3D::Light>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<Drizzle3D::Light,std::allocator<Drizzle3D::Light>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(104,29): warning C4251: 'Drizzle3D::RenderingLayer::Cameras': class 'std::vector<Drizzle3D::Camera,std::allocator<Drizzle3D::Camera>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<Drizzle3D::Camera,std::allocator<Drizzle3D::Camera>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(108,42): warning C4251: 'Drizzle3D::RenderingLayer::resourcemgr': class 'std::shared_ptr<Drizzle3D::ResourceManager>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::ResourceManager>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\App.h(54,36): warning C4251: 'Drizzle3D::App::resourcemgr': class 'std::shared_ptr<Drizzle3D::ResourceManager>' needs to have dll-interface to be used by clients of class 'Drizzle3D::App'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::ResourceManager>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\App.h(59,31): warning C4251: 'Drizzle3D::App::imguilayer': class 'std::shared_ptr<Drizzle3D::ImGuiLayer>' needs to have dll-interface to be used by clients of class 'Drizzle3D::App'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::ImGuiLayer>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\App.h(60,35): warning C4251: 'Drizzle3D::App::renderinglayer': class 'std::shared_ptr<Drizzle3D::RenderingLayer>' needs to have dll-interface to be used by clients of class 'Drizzle3D::App'
+  (compiling source file 'App.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::RenderingLayer>'
+  
+  FirstPersonCamera.cpp
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Events.h(55,45): warning C4251: 'Drizzle3D::EventDispatcher::events': class 'std::vector<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>,std::allocator<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::EventDispatcher'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>,std::allocator<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Events.h(56,88): warning C4251: 'Drizzle3D::EventDispatcher::eventCallbacks': class 'std::unordered_map<Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>,std::hash<Drizzle3D::EventType>,std::equal_to<Drizzle3D::EventType>,std::allocator<std::pair<const Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::EventDispatcher'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\unordered_map(66,7):
+  see declaration of 'std::unordered_map<Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>,std::hash<Drizzle3D::EventType>,std::equal_to<Drizzle3D::EventType>,std::allocator<std::pair<const Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Window.h(48,20): warning C4251: 'Drizzle3D::Window::key_codes': class 'std::vector<int,std::allocator<int>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Window'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<int,std::allocator<int>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Window.h(49,20): warning C4251: 'Drizzle3D::Window::keyRel_codes': class 'std::vector<int,std::allocator<int>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Window'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<int,std::allocator<int>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Layer.h(32,21): warning C4251: 'Drizzle3D::Layer::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Layer'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring(2337,7):
+  see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Layer.h(51,45): warning C4251: 'Drizzle3D::LayerDispatch::layers': class 'std::vector<std::shared_ptr<Drizzle3D::Layer>,std::allocator<std::shared_ptr<Drizzle3D::Layer>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::LayerDispatch'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<std::shared_ptr<Drizzle3D::Layer>,std::allocator<std::shared_ptr<Drizzle3D::Layer>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\ImGuiLayer.h(46,21): warning C4251: 'Drizzle3D::ImGuiLayer::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ImGuiLayer'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring(2337,7):
+  see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\ImGuiLayer.h(48,37): warning C4251: 'Drizzle3D::ImGuiLayer::igui': class 'std::shared_ptr<Drizzle3D::ImGuiLayer>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ImGuiLayer'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::ImGuiLayer>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\ImGuiLayer.h(49,34): warning C4251: 'Drizzle3D::ImGuiLayer::SliderFloats': class 'std::vector<Drizzle3D::SliderFloat,std::allocator<Drizzle3D::SliderFloat>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ImGuiLayer'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<Drizzle3D::SliderFloat,std::allocator<Drizzle3D::SliderFloat>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\ResourceManager.h(32,48): warning C4251: 'Drizzle3D::ResourceManager::resources': class 'std::unordered_map<std::string,std::string,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::string>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ResourceManager'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\unordered_map(66,7):
+  see declaration of 'std::unordered_map<std::string,std::string,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::string>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(100,21): warning C4251: 'Drizzle3D::RenderingLayer::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring(2337,7):
+  see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(102,29): warning C4251: 'Drizzle3D::RenderingLayer::Objects': class 'std::vector<Drizzle3D::Object,std::allocator<Drizzle3D::Object>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<Drizzle3D::Object,std::allocator<Drizzle3D::Object>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(103,28): warning C4251: 'Drizzle3D::RenderingLayer::Lights': class 'std::vector<Drizzle3D::Light,std::allocator<Drizzle3D::Light>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<Drizzle3D::Light,std::allocator<Drizzle3D::Light>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(104,29): warning C4251: 'Drizzle3D::RenderingLayer::Cameras': class 'std::vector<Drizzle3D::Camera,std::allocator<Drizzle3D::Camera>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<Drizzle3D::Camera,std::allocator<Drizzle3D::Camera>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(108,42): warning C4251: 'Drizzle3D::RenderingLayer::resourcemgr': class 'std::shared_ptr<Drizzle3D::ResourceManager>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::ResourceManager>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\App.h(54,36): warning C4251: 'Drizzle3D::App::resourcemgr': class 'std::shared_ptr<Drizzle3D::ResourceManager>' needs to have dll-interface to be used by clients of class 'Drizzle3D::App'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::ResourceManager>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\App.h(59,31): warning C4251: 'Drizzle3D::App::imguilayer': class 'std::shared_ptr<Drizzle3D::ImGuiLayer>' needs to have dll-interface to be used by clients of class 'Drizzle3D::App'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::ImGuiLayer>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\App.h(60,35): warning C4251: 'Drizzle3D::App::renderinglayer': class 'std::shared_ptr<Drizzle3D::RenderingLayer>' needs to have dll-interface to be used by clients of class 'Drizzle3D::App'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::RenderingLayer>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\FirstPersonCamera.h(20,13): warning C4251: 'Drizzle3D::FirstPersonCamera::position': struct 'glm::vec<3,float,glm::packed_highp>' needs to have dll-interface to be used by clients of class 'Drizzle3D::FirstPersonCamera'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\vendor\glm\glm\detail\qualifier.hpp(35,66):
+  see declaration of 'glm::vec<3,float,glm::packed_highp>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\FirstPersonCamera.h(27,24): warning C4251: 'Drizzle3D::FirstPersonCamera::application': class 'std::shared_ptr<Drizzle3D::App>' needs to have dll-interface to be used by clients of class 'Drizzle3D::FirstPersonCamera'
+  (compiling source file 'FirstPersonCamera.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::App>'
+  
+  ImGuiLayer.cpp
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Events.h(55,45): warning C4251: 'Drizzle3D::EventDispatcher::events': class 'std::vector<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>,std::allocator<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::EventDispatcher'
+  (compiling source file 'ImGuiLayer.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>,std::allocator<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Events.h(56,88): warning C4251: 'Drizzle3D::EventDispatcher::eventCallbacks': class 'std::unordered_map<Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>,std::hash<Drizzle3D::EventType>,std::equal_to<Drizzle3D::EventType>,std::allocator<std::pair<const Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::EventDispatcher'
+  (compiling source file 'ImGuiLayer.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\unordered_map(66,7):
+  see declaration of 'std::unordered_map<Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>,std::hash<Drizzle3D::EventType>,std::equal_to<Drizzle3D::EventType>,std::allocator<std::pair<const Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Window.h(48,20): warning C4251: 'Drizzle3D::Window::key_codes': class 'std::vector<int,std::allocator<int>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Window'
+  (compiling source file 'ImGuiLayer.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<int,std::allocator<int>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Window.h(49,20): warning C4251: 'Drizzle3D::Window::keyRel_codes': class 'std::vector<int,std::allocator<int>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Window'
+  (compiling source file 'ImGuiLayer.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<int,std::allocator<int>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Layer.h(32,21): warning C4251: 'Drizzle3D::Layer::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Layer'
+  (compiling source file 'ImGuiLayer.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring(2337,7):
+  see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Layer.h(51,45): warning C4251: 'Drizzle3D::LayerDispatch::layers': class 'std::vector<std::shared_ptr<Drizzle3D::Layer>,std::allocator<std::shared_ptr<Drizzle3D::Layer>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::LayerDispatch'
+  (compiling source file 'ImGuiLayer.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<std::shared_ptr<Drizzle3D::Layer>,std::allocator<std::shared_ptr<Drizzle3D::Layer>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\ImGuiLayer.h(46,21): warning C4251: 'Drizzle3D::ImGuiLayer::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ImGuiLayer'
+  (compiling source file 'ImGuiLayer.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring(2337,7):
+  see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\ImGuiLayer.h(48,37): warning C4251: 'Drizzle3D::ImGuiLayer::igui': class 'std::shared_ptr<Drizzle3D::ImGuiLayer>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ImGuiLayer'
+  (compiling source file 'ImGuiLayer.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::ImGuiLayer>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\ImGuiLayer.h(49,34): warning C4251: 'Drizzle3D::ImGuiLayer::SliderFloats': class 'std::vector<Drizzle3D::SliderFloat,std::allocator<Drizzle3D::SliderFloat>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ImGuiLayer'
+  (compiling source file 'ImGuiLayer.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<Drizzle3D::SliderFloat,std::allocator<Drizzle3D::SliderFloat>>'
+  
+  Skybox.cpp
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Events.h(55,45): warning C4251: 'Drizzle3D::EventDispatcher::events': class 'std::vector<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>,std::allocator<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::EventDispatcher'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>,std::allocator<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Events.h(56,88): warning C4251: 'Drizzle3D::EventDispatcher::eventCallbacks': class 'std::unordered_map<Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>,std::hash<Drizzle3D::EventType>,std::equal_to<Drizzle3D::EventType>,std::allocator<std::pair<const Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::EventDispatcher'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\unordered_map(66,7):
+  see declaration of 'std::unordered_map<Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>,std::hash<Drizzle3D::EventType>,std::equal_to<Drizzle3D::EventType>,std::allocator<std::pair<const Drizzle3D::EventType,std::vector<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>,std::allocator<std::pair<Drizzle3D::EventDispatcher::EventCallback,std::any>>>>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Window.h(48,20): warning C4251: 'Drizzle3D::Window::key_codes': class 'std::vector<int,std::allocator<int>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Window'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<int,std::allocator<int>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Window.h(49,20): warning C4251: 'Drizzle3D::Window::keyRel_codes': class 'std::vector<int,std::allocator<int>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Window'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<int,std::allocator<int>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Layer.h(32,21): warning C4251: 'Drizzle3D::Layer::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Layer'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring(2337,7):
+  see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Layer.h(51,45): warning C4251: 'Drizzle3D::LayerDispatch::layers': class 'std::vector<std::shared_ptr<Drizzle3D::Layer>,std::allocator<std::shared_ptr<Drizzle3D::Layer>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::LayerDispatch'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<std::shared_ptr<Drizzle3D::Layer>,std::allocator<std::shared_ptr<Drizzle3D::Layer>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\ImGuiLayer.h(46,21): warning C4251: 'Drizzle3D::ImGuiLayer::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ImGuiLayer'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring(2337,7):
+  see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\ImGuiLayer.h(48,37): warning C4251: 'Drizzle3D::ImGuiLayer::igui': class 'std::shared_ptr<Drizzle3D::ImGuiLayer>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ImGuiLayer'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::ImGuiLayer>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\ImGuiLayer.h(49,34): warning C4251: 'Drizzle3D::ImGuiLayer::SliderFloats': class 'std::vector<Drizzle3D::SliderFloat,std::allocator<Drizzle3D::SliderFloat>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ImGuiLayer'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<Drizzle3D::SliderFloat,std::allocator<Drizzle3D::SliderFloat>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\ResourceManager.h(32,48): warning C4251: 'Drizzle3D::ResourceManager::resources': class 'std::unordered_map<std::string,std::string,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::string>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::ResourceManager'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\unordered_map(66,7):
+  see declaration of 'std::unordered_map<std::string,std::string,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::string>>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(100,21): warning C4251: 'Drizzle3D::RenderingLayer::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\xstring(2337,7):
+  see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(102,29): warning C4251: 'Drizzle3D::RenderingLayer::Objects': class 'std::vector<Drizzle3D::Object,std::allocator<Drizzle3D::Object>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<Drizzle3D::Object,std::allocator<Drizzle3D::Object>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(103,28): warning C4251: 'Drizzle3D::RenderingLayer::Lights': class 'std::vector<Drizzle3D::Light,std::allocator<Drizzle3D::Light>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<Drizzle3D::Light,std::allocator<Drizzle3D::Light>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(104,29): warning C4251: 'Drizzle3D::RenderingLayer::Cameras': class 'std::vector<Drizzle3D::Camera,std::allocator<Drizzle3D::Camera>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\vector(436,7):
+  see declaration of 'std::vector<Drizzle3D::Camera,std::allocator<Drizzle3D::Camera>>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\RenderingLayer.h(108,42): warning C4251: 'Drizzle3D::RenderingLayer::resourcemgr': class 'std::shared_ptr<Drizzle3D::ResourceManager>' needs to have dll-interface to be used by clients of class 'Drizzle3D::RenderingLayer'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::ResourceManager>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\App.h(54,36): warning C4251: 'Drizzle3D::App::resourcemgr': class 'std::shared_ptr<Drizzle3D::ResourceManager>' needs to have dll-interface to be used by clients of class 'Drizzle3D::App'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::ResourceManager>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\App.h(59,31): warning C4251: 'Drizzle3D::App::imguilayer': class 'std::shared_ptr<Drizzle3D::ImGuiLayer>' needs to have dll-interface to be used by clients of class 'Drizzle3D::App'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::ImGuiLayer>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\App.h(60,35): warning C4251: 'Drizzle3D::App::renderinglayer': class 'std::shared_ptr<Drizzle3D::RenderingLayer>' needs to have dll-interface to be used by clients of class 'Drizzle3D::App'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::RenderingLayer>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Skybox.h(21,24): warning C4251: 'Drizzle3D::Skybox::application': class 'std::shared_ptr<Drizzle3D::App>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Skybox'
+  (compiling source file 'Skybox.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::App>'
+  
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Skybox.h(22,13): warning C4251: 'Drizzle3D::Skybox::pos': struct 'glm::vec<3,float,glm::packed_highp>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Skybox'
+  (compiling source file 'Skybox.cpp')
+  C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\vendor\glm\glm\detail\qualifier.hpp(35,66):
+  see declaration of 'glm::vec<3,float,glm::packed_highp>'
+  
   main.cpp
 C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Events.h(55,45): warning C4251: 'Drizzle3D::EventDispatcher::events': class 'std::vector<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>,std::allocator<std::unique_ptr<Drizzle3D::Event,std::default_delete<Drizzle3D::Event>>>>' needs to have dll-interface to be used by clients of class 'Drizzle3D::EventDispatcher'
   (compiling source file 'main.cpp')
@@ -100,11 +439,15 @@ C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\FirstPersonCamera.h(27,24): warning C
   C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
   see declaration of 'std::shared_ptr<Drizzle3D::App>'
   
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Skybox.h(21,24): warning C4251: 'Drizzle3D::Skybox::application': class 'std::shared_ptr<Drizzle3D::App>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Skybox'
+  (compiling source file 'main.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\memory(1525,7):
+  see declaration of 'std::shared_ptr<Drizzle3D::App>'
+  
 C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Skybox.h(22,13): warning C4251: 'Drizzle3D::Skybox::pos': struct 'glm::vec<3,float,glm::packed_highp>' needs to have dll-interface to be used by clients of class 'Drizzle3D::Skybox'
   (compiling source file 'main.cpp')
   C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\vendor\glm\glm\detail\qualifier.hpp(35,66):
   see declaration of 'glm::vec<3,float,glm::packed_highp>'
   
-     Creating library C:\Users\ronit\Desktop\Drizzle3D\x64\Debug\Drizzle3D.lib and object C:\Users\ronit\Desktop\Drizzle3D\x64\Debug\Drizzle3D.exp
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Generating Code...
   Drizzle3D.vcxproj -> C:\Users\ronit\Desktop\Drizzle3D\x64\Debug\Drizzle3D.dll

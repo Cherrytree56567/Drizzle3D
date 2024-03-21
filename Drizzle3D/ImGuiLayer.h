@@ -39,7 +39,7 @@ namespace Drizzle3D {
         void setIGUI(std::shared_ptr<ImGuiLayer> ig) { igui = ig; }
         void IterateSliderFloat();
         void GUISliderFloat(const char* label, float* v, float v_min, float v_max, const char* format = NULL, int flags = NULL);
-        ImGuiContext* imguiContext;
+        ImGuiContext* imguiContext = NULL;
 
     private:
         bool show;
