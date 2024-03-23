@@ -63,48 +63,48 @@ namespace Drizzle3D {
         char* ID;
     };
 
-    class Drizzle3D_API RenderingLayer : public Layer {
+    class RenderingLayer : public Layer {
     public:
-        RenderingLayer(Window* window, std::shared_ptr<ResourceManager> resmgr) : name("3DLayer"), show(true), pWindow(window), resourcemgr(resmgr) {}
+        Drizzle3D_API RenderingLayer(Window* window, std::shared_ptr<ResourceManager> resmgr) : name("3DLayer"), show(true), pWindow(window), resourcemgr(resmgr) {}
 
-        void OnAttach() override;
-        void OnDetach() override {}
-        void Render() override;
+        Drizzle3D_API void OnAttach() override;
+        Drizzle3D_API void OnDetach() override {}
+        Drizzle3D_API void Render() override;
 
-        bool IsShown() const override { return show; }
-        const std::string& GetName() const override { return name; }
-        void SetShow(bool value) override { show = value; }
+        Drizzle3D_API bool IsShown() const override { return show; }
+        Drizzle3D_API const std::string& GetName() const override { return name; }
+        Drizzle3D_API void SetShow(bool value) override { show = value; }
 
-		void Create_Shader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        Object DrawVerts(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix = glm::mat4(1.0f));
-        void AddObject(const char* name, Object theObject);
-        Object* returnObject(const char* name);
-        void RemoveObject(const char* name);
-        void AddLight(float id, Light theLight);
-        Light* returnLight(float id);
-        void RemoveLight(float id);
-        void SwitchCamera(const char* name);
-        void AddCamera(const char* id, Camera theCamera);
-        Camera* returnCamera(const char* id);
-        void RemoveCamera(const char* id);
-        char* GetActiveCamera() { return current_camera; }
-        Camera ReturnActiveCamera();
-        Camera GetCameraFromID(char* cam);
+        Drizzle3D_API void Create_Shader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        Drizzle3D_API Object DrawVerts(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix = glm::mat4(1.0f));
+        Drizzle3D_API void AddObject(const char* name, Object theObject);
+        Drizzle3D_API Object* returnObject(const char* name);
+        Drizzle3D_API void RemoveObject(const char* name);
+        Drizzle3D_API void AddLight(float id, Light theLight);
+        Drizzle3D_API Light* returnLight(float id);
+        Drizzle3D_API void RemoveLight(float id);
+        Drizzle3D_API void SwitchCamera(const char* name);
+        Drizzle3D_API void AddCamera(const char* id, Camera theCamera);
+        Drizzle3D_API Camera* returnCamera(const char* id);
+        Drizzle3D_API void RemoveCamera(const char* id);
+        Drizzle3D_API char* GetActiveCamera() { return current_camera; }
+        Drizzle3D_API Camera ReturnActiveCamera();
+        Drizzle3D_API Camera GetCameraFromID(char* cam);
 
         bool Lighting = true;
 
     private:
         bool show;
-        GLuint shaderProgram;
-        GLuint OldshaderProgram;
+        GLuint shaderProgram = 0;
+        GLuint OldshaderProgram = 0;
         std::string name;
         Window* pWindow;
         std::vector<Object> Objects;
         std::vector<Light> Lights;
         std::vector<Camera> Cameras;
 
-        GLuint lightsBuffer;
-        char* current_camera;
+        GLuint lightsBuffer = 0;
+        char* current_camera = (char*)"Default";
         std::shared_ptr<ResourceManager> resourcemgr;
 	};
 }

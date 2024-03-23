@@ -18,25 +18,25 @@
 
 namespace Drizzle3D {
 
-	class Drizzle3D_API Window {
+	class Window {
 	public:
-		Window(EventDispatcher* dispatch, char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
-		~Window();
+		Drizzle3D_API Window(EventDispatcher* dispatch, char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
+		Drizzle3D_API ~Window();
 
-		GLFWwindow* returnwindow() { return window; };
-		int returnWidth() { return winwidth; }
-		int returnHeight() { return winheight; }
-		int returnX() { return winx; }
-		int returnY() { return winy; }
-		std::vector<int> returnKeyPressedCodes() { return key_codes; }
-		void clearKeyCodes() { key_codes.clear(); }
-		std::vector<int> returnKeyReleasedCodes() { return keyRel_codes; }
-		void clearKeyReleasedCodes() { keyRel_codes.clear(); }
-		double returnMouseX() { return lastMouseX; }
-		double returnMouseY() { return lastMouseY; }
+		Drizzle3D_API GLFWwindow* returnwindow() { return window; };
+		Drizzle3D_API int returnWidth() { return winwidth; }
+		Drizzle3D_API int returnHeight() { return winheight; }
+		Drizzle3D_API int returnX() { return winx; }
+		Drizzle3D_API int returnY() { return winy; }
+		Drizzle3D_API std::vector<int> returnKeyPressedCodes() { return key_codes; }
+		Drizzle3D_API void clearKeyCodes() { key_codes.clear(); }
+		Drizzle3D_API std::vector<int> returnKeyReleasedCodes() { return keyRel_codes; }
+		Drizzle3D_API void clearKeyReleasedCodes() { keyRel_codes.clear(); }
+		Drizzle3D_API double returnMouseX() { return lastMouseX; }
+		Drizzle3D_API double returnMouseY() { return lastMouseY; }
 
-		void ProcessEvents();
-		void Render();
+		Drizzle3D_API void ProcessEvents();
+		Drizzle3D_API void Render();
 
 		EventDispatcher* dispatcher;
 	private:

@@ -415,66 +415,80 @@ namespace Drizzle3D {
     * Window
     */
 
-    class Drizzle3D_API Window {
+    class Window {
     public:
-        Window(EventDispatcher* dispatch, char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
-        ~Window();
+        Drizzle3D_API Window(EventDispatcher* dispatch, char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
+        Drizzle3D_API ~Window();
 
-        GLFWwindow* returnwindow();
-        int returnWidth();
-        int returnHeight();
-        int returnX();
-        int returnY();
-        std::vector<int> returnKeyPressedCodes();
-        void clearKeyCodes();
-        std::vector<int> returnKeyReleasedCodes();
-        void clearKeyReleasedCodes();
-        double returnMouseX();
-        double returnMouseY();
+        Drizzle3D_API GLFWwindow* returnwindow() { return window; };
+        Drizzle3D_API int returnWidth() { return winwidth; }
+        Drizzle3D_API int returnHeight() { return winheight; }
+        Drizzle3D_API int returnX() { return winx; }
+        Drizzle3D_API int returnY() { return winy; }
+        Drizzle3D_API std::vector<int> returnKeyPressedCodes() { return key_codes; }
+        Drizzle3D_API void clearKeyCodes() { key_codes.clear(); }
+        Drizzle3D_API std::vector<int> returnKeyReleasedCodes() { return keyRel_codes; }
+        Drizzle3D_API void clearKeyReleasedCodes() { keyRel_codes.clear(); }
+        Drizzle3D_API double returnMouseX() { return lastMouseX; }
+        Drizzle3D_API double returnMouseY() { return lastMouseY; }
 
-        void ProcessEvents();
-        void Render();
+        Drizzle3D_API void ProcessEvents();
+        Drizzle3D_API void Render();
 
         EventDispatcher* dispatcher;
+    private:
+        GLFWwindow* window = NULL;
+        int winwidth;
+        int winheight;
+        int winx;
+        int winy;
+        std::vector<int> key_codes;
+        std::vector<int> keyRel_codes;
+        bool wasLeftMouseButtonPressed = false;
+        bool wasRightMouseButtonPressed = false;
+        double lastMouseX = 0.0;
+        double lastMouseY = 0.0;
+        double lastSMouseX = 0.0;
+        double lastSMouseY = 0.0;
     };
 
     /*
     * Layer
     */
 
-    class Drizzle3D_API Layer {
+    class Layer {
     public:
-        Layer() {}
+        Drizzle3D_API Layer() {}
 
-        Layer(Window* window) : name("Layer"), pWindow(window) {}
+        Drizzle3D_API Layer(Window* window) : name("Layer"), pWindow(window) {}
 
-        virtual ~Layer() = default;
-        virtual void OnAttach() { }
-        virtual void OnDetach() { }
-        virtual void Render() { }
+        Drizzle3D_API virtual ~Layer() = default;
+        Drizzle3D_API virtual void OnAttach() { }
+        Drizzle3D_API virtual void OnDetach() { }
+        Drizzle3D_API virtual void Render() { }
 
-        virtual bool IsShown() const { return show; }
-        virtual const std::string& GetName() const { return name; }
-        virtual void SetShow(bool value) { show = value; }
+        Drizzle3D_API virtual bool IsShown() const { return show; }
+        Drizzle3D_API virtual const std::string& GetName() const { return name; }
+        Drizzle3D_API virtual void SetShow(bool value) { show = value; }
     private:
-        bool show;
+        bool show = false;
         std::string name;
-        Window* pWindow;
+        Window* pWindow = NULL;
     };
 
-    class Drizzle3D_API LayerDispatch {
+    class LayerDispatch {
     public:
-        void AddLayer(std::shared_ptr<Layer> layer);
-        void RemoveLayerByName(const std::string& name);
-        void ShowHideLayerByName(const std::string& name, bool show);
-        void PushFront(const std::string& name);
-        void PushForward(const std::string& name);
-        void PushBack(const std::string& name);
-        void PushBackward(const std::string& name);
+        Drizzle3D_API void AddLayer(std::shared_ptr<Layer> layer);
+        Drizzle3D_API void RemoveLayerByName(const std::string& name);
+        Drizzle3D_API void ShowHideLayerByName(const std::string& name, bool show);
+        Drizzle3D_API void PushFront(const std::string& name);
+        Drizzle3D_API void PushForward(const std::string& name);
+        Drizzle3D_API void PushBack(const std::string& name);
+        Drizzle3D_API void PushBackward(const std::string& name);
 
-        void DispatchLayerRender();
-        void DispatchLayerDetach();
-        void DispatchLayerAttach();
+        Drizzle3D_API void DispatchLayerRender();
+        Drizzle3D_API void DispatchLayerDetach();
+        Drizzle3D_API void DispatchLayerAttach();
 
     private:
         std::vector<std::shared_ptr<Layer>> layers;
@@ -528,48 +542,48 @@ namespace Drizzle3D {
         char* ID;
     };
 
-    class Drizzle3D_API RenderingLayer : public Layer {
+    class RenderingLayer : public Layer {
     public:
-        RenderingLayer(Window* window, std::shared_ptr<ResourceManager> resmgr);
+        Drizzle3D_API RenderingLayer(Window* window, std::shared_ptr<ResourceManager> resmgr) : name("3DLayer"), show(true), pWindow(window), resourcemgr(resmgr) {}
 
-        void OnAttach() override;
-        void OnDetach() override;
-        void Render() override;
+        Drizzle3D_API void OnAttach() override;
+        Drizzle3D_API void OnDetach() override {}
+        Drizzle3D_API void Render() override;
 
-        bool IsShown() const override;
-        const std::string& GetName() const override;
-        void SetShow(bool value) override;
+        Drizzle3D_API bool IsShown() const override { return show; }
+        Drizzle3D_API const std::string& GetName() const override { return name; }
+        Drizzle3D_API void SetShow(bool value) override { show = value; }
 
-        void Create_Shader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        Object DrawVerts(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix = glm::mat4(1.0f));
-        void AddObject(const char* name, Object theObject);
-        Object* returnObject(const char* name);
-        void RemoveObject(const char* name);
-        void AddLight(float id, Light theLight);
-        Light* returnLight(float id);
-        void RemoveLight(float id);
-        void SwitchCamera(const char* name);
-        void AddCamera(const char* id, Camera theCamera);
-        Camera* returnCamera(const char* id);
-        void RemoveCamera(const char* id);
-        char* GetActiveCamera();
-        Camera ReturnActiveCamera();
-        Camera GetCameraFromID(char* cam);
+        Drizzle3D_API void Create_Shader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        Drizzle3D_API Object DrawVerts(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix = glm::mat4(1.0f));
+        Drizzle3D_API void AddObject(const char* name, Object theObject);
+        Drizzle3D_API Object* returnObject(const char* name);
+        Drizzle3D_API void RemoveObject(const char* name);
+        Drizzle3D_API void AddLight(float id, Light theLight);
+        Drizzle3D_API Light* returnLight(float id);
+        Drizzle3D_API void RemoveLight(float id);
+        Drizzle3D_API void SwitchCamera(const char* name);
+        Drizzle3D_API void AddCamera(const char* id, Camera theCamera);
+        Drizzle3D_API Camera* returnCamera(const char* id);
+        Drizzle3D_API void RemoveCamera(const char* id);
+        Drizzle3D_API char* GetActiveCamera() { return current_camera; }
+        Drizzle3D_API Camera ReturnActiveCamera();
+        Drizzle3D_API Camera GetCameraFromID(char* cam);
 
         bool Lighting = true;
 
     private:
         bool show;
-        GLuint shaderProgram;
-        GLuint OldshaderProgram;
+        GLuint shaderProgram = 0;
+        GLuint OldshaderProgram = 0;
         std::string name;
         Window* pWindow;
         std::vector<Object> Objects;
         std::vector<Light> Lights;
         std::vector<Camera> Cameras;
 
-        GLuint lightsBuffer;
-        char* current_camera;
+        GLuint lightsBuffer = 0;
+        char* current_camera = (char*)"Default";
         std::shared_ptr<ResourceManager> resourcemgr;
     };
 
@@ -618,17 +632,17 @@ namespace Drizzle3D {
     * App
     */
 
-    class Drizzle3D_API App {
+    class App {
     public:
-        App(char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
+        Drizzle3D_API App(char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
 
-        void Run();
+        Drizzle3D_API void Run();
 
-        Window* window() { return &D3DWindow; }
-        std::shared_ptr<ImGuiLayer> ImguiLayer() { return imguilayer; }
-        std::shared_ptr<RenderingLayer> GetRenderingLayer() { return renderinglayer; }
-        std::shared_ptr<ResourceManager> GetResourceManager() { return resourcemgr; }
-        EventDispatcher* dispatcher() { return &dispatch; }
+        Drizzle3D_API Window* window() { return &D3DWindow; }
+        Drizzle3D_API std::shared_ptr<ImGuiLayer> ImguiLayer() { return imguilayer; }
+        Drizzle3D_API std::shared_ptr<RenderingLayer> GetRenderingLayer() { return renderinglayer; }
+        Drizzle3D_API std::shared_ptr<ResourceManager> GetResourceManager() { return resourcemgr; }
+        Drizzle3D_API EventDispatcher* dispatcher() { return &dispatch; }
 
         typedef void(*UpdateFunc)(App* myApp);
         UpdateFunc update = [](App* myApp) {};

@@ -13,39 +13,39 @@
 #include "Window.h"
 
 namespace Drizzle3D {
-    class Drizzle3D_API Layer {
+    class Layer {
     public:
-        Layer() {}
+        Drizzle3D_API Layer() {}
 
-        Layer(Window* window) : name("Layer"), pWindow(window) {}
+        Drizzle3D_API Layer(Window* window) : name("Layer"), pWindow(window) {}
 
-        virtual ~Layer() = default;
-        virtual void OnAttach() { }
-        virtual void OnDetach() { }
-        virtual void Render() { }
+        Drizzle3D_API virtual ~Layer() = default;
+        Drizzle3D_API virtual void OnAttach() { }
+        Drizzle3D_API virtual void OnDetach() { }
+        Drizzle3D_API virtual void Render() { }
 
-        virtual bool IsShown() const { return show; }
-        virtual const std::string& GetName() const { return name; }
-        virtual void SetShow(bool value) { show = value; }
+        Drizzle3D_API virtual bool IsShown() const { return show; }
+        Drizzle3D_API virtual const std::string& GetName() const { return name; }
+        Drizzle3D_API virtual void SetShow(bool value) { show = value; }
     private:
-        bool show;
+        bool show = false;
         std::string name;
-        Window* pWindow;
+        Window* pWindow = NULL;
     };
 
-    class Drizzle3D_API LayerDispatch {
+    class LayerDispatch {
     public:
-        void AddLayer(std::shared_ptr<Layer> layer);
-        void RemoveLayerByName(const std::string& name);
-        void ShowHideLayerByName(const std::string& name, bool show);
-        void PushFront(const std::string& name);
-        void PushForward(const std::string& name);
-        void PushBack(const std::string& name);
-        void PushBackward(const std::string& name);
+        Drizzle3D_API void AddLayer(std::shared_ptr<Layer> layer);
+        Drizzle3D_API void RemoveLayerByName(const std::string& name);
+        Drizzle3D_API void ShowHideLayerByName(const std::string& name, bool show);
+        Drizzle3D_API void PushFront(const std::string& name);
+        Drizzle3D_API void PushForward(const std::string& name);
+        Drizzle3D_API void PushBack(const std::string& name);
+        Drizzle3D_API void PushBackward(const std::string& name);
 
-        void DispatchLayerRender();
-        void DispatchLayerDetach();
-        void DispatchLayerAttach();
+        Drizzle3D_API void DispatchLayerRender();
+        Drizzle3D_API void DispatchLayerDetach();
+        Drizzle3D_API void DispatchLayerAttach();
 
     private:
         std::vector<std::shared_ptr<Layer>> layers;
