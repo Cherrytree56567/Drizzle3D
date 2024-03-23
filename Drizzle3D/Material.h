@@ -1,7 +1,7 @@
 /*
 ***********************************************************************
 *                                                                     *
-* Drizzle3D © 2024 by Ronit D'silva is licensed under CC BY-NC-SA 4.0 *
+* Drizzle3D ï¿½ 2024 by Ronit D'silva is licensed under CC BY-NC-SA 4.0 *
 *                                                                     *
 ***********************************************************************
 */
@@ -10,6 +10,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <memory>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
