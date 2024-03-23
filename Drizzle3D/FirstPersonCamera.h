@@ -13,9 +13,9 @@
 #include "App.h"
 
 namespace Drizzle3D {
-	class Drizzle3D_API FirstPersonCamera {
+	class FirstPersonCamera {
 	public:
-		FirstPersonCamera(std::shared_ptr<App> app);
+		Drizzle3D_API FirstPersonCamera(std::shared_ptr<App> app);
 
 		glm::vec3 position = glm::vec3(0, 0, 5);
 		float horizontalAngle = 0.0f;

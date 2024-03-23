@@ -15,10 +15,10 @@
 #include <GLFW/glfw3.h>
 
 namespace Drizzle3D {
-	class Drizzle3D_API Material {
+	class Material {
 	public:
-		Material(std::shared_ptr<ResourceManager> resourcemgr, const char* fname, const char* fgname);
-		GLuint GetShaderProgram() { return shaderProgram; }
+		Drizzle3D_API Material(std::shared_ptr<ResourceManager> resourcemgr, const char* fname, const char* fgname);
+		Drizzle3D_API GLuint GetShaderProgram() { return shaderProgram; }
 	private:
 		GLuint shaderProgram;
 	};

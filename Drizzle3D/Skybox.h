@@ -12,10 +12,10 @@
 #include <glm/gtc/type_ptr.hpp>
 
 namespace Drizzle3D {
-	class Drizzle3D_API Skybox {
+	class Skybox {
 	public:
-		Skybox(std::shared_ptr<App> app, const char* skyboxtex, float size = 100.0f);
-		void Update();
+		Drizzle3D_API Skybox(std::shared_ptr<App> app, const char* skyboxtex, float size = 100.0f);
+		Drizzle3D_API void Update();
 
 	private:
 		std::shared_ptr<App> application;

@@ -9,64 +9,64 @@
 #include "Events.h"
 
 namespace Drizzle3D {
-	class Drizzle3D_API WindowResizeEvent : public Event {
+	class WindowResizeEvent : public Event {
 	public:
-		WindowResizeEvent(unsigned int width, unsigned int height) : m_Width(width), m_Height(height) {}
+		Drizzle3D_API WindowResizeEvent(unsigned int width, unsigned int height) : m_Width(width), m_Height(height) {}
 
-		unsigned int GetWidth() const { return m_Width; }
-		unsigned int GetHeight() const { return m_Height; }
+		Drizzle3D_API unsigned int GetWidth() const { return m_Width; }
+		Drizzle3D_API unsigned int GetHeight() const { return m_Height; }
 
-		EventType GetEventType() override { return EventType::WindowResize; }
+		Drizzle3D_API EventType GetEventType() override { return EventType::WindowResize; }
 	private:
 		unsigned int m_Width, m_Height;
 	};
 
-	class Drizzle3D_API WindowMoveEvent : public Event {
+	class WindowMoveEvent : public Event {
 	public:
-		WindowMoveEvent(unsigned int x, unsigned int y) : m_x(x), m_y(y) {}
+		Drizzle3D_API WindowMoveEvent(unsigned int x, unsigned int y) : m_x(x), m_y(y) {}
 
-		unsigned int GetWidth() const { return m_x; }
-		unsigned int GetHeight() const { return m_y; }
-		EventType GetEventType() override { return EventType::WindowMoved; }
+		Drizzle3D_API unsigned int GetWidth() const { return m_x; }
+		Drizzle3D_API unsigned int GetHeight() const { return m_y; }
+		Drizzle3D_API EventType GetEventType() override { return EventType::WindowMoved; }
 	private:
 		unsigned int m_x, m_y;
 	};
 
-	class Drizzle3D_API WindowFocusEvent : public Event {
+	class WindowFocusEvent : public Event {
 	public:
-		WindowFocusEvent(bool isFocused) : m_is_focused(isFocused) {}
+		Drizzle3D_API WindowFocusEvent(bool isFocused) : m_is_focused(isFocused) {}
 
-		bool IsFocused() const { return m_is_focused; }
-		EventType GetEventType() override { return EventType::WindowFocus; }
+		Drizzle3D_API bool IsFocused() const { return m_is_focused; }
+		Drizzle3D_API EventType GetEventType() override { return EventType::WindowFocus; }
 	private:
 		bool m_is_focused;
 	};
 
-	class Drizzle3D_API WindowCloseEvent : public Event {
+	class WindowCloseEvent : public Event {
 	public:
-		WindowCloseEvent() = default;
+		Drizzle3D_API WindowCloseEvent() = default;
 
-		EventType GetEventType() override { return EventType::WindowClose; }
+		Drizzle3D_API EventType GetEventType() override { return EventType::WindowClose; }
 	};
 
-	class Drizzle3D_API AppTickEvent : public Event {
+	class AppTickEvent : public Event {
 	public:
-		AppTickEvent() = default;
+		Drizzle3D_API AppTickEvent() = default;
 
-		EventType GetEventType() override { return EventType::AppTick; }
+		Drizzle3D_API EventType GetEventType() override { return EventType::AppTick; }
 	};
 
-	class Drizzle3D_API AppUpdateEvent : public Event {
+	class AppUpdateEvent : public Event {
 	public:
-		AppUpdateEvent() = default;
+		Drizzle3D_API AppUpdateEvent() = default;
 
-		EventType GetEventType() override { return EventType::AppUpdate; }
+		Drizzle3D_API EventType GetEventType() override { return EventType::AppUpdate; }
 	};
 
-	class Drizzle3D_API AppRenderEvent : public Event {
+	class AppRenderEvent : public Event {
 	public:
-		AppRenderEvent() = default;
+		Drizzle3D_API AppRenderEvent() = default;
 
-		EventType GetEventType() override { return EventType::AppRender; }
+		Drizzle3D_API EventType GetEventType() override { return EventType::AppRender; }
 	};
 }

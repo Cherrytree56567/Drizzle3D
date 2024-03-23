@@ -11,25 +11,8 @@ char* cam;
 float streg = 0.0f;
 bool use_ios = true;
 
-void Closed(GLFWwindow* window) {
+void Closed(GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
     std::cout << "Closeda";
-}
-
-void Update(Drizzle3D::App* app) {
-    app->GetRenderingLayer()->returnObject("Cube")->modelMatrix = modelMatrix;
-
-    if (use_ios == true)
-        app->GetRenderingLayer()->returnObject("Cube")->textureID = Drizzle3D::GetTexture("ios.png");
-
-    if (use_ios == false)
-        app->GetRenderingLayer()->returnObject("Cube")->textureID = Drizzle3D::GetTexture("duck.png");
-
-    app->GetRenderingLayer()->returnLight(1)->position = light_pos;
-    app->GetRenderingLayer()->returnLight(1)->strength = streg;
-
-    app->GetRenderingLayer()->returnCamera("Acam")->position = camera_pos;
-    app->GetRenderingLayer()->returnCamera("Acam")->up = camera_up_pos;
-    app->GetRenderingLayer()->returnCamera("Acam")->look_at_position = camera_la_pos;
 }
 
 void ImGUICode(std::shared_ptr<Drizzle3D::ImGuiLayer> rend) {
@@ -95,7 +78,7 @@ int main() {
         std::cout << "Mouse Moved\n";
         });
 
-    app->update = Update;
+    app->dispatcher()->AddEventListener(EWindowClose, Closed);
 
     app->GetRenderingLayer()->Lighting = false;
 
@@ -118,7 +101,22 @@ int main() {
     //app.GetRenderingLayer()->SwitchCamera("Acam");
     app->GetRenderingLayer()->SwitchCamera("FirstPersonCamera");
 
-    app->Run();
+    while (app->Run()) {
+        app->GetRenderingLayer()->returnObject("Cube")->modelMatrix = modelMatrix;
+
+        if (use_ios == true)
+            app->GetRenderingLayer()->returnObject("Cube")->textureID = Drizzle3D::GetTexture("ios.png");
+
+        if (use_ios == false)
+            app->GetRenderingLayer()->returnObject("Cube")->textureID = Drizzle3D::GetTexture("duck.png");
+
+        app->GetRenderingLayer()->returnLight(1)->position = light_pos;
+        app->GetRenderingLayer()->returnLight(1)->strength = streg;
+
+        app->GetRenderingLayer()->returnCamera("Acam")->position = camera_pos;
+        app->GetRenderingLayer()->returnCamera("Acam")->up = camera_up_pos;
+        app->GetRenderingLayer()->returnCamera("Acam")->look_at_position = camera_la_pos;
+    }
 
     return 0;
 }

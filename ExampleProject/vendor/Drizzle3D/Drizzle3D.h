@@ -79,31 +79,31 @@ namespace Drizzle3D {
         MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
     };
 
-    class Drizzle3D_API Event {
+    class Event {
     public:
-        virtual ~Event() = default;
+        Drizzle3D_API virtual ~Event() = default;
 
         bool Handled = false;
 
-        virtual EventType GetEventType() = 0;
+        Drizzle3D_API virtual EventType GetEventType() = 0;
     };
 
-    class Drizzle3D_API EventDispatcher {
+    class EventDispatcher {
     public:
-        EventDispatcher(const EventDispatcher&) = delete;
-        EventDispatcher& operator=(const EventDispatcher&) = delete;
-        EventDispatcher() = default;
-        EventDispatcher& operator=(EventDispatcher&&) = default;
-        EventDispatcher(EventDispatcher&&) = default;
+        Drizzle3D_API EventDispatcher(const EventDispatcher&) = delete;
+        Drizzle3D_API EventDispatcher& operator=(const EventDispatcher&) = delete;
+        Drizzle3D_API EventDispatcher() = default;
+        Drizzle3D_API EventDispatcher& operator=(EventDispatcher&&) = default;
+        Drizzle3D_API EventDispatcher(EventDispatcher&&) = default;
         typedef void (*EventCallback)(GLFWwindow* app, std::unique_ptr<Event> events, std::any);
-        void AddEvent(std::unique_ptr<Event> newEvent);
-        std::unique_ptr<Event> GetEvent(EventType eventType);
-        void RemoveHandledEvents();
-        bool isUnhandledEvent(EventType eventType);
-        void ResetEvents();
-        void AddEventListener(EventType eventType, EventCallback callback, std::any a = NULL);
-        void RemoveEventListener(EventType eventType, EventCallback callback);
-        void DispatchEvent(GLFWwindow* window);
+        Drizzle3D_API void AddEvent(std::unique_ptr<Event> newEvent);
+        Drizzle3D_API std::unique_ptr<Event> GetEvent(EventType eventType);
+        Drizzle3D_API void RemoveHandledEvents();
+        Drizzle3D_API bool isUnhandledEvent(EventType eventType);
+        Drizzle3D_API void ResetEvents() { events.clear(); }
+        Drizzle3D_API void AddEventListener(EventType eventType, EventCallback callback, std::any a = NULL);
+        Drizzle3D_API void RemoveEventListener(EventType eventType, EventCallback callback);
+        Drizzle3D_API void DispatchEvent(GLFWwindow* window);
     private:
         std::vector<std::unique_ptr<Event>> events;
         std::unordered_map<EventType, std::vector<std::pair<EventCallback, std::any>>> eventCallbacks;
@@ -261,131 +261,131 @@ namespace Drizzle3D {
         ButtonMiddle = Button3
     };
 
-    class Drizzle3D_API WindowResizeEvent : public Event {
+    class WindowResizeEvent : public Event {
     public:
-        WindowResizeEvent(unsigned int width, unsigned int height) : m_Width(width), m_Height(height) {}
+        Drizzle3D_API WindowResizeEvent(unsigned int width, unsigned int height) : m_Width(width), m_Height(height) {}
 
-        unsigned int GetWidth() const { return m_Width; }
-        unsigned int GetHeight() const { return m_Height; }
+        Drizzle3D_API unsigned int GetWidth() const { return m_Width; }
+        Drizzle3D_API unsigned int GetHeight() const { return m_Height; }
 
-        EventType GetEventType() override { return EventType::WindowResize; }
+        Drizzle3D_API EventType GetEventType() override { return EventType::WindowResize; }
     private:
         unsigned int m_Width, m_Height;
     };
 
-    class Drizzle3D_API WindowMoveEvent : public Event {
+    class WindowMoveEvent : public Event {
     public:
-        WindowMoveEvent(unsigned int x, unsigned int y) : m_x(x), m_y(y) {}
+        Drizzle3D_API WindowMoveEvent(unsigned int x, unsigned int y) : m_x(x), m_y(y) {}
 
-        unsigned int GetWidth() const { return m_x; }
-        unsigned int GetHeight() const { return m_y; }
-        EventType GetEventType() override { return EventType::WindowMoved; }
+        Drizzle3D_API unsigned int GetWidth() const { return m_x; }
+        Drizzle3D_API unsigned int GetHeight() const { return m_y; }
+        Drizzle3D_API EventType GetEventType() override { return EventType::WindowMoved; }
     private:
         unsigned int m_x, m_y;
     };
 
-    class Drizzle3D_API WindowFocusEvent : public Event {
+    class WindowFocusEvent : public Event {
     public:
-        WindowFocusEvent(bool isFocused) : m_is_focused(isFocused) {}
+        Drizzle3D_API WindowFocusEvent(bool isFocused) : m_is_focused(isFocused) {}
 
-        bool IsFocused() const { return m_is_focused; }
-        EventType GetEventType() override { return EventType::WindowFocus; }
+        Drizzle3D_API bool IsFocused() const { return m_is_focused; }
+        Drizzle3D_API EventType GetEventType() override { return EventType::WindowFocus; }
     private:
         bool m_is_focused;
     };
 
-    class Drizzle3D_API WindowCloseEvent : public Event {
+    class WindowCloseEvent : public Event {
     public:
-        WindowCloseEvent() = default;
+        Drizzle3D_API WindowCloseEvent() = default;
 
-        EventType GetEventType() override { return EventType::WindowClose; }
+        Drizzle3D_API EventType GetEventType() override { return EventType::WindowClose; }
     };
 
-    class Drizzle3D_API AppTickEvent : public Event {
+    class AppTickEvent : public Event {
     public:
-        AppTickEvent() = default;
+        Drizzle3D_API AppTickEvent() = default;
 
-        EventType GetEventType() override { return EventType::AppTick; }
+        Drizzle3D_API EventType GetEventType() override { return EventType::AppTick; }
     };
 
-    class Drizzle3D_API AppUpdateEvent : public Event {
+    class AppUpdateEvent : public Event {
     public:
-        AppUpdateEvent() = default;
+        Drizzle3D_API AppUpdateEvent() = default;
 
-        EventType GetEventType() override { return EventType::AppUpdate; }
+        Drizzle3D_API EventType GetEventType() override { return EventType::AppUpdate; }
     };
 
-    class Drizzle3D_API AppRenderEvent : public Event {
+    class AppRenderEvent : public Event {
     public:
-        AppRenderEvent() = default;
+        Drizzle3D_API AppRenderEvent() = default;
 
-        EventType GetEventType() override { return EventType::AppRender; }
+        Drizzle3D_API EventType GetEventType() override { return EventType::AppRender; }
     };
 
-    class Drizzle3D_API KeyPressedEvent : public Event {
+    class KeyPressedEvent : public Event {
     public:
-        KeyPressedEvent(const KeyCode keycode) : m_KeyCode(keycode) {}
+        Drizzle3D_API KeyPressedEvent(const KeyCode keycode) : m_KeyCode(keycode) {}
 
-        KeyCode GetKeyCode() { return m_KeyCode; }
+        Drizzle3D_API KeyCode GetKeyCode() { return m_KeyCode; }
 
-        EventType GetEventType() override { return EventType::KeyPressed; }
+        Drizzle3D_API EventType GetEventType() override { return EventType::KeyPressed; }
     private:
         KeyCode m_KeyCode;
     };
 
-    class Drizzle3D_API KeyReleasedEvent : public Event {
+    class KeyReleasedEvent : public Event {
     public:
-        KeyReleasedEvent(const KeyCode keycode) : m_KeyCode(keycode) {}
+        Drizzle3D_API KeyReleasedEvent(const KeyCode keycode) : m_KeyCode(keycode) {}
 
-        KeyCode GetKeyCode() { return m_KeyCode; }
+        Drizzle3D_API KeyCode GetKeyCode() { return m_KeyCode; }
 
-        EventType GetEventType() override { return EventType::KeyReleased; }
+        Drizzle3D_API EventType GetEventType() override { return EventType::KeyReleased; }
     private:
         KeyCode m_KeyCode;
     };
 
-    class Drizzle3D_API MouseMovedEvent : public Event {
+    class MouseMovedEvent : public Event {
     public:
-        MouseMovedEvent(const float x, const float y) : m_MouseX(x), m_MouseY(y) {}
+        Drizzle3D_API MouseMovedEvent(const float x, const float y) : m_MouseX(x), m_MouseY(y) {}
 
-        float GetX() const { return m_MouseX; }
-        float GetY() const { return m_MouseY; }
+        Drizzle3D_API float GetX() const { return m_MouseX; }
+        Drizzle3D_API float GetY() const { return m_MouseY; }
 
-        EventType GetEventType() override { return EventType::MouseMoved; }
+        Drizzle3D_API EventType GetEventType() override { return EventType::MouseMoved; }
     private:
         float m_MouseX, m_MouseY;
     };
 
-    class Drizzle3D_API MouseScrolledEvent : public Event {
+    class MouseScrolledEvent : public Event {
     public:
-        MouseScrolledEvent(const float xOffset, const float yOffset) : m_XOffset(xOffset), m_YOffset(yOffset) {}
+        Drizzle3D_API MouseScrolledEvent(const float xOffset, const float yOffset) : m_XOffset(xOffset), m_YOffset(yOffset) {}
 
-        float GetXOffset() const { return m_XOffset; }
-        float GetYOffset() const { return m_YOffset; }
+        Drizzle3D_API float GetXOffset() const { return m_XOffset; }
+        Drizzle3D_API float GetYOffset() const { return m_YOffset; }
 
-        EventType GetEventType() override { return EventType::MouseScrolled; }
+        Drizzle3D_API EventType GetEventType() override { return EventType::MouseScrolled; }
     private:
         float m_XOffset, m_YOffset;
     };
 
-    class Drizzle3D_API MouseButtonPressedEvent : public Event {
+    class MouseButtonPressedEvent : public Event {
     public:
-        MouseButtonPressedEvent(const MouseCode button) : m_Button(button) {}
+        Drizzle3D_API MouseButtonPressedEvent(const MouseCode button) : m_Button(button) {}
 
-        MouseCode GetMouseButton() const { return m_Button; }
+        Drizzle3D_API MouseCode GetMouseButton() const { return m_Button; }
 
-        EventType GetEventType() override { return EventType::MouseButtonPressed; }
+        Drizzle3D_API EventType GetEventType() override { return EventType::MouseButtonPressed; }
     private:
         MouseCode m_Button;
     };
 
-    class Drizzle3D_API MouseButtonReleasedEvent : public Event {
+    class MouseButtonReleasedEvent : public Event {
     public:
-        MouseButtonReleasedEvent(const MouseCode button) : m_Button(button) {}
+        Drizzle3D_API MouseButtonReleasedEvent(const MouseCode button) : m_Button(button) {}
 
-        MouseCode GetMouseButton() const { return m_Button; }
+        Drizzle3D_API MouseCode GetMouseButton() const { return m_Button; }
 
-        EventType GetEventType() override { return EventType::MouseButtonReleased; }
+        Drizzle3D_API EventType GetEventType() override { return EventType::MouseButtonReleased; }
     private:
         MouseCode m_Button;
     };
@@ -398,15 +398,15 @@ namespace Drizzle3D {
         const char mode[2];
     };
 
-    class Drizzle3D_API ResourceManager {
+    class ResourceManager {
     public:
-        Resource loadFile(const std::string& filePath, const char mode[2]);
+        Drizzle3D_API Resource loadFile(const std::string& filePath, const char mode[2]);
 
-        bool fileExists(const std::string& filePath) const;
+        Drizzle3D_API bool fileExists(const std::string& filePath) const;
 
-        void writeFile(const std::string& filePath, const std::string& content);
+        Drizzle3D_API void writeFile(const std::string& filePath, const std::string& content);
 
-        std::string& getTempFileContent(const std::string& filePath);
+        Drizzle3D_API std::string& getTempFileContent(const std::string& filePath);
     private:
         std::unordered_map<std::string, std::string> resources;
     };
@@ -600,25 +600,25 @@ namespace Drizzle3D {
         int flags = NULL;
     };
 
-    class Drizzle3D_API ImGuiLayer : public Layer {
+    class ImGuiLayer : public Layer {
     public:
-        ImGuiLayer(Window* window) : name("ImGUI"), show(true), pWindow(window) {}
+        Drizzle3D_API ImGuiLayer(Window* window) : name("ImGUI"), show(true), pWindow(window) {}
 
         typedef void (*ImGUICode)(std::shared_ptr<ImGuiLayer> igui);
 
         ImGUICode code = [](std::shared_ptr<ImGuiLayer> igui) {};
 
-        void OnAttach() override;
-        void OnDetach() { }
-        void Render() override;
+        Drizzle3D_API void OnAttach() override;
+        Drizzle3D_API void OnDetach() { }
+        Drizzle3D_API void Render() override;
 
-        bool IsShown() const override { return show; }
-        const std::string& GetName() const override { return name; }
-        void SetShow(bool value) override { show = value; }
-        void setIGUI(std::shared_ptr<ImGuiLayer> ig) { igui = ig; }
-        void IterateSliderFloat();
-        void GUISliderFloat(const char* label, float* v, float v_min, float v_max, const char* format = NULL, int flags = NULL);
-        ImGuiContext* imguiContext = ImGui::GetCurrentContext();
+        Drizzle3D_API bool IsShown() const override { return show; }
+        Drizzle3D_API const std::string& GetName() const override { return name; }
+        Drizzle3D_API void SetShow(bool value) override { show = value; }
+        Drizzle3D_API void setIGUI(std::shared_ptr<ImGuiLayer> ig) { igui = ig; }
+        Drizzle3D_API void IterateSliderFloat();
+        Drizzle3D_API void GUISliderFloat(const char* label, float* v, float v_min, float v_max, const char* format = NULL, int flags = NULL);
+        ImGuiContext* imguiContext = NULL;
 
     private:
         bool show;
@@ -636,16 +636,13 @@ namespace Drizzle3D {
     public:
         Drizzle3D_API App(char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
 
-        Drizzle3D_API void Run();
+        Drizzle3D_API bool Run();
 
         Drizzle3D_API Window* window() { return &D3DWindow; }
         Drizzle3D_API std::shared_ptr<ImGuiLayer> ImguiLayer() { return imguilayer; }
         Drizzle3D_API std::shared_ptr<RenderingLayer> GetRenderingLayer() { return renderinglayer; }
         Drizzle3D_API std::shared_ptr<ResourceManager> GetResourceManager() { return resourcemgr; }
         Drizzle3D_API EventDispatcher* dispatcher() { return &dispatch; }
-
-        typedef void(*UpdateFunc)(App* myApp);
-        UpdateFunc update = [](App* myApp) {};
 
     private:
         // Managers
@@ -666,9 +663,9 @@ namespace Drizzle3D {
     * First Person Camera
     */
 
-    class Drizzle3D_API FirstPersonCamera {
+    class FirstPersonCamera {
     public:
-        FirstPersonCamera(std::shared_ptr<App> app);
+        Drizzle3D_API FirstPersonCamera(std::shared_ptr<App> app);
 
         glm::vec3 position = glm::vec3(0, 0, 5);
         float horizontalAngle = 0.0f;
@@ -686,10 +683,10 @@ namespace Drizzle3D {
     * Skybox
     */
 
-    class Drizzle3D_API Skybox {
+    class Skybox {
     public:
-        Skybox(std::shared_ptr<App> app, const char* skyboxtex, float size = 100.0f);
-        void Update();
+        Drizzle3D_API Skybox(std::shared_ptr<App> app, const char* skyboxtex, float size = 100.0f);
+        Drizzle3D_API void Update();
 
     private:
         std::shared_ptr<App> application;
@@ -700,9 +697,9 @@ namespace Drizzle3D {
     * Material
     */
 
-    class Drizzle3D_API Material {
+    class Material {
     public:
-        Material(std::shared_ptr<ResourceManager> resourcemgr, const char* fname, const char* fgname);
-        GLuint GetShaderProgram();
+        Drizzle3D_API Material(std::shared_ptr<ResourceManager> resourcemgr, const char* fname, const char* fgname);
+        Drizzle3D_API GLuint GetShaderProgram();
     };
 }

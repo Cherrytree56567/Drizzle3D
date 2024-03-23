@@ -38,16 +38,13 @@ namespace Drizzle3D {
 	public:
 		Drizzle3D_API App(char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
 
-		Drizzle3D_API void Run();
+		Drizzle3D_API bool Run();
 
 		Drizzle3D_API Window* window() { return &D3DWindow; }
 		Drizzle3D_API std::shared_ptr<ImGuiLayer> ImguiLayer() { return imguilayer; }
 		Drizzle3D_API std::shared_ptr<RenderingLayer> GetRenderingLayer() { return renderinglayer; }
 		Drizzle3D_API std::shared_ptr<ResourceManager> GetResourceManager() { return resourcemgr; }
 		Drizzle3D_API EventDispatcher* dispatcher() { return &dispatch; }
-
-		typedef void(*UpdateFunc)(App* myApp);
-		UpdateFunc update = [](App* myApp){};
 
 	private:
 		// Managers

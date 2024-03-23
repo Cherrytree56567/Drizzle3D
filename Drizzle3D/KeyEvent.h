@@ -11,24 +11,24 @@
 
 namespace Drizzle3D {
 
-	class Drizzle3D_API KeyPressedEvent : public Event {
+	class KeyPressedEvent : public Event {
 	public:
-		KeyPressedEvent(const KeyCode keycode) : m_KeyCode(keycode) {}
+		Drizzle3D_API KeyPressedEvent(const KeyCode keycode) : m_KeyCode(keycode) {}
 
-		KeyCode GetKeyCode() { return m_KeyCode; }
+		Drizzle3D_API KeyCode GetKeyCode() { return m_KeyCode; }
 
-		EventType GetEventType() override { return EventType::KeyPressed; }
+		Drizzle3D_API EventType GetEventType() override { return EventType::KeyPressed; }
 	private:
 		KeyCode m_KeyCode;
 	};
 
-	class Drizzle3D_API KeyReleasedEvent : public Event {
+	class KeyReleasedEvent : public Event {
 	public:
-		KeyReleasedEvent(const KeyCode keycode) : m_KeyCode(keycode) {}
+		Drizzle3D_API KeyReleasedEvent(const KeyCode keycode) : m_KeyCode(keycode) {}
 
-		KeyCode GetKeyCode() { return m_KeyCode; }
+		Drizzle3D_API KeyCode GetKeyCode() { return m_KeyCode; }
 
-		EventType GetEventType() override { return EventType::KeyReleased; }
+		Drizzle3D_API EventType GetEventType() override { return EventType::KeyReleased; }
 	private:
 		KeyCode m_KeyCode;
 	};

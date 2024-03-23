@@ -19,15 +19,15 @@ namespace Drizzle3D {
 		const char mode[2];
 	};
 
-	class Drizzle3D_API ResourceManager {
+	class ResourceManager {
 	public:
-        Resource loadFile(const std::string& filePath, const char mode[2]);
+		Drizzle3D_API Resource loadFile(const std::string& filePath, const char mode[2]);
 
-        bool fileExists(const std::string& filePath) const;
+		Drizzle3D_API bool fileExists(const std::string& filePath) const;
 
-        void writeFile(const std::string& filePath, const std::string& content);
+		Drizzle3D_API void writeFile(const std::string& filePath, const std::string& content);
 
-		std::string& getTempFileContent(const std::string& filePath);
+		Drizzle3D_API std::string& getTempFileContent(const std::string& filePath);
 	private:
 		std::unordered_map<std::string, std::string> resources;
 	};

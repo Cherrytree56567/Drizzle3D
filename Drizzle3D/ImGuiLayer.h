@@ -21,24 +21,24 @@ namespace Drizzle3D {
         ImGuiSliderFlags flags = NULL;
     };
 
-    class Drizzle3D_API ImGuiLayer : public Layer {
+    class ImGuiLayer : public Layer {
     public:
-        ImGuiLayer(Window* window) : name("ImGUI"), show(true), pWindow(window) {}
+        Drizzle3D_API ImGuiLayer(Window* window) : name("ImGUI"), show(true), pWindow(window) {}
 
         typedef void (*ImGUICode)(std::shared_ptr<ImGuiLayer> igui);
 
         ImGUICode code = [](std::shared_ptr<ImGuiLayer> igui) {};
 
-        void OnAttach() override;
-        void OnDetach() { }
-        void Render() override;
+        Drizzle3D_API void OnAttach() override;
+        Drizzle3D_API void OnDetach() { }
+        Drizzle3D_API void Render() override;
 
-        bool IsShown() const override { return show; }
-        const std::string& GetName() const override { return name; }
-        void SetShow(bool value) override { show = value; }
-        void setIGUI(std::shared_ptr<ImGuiLayer> ig) { igui = ig; }
-        void IterateSliderFloat();
-        void GUISliderFloat(const char* label, float* v, float v_min, float v_max, const char* format = NULL, int flags = NULL);
+        Drizzle3D_API bool IsShown() const override { return show; }
+        Drizzle3D_API const std::string& GetName() const override { return name; }
+        Drizzle3D_API void SetShow(bool value) override { show = value; }
+        Drizzle3D_API void setIGUI(std::shared_ptr<ImGuiLayer> ig) { igui = ig; }
+        Drizzle3D_API void IterateSliderFloat();
+        Drizzle3D_API void GUISliderFloat(const char* label, float* v, float v_min, float v_max, const char* format = NULL, int flags = NULL);
         ImGuiContext* imguiContext = NULL;
 
     private:
