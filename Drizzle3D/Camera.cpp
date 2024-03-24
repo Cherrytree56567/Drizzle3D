@@ -9,9 +9,8 @@
 
 namespace Drizzle3D {
     void RenderingLayer::AddCamera(const char* id, Camera theCamera) {
-        Camera a = theCamera;
-        a.ID = (char*)id;
-        Cameras.push_back(a);
+        theCamera.ID = (char*)id;
+        Cameras.push_back(theCamera);
     }
 
     void RenderingLayer::SwitchCamera(const char* id) {

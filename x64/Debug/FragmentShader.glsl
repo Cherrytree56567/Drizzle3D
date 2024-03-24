@@ -30,6 +30,7 @@ uniform sampler2D textureSampler;
 uniform vec3 viewPos;
 uniform Light lights[MAX_LIGHTS];
 uniform int numLights;
+uniform bool IsSkyBox;
 
 void main() {
     vec3 ambient = vec3(0.0);
@@ -66,5 +67,9 @@ void main() {
 
     vec3 result = ambient + diffuse + specular;
 
-    FragColor = vec4(result, 1.0) * texture(textureSampler, texCoord);
+    if (IsSkyBox == true) {
+        FragColor = texture(textureSampler, texCoord);
+    } else {
+        FragColor = vec4(result, 1.0f) * texture(textureSampler, texCoord);
+    }
 }
