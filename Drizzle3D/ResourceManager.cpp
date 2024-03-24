@@ -11,7 +11,7 @@ namespace Drizzle3D {
     Resource ResourceManager::loadFile(const std::string& filePath, const char mode[2]) {
         auto it = resources.find(filePath);
         if (it != resources.end()) {
-            return { it->second, (const char)mode };
+            return { it->second, (const char)mode};
         }
         else {
             std::ifstream file;
