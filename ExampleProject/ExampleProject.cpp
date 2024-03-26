@@ -91,7 +91,7 @@ int main() {
     app->dispatcher()->AddEventListener(EWindowClose, Closed);
 
     app->GetRenderingLayer()->GetFlags()->ChangeFlag("Lighting", false);
-    //app->GetRenderingLayer()->GetFlags()->ChangeFlag("UseOpenGL", false);
+    app->GetRenderingLayer()->GetFlags()->ChangeFlag("UseOpenGL", false);
     app->GetRenderingLayer()->GetFlags()->ChangeFlag("UseVulkan", true);
 
     app->ImguiLayer()->code = ImGUICode;

@@ -79,10 +79,6 @@ namespace Drizzle3D {
             UseOpenGL = true;
             UseVulkan = false;
         }
-        if (!UseOpenGL && !UseVulkan) {
-            UseOpenGL = true;
-            UseVulkan = false;
-        }
         if (UseOpenGL) {
             InitGlRendering();
         } else if (UseVulkan) {
@@ -126,10 +122,6 @@ namespace Drizzle3D {
         myOBJ.modelMatrix = modelMatrix;
         myOBJ.mat = shaderProgram;
         // Create Vertex Array Object (VAO), Vertex Buffer Object (VBO), and Element Buffer Object (EBO)
-        if (!UseOpenGL && !UseVulkan) {
-            UseOpenGL = true;
-            UseVulkan = false;
-        }
         if (UseOpenGL && UseVulkan) {
             UseOpenGL = true;
             UseVulkan = false;
@@ -150,10 +142,6 @@ namespace Drizzle3D {
             glfwRestoreWindow(pWindow->returnwindow());
         }
 
-        if (!UseOpenGL && !UseVulkan) {
-            UseOpenGL = true;
-            UseVulkan = false;
-        }
         if (UseOpenGL && UseVulkan) {
             UseOpenGL = true;
             UseVulkan = false;
