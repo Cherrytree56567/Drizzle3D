@@ -91,6 +91,7 @@ int main() {
     app->dispatcher()->AddEventListener(EWindowClose, Closed);
 
     app->GetRenderingLayer()->GetFlags()->ChangeFlag("Lighting", false);
+    app->GetRenderingLayer()->GetFlags()->ChangeFlag("UseOpenGL", true);
 
     app->ImguiLayer()->code = ImGUICode;
     app->GetRenderingLayer()->AddObject("Cube", app->GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Cube.obj"), modelMatrix));
