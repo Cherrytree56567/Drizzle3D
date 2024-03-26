@@ -16,6 +16,7 @@
 #include "Material.h"
 #include "ResourceManager.h"
 #include "base.h"
+#include "Flags.h"
 
 namespace Drizzle3D {
 
@@ -65,7 +66,7 @@ namespace Drizzle3D {
 
     class RenderingLayer : public Layer {
     public:
-        Drizzle3D_API RenderingLayer(Window* window, std::shared_ptr<ResourceManager> resmgr) : name("3DLayer"), show(true), pWindow(window), resourcemgr(resmgr) {}
+        Drizzle3D_API RenderingLayer(Window* window, std::shared_ptr<ResourceManager> resmgr);
 
         Drizzle3D_API void OnAttach() override;
         Drizzle3D_API void OnDetach() override {}
@@ -90,10 +91,10 @@ namespace Drizzle3D {
         Drizzle3D_API char* GetActiveCamera() { return current_camera; }
         Drizzle3D_API Camera ReturnActiveCamera();
         Drizzle3D_API Camera GetCameraFromID(char* cam);
-
-        bool Lighting = true;
-
+        Drizzle3D_API Flags* GetFlags() { return &flags; }
     private:
+        bool Lighting = true;
+        bool fullscreen = false;
         bool show;
         GLuint shaderProgram = 0;
         GLuint OldshaderProgram = 0;
@@ -102,6 +103,7 @@ namespace Drizzle3D {
         std::vector<Object> Objects;
         std::vector<Light> Lights;
         std::vector<Camera> Cameras;
+        Flags flags;
 
         GLuint lightsBuffer = 0;
         char* current_camera = (char*)"Default";

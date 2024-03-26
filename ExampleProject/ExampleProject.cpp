@@ -10,6 +10,8 @@ glm::vec3 camera_la_pos;
 char* cam;
 float streg = 0.0f;
 bool use_ios = true;
+bool sld = false;
+bool sh = true;
 
 void Closed(GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
     std::cout << "Closeda";
@@ -61,6 +63,14 @@ void ImGUICode(std::shared_ptr<Drizzle3D::ImGuiLayer> rend) {
     ImGui::SliderFloat("Camera Look-At X", &camera_la_pos.x, 0.0f, 50.0f);
     ImGui::SliderFloat("Camera Look-At Y", &camera_la_pos.y, 0.0f, 50.0f);
     ImGui::SliderFloat("Camera Look-At Z", &camera_la_pos.z, 0.0f, 50.0f);
+
+    if (ImGui::Button("Fullscreen")) {
+        sld = !sld;
+    }
+
+    if (ImGui::Button("Show")) {
+        sh = !sh;
+    }
 }
 
 int main() {
@@ -80,7 +90,7 @@ int main() {
 
     app->dispatcher()->AddEventListener(EWindowClose, Closed);
 
-    app->GetRenderingLayer()->Lighting = false;
+    app->GetRenderingLayer()->GetFlags()->ChangeFlag("Lighting", false);
 
     app->ImguiLayer()->code = ImGUICode;
     app->GetRenderingLayer()->AddObject("Cube", app->GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Cube.obj"), modelMatrix));
@@ -116,6 +126,8 @@ int main() {
         app->GetRenderingLayer()->returnCamera("Acam")->position = camera_pos;
         app->GetRenderingLayer()->returnCamera("Acam")->up = camera_up_pos;
         app->GetRenderingLayer()->returnCamera("Acam")->look_at_position = camera_la_pos;
+        app->GetRenderingLayer()->GetFlags()->ChangeFlag("Fullscreen", sld);
+        app->GetRenderingLayer()->GetFlags()->ChangeFlag("Show", sh);
     }
 
     return 0;

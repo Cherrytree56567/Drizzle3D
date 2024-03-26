@@ -23,6 +23,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="FirstPersonCamera.cpp" />
+    <ClCompile Include="Flags.cpp" />
     <ClCompile Include="ImGuiLayer.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -51,6 +52,7 @@
     <ClInclude Include="base.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="FirstPersonCamera.h" />
+    <ClInclude Include="Flags.h" />
     <ClInclude Include="ImGuiLayer.h" />
     <ClInclude Include="KeyCodes.h" />
     <ClInclude Include="KeyEvent.h" />

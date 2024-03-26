@@ -79,6 +79,9 @@
     <Filter Include="Source Files\Rendering\Material">
       <UniqueIdentifier>{766b5aaf-57a2-477b-82c9-2cc16b3d97a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Flags">
+      <UniqueIdentifier>{d2494ee0-6d9c-46f2-8671-60f383df2474}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -155,6 +158,9 @@
     </ClCompile>
     <ClCompile Include="vendor\glm\glm\glm.cppm">
       <Filter>Vendor</Filter>
+    </ClCompile>
+    <ClCompile Include="Flags.cpp">
+      <Filter>Source Files\Flags</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="main.h">
       <Filter>Vendor</Filter>
+    </ClInclude>
+    <ClInclude Include="Flags.h">
+      <Filter>Source Files\Flags</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

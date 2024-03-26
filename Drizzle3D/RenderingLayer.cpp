@@ -15,6 +15,12 @@
 
 namespace Drizzle3D {
 
+    RenderingLayer::RenderingLayer(Window* window, std::shared_ptr<ResourceManager> resmgr) : name("3DLayer"), show(true), pWindow(window), resourcemgr(resmgr) {
+        flags.AddFlag("Lighting", Lighting);
+        flags.AddFlag("Fullscreen", fullscreen);
+        flags.AddFlag("Show", show);
+    }
+
     Drizzle3D_API std::pair<std::vector<float>, std::vector<unsigned int>> LoadObjFile(const std::string& filePath) {
         std::vector<float> vertices;
         std::vector<unsigned int> indices;
@@ -152,6 +158,11 @@ namespace Drizzle3D {
     }
 
     void RenderingLayer::Render() {
+        if (fullscreen) {
+            glfwMaximizeWindow(pWindow->returnwindow());
+        } else {
+            glfwRestoreWindow(pWindow->returnwindow());
+        }
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glUseProgram(shaderProgram);

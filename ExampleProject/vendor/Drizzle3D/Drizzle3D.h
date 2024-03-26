@@ -1,11 +1,7 @@
 #pragma once
-//#include <glad/glad.h>
-//#include <GLFW/glfw3.h>
 #include <iostream>
 #include <memory>
 #include <functional>
-//#include <glm/glm.hpp>
-//#include <glm/gtc/matrix_transform.hpp>
 #include "glm/vec3.hpp"
 #include "glm/vec2.hpp"
 #include "glm/vec4.hpp"
@@ -18,9 +14,8 @@
 #include <vector>
 #include <string>
 #include <any>
-//#include <GLAD/glad.h>
+#include <map>
 #include <vector>
-//#include <GLFW/glfw3.h>
 #include <iostream>
 #include "imgui.h"
 typedef unsigned int GLuint;
@@ -41,6 +36,7 @@ typedef struct GLFWwindow GLFWwindow;
 #define EMouseRightButtonPressed Drizzle3D::EventType::MouseRightButtonPressed
 #define EMouseRightButtonReleased Drizzle3D::EventType::MouseRightButtonReleased
 #define EMouseMoved Drizzle3D::EventType::MouseMoved
+
 #ifdef Drizzle3D_LINUX
 #define Drizzle3D_API 
 #else
@@ -54,6 +50,7 @@ typedef struct GLFWwindow GLFWwindow;
 Drizzle3D_API int TestProgram();
 
 namespace Drizzle3D {
+
     /*
     * Logging
     */
@@ -66,6 +63,25 @@ namespace Drizzle3D {
         void Warning(std::string message, std::string who = "[Drizzle3D::Core] ");
         void Info(std::string message, std::string who = "[Drizzle3D::Core] ");
     };
+
+    /*
+    * Flags
+    */
+
+    class Flags {
+	public:
+		Drizzle3D_API Flags() {}
+
+		Drizzle3D_API void AddFlag(const std::string& name, bool& pointer);
+
+        Drizzle3D_API void ChangeFlag(const std::string& name, const bool newValue);
+
+		Drizzle3D_API bool GetFlag(const std::string& name);
+
+	private:
+		std::map<std::string, bool*> flagMap;
+		Logging log;
+	};
 
     /*
     * Event
@@ -544,7 +560,7 @@ namespace Drizzle3D {
 
     class RenderingLayer : public Layer {
     public:
-        Drizzle3D_API RenderingLayer(Window* window, std::shared_ptr<ResourceManager> resmgr) : name("3DLayer"), show(true), pWindow(window), resourcemgr(resmgr) {}
+        Drizzle3D_API RenderingLayer(Window* window, std::shared_ptr<ResourceManager> resmgr);
 
         Drizzle3D_API void OnAttach() override;
         Drizzle3D_API void OnDetach() override {}
@@ -569,9 +585,9 @@ namespace Drizzle3D {
         Drizzle3D_API char* GetActiveCamera() { return current_camera; }
         Drizzle3D_API Camera ReturnActiveCamera();
         Drizzle3D_API Camera GetCameraFromID(char* cam);
+        Drizzle3D_API Flags* GetFlags() { return &flags; }
 
         bool Lighting = true;
-
     private:
         bool show;
         GLuint shaderProgram = 0;
@@ -581,6 +597,7 @@ namespace Drizzle3D {
         std::vector<Object> Objects;
         std::vector<Light> Lights;
         std::vector<Camera> Cameras;
+        Flags flags;
 
         GLuint lightsBuffer = 0;
         char* current_camera = (char*)"Default";
