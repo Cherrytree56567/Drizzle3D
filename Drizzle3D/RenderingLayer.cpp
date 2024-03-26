@@ -109,11 +109,17 @@ namespace Drizzle3D {
     }
 
     Object RenderingLayer::DrawVerts(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix) {
-
+        Object myOBJ;
+        myOBJ.vertices = vf.first;
+        myOBJ.indices = vf.second;
+        myOBJ.modelMatrix = modelMatrix;
+        myOBJ.mat = shaderProgram;
         // Create Vertex Array Object (VAO), Vertex Buffer Object (VBO), and Element Buffer Object (EBO)
         if (UseOpenGL) {
-            return DrawVertGLRendering(vf, modelMatrix);
+            DrawVertGLRendering(myOBJ);
         }
+
+        return myOBJ;
     }
 
     void RenderingLayer::Render() {

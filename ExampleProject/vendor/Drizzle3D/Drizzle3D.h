@@ -586,9 +586,13 @@ namespace Drizzle3D {
         Drizzle3D_API Camera ReturnActiveCamera();
         Drizzle3D_API Camera GetCameraFromID(char* cam);
         Drizzle3D_API Flags* GetFlags() { return &flags; }
-
-        bool Lighting = true;
+        Drizzle3D_API void InitGlRendering();
+        Drizzle3D_API void RenderInitGlRendering();
+        Drizzle3D_API void DrawVertGLRendering(Object& myOBJ);
     private:
+        bool Lighting = true;
+        bool fullscreen = false;
+        bool UseOpenGL = true;
         bool show;
         GLuint shaderProgram = 0;
         GLuint OldshaderProgram = 0;

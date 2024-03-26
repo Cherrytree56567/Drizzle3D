@@ -94,7 +94,7 @@ namespace Drizzle3D {
         Drizzle3D_API Flags* GetFlags() { return &flags; }
         Drizzle3D_API void InitGlRendering();
         Drizzle3D_API void RenderInitGlRendering();
-        Drizzle3D_API Object DrawVertGLRendering(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix);
+        Drizzle3D_API void DrawVertGLRendering(Object &myOBJ);
     private:
         bool Lighting = true;
         bool fullscreen = false;

@@ -18,12 +18,7 @@ namespace Drizzle3D {
         glUseProgram(0);
 	}
     
-    Object RenderingLayer::DrawVertGLRendering(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix) {
-        Object myOBJ;
-        myOBJ.vertices = vf.first;
-        myOBJ.indices = vf.second;
-        myOBJ.modelMatrix = modelMatrix;
-        myOBJ.mat = shaderProgram;
+    void RenderingLayer::DrawVertGLRendering(Object &myOBJ) {
 
         glGenVertexArrays(1, &myOBJ.VertexArray);
         glGenBuffers(1, &myOBJ.VertexBuffer);
@@ -53,7 +48,6 @@ namespace Drizzle3D {
 
         // Unbind VAO to prevent accidentally modifying it elsewhere
         glBindVertexArray(0);
-        return myOBJ;
     }
 
     void RenderingLayer::RenderInitGlRendering() {
