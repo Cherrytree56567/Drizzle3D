@@ -101,7 +101,7 @@ namespace Drizzle3D {
     private:
         bool Lighting = true;
         bool fullscreen = false;
-        bool UseOpenGL = false;
+        bool UseOpenGL = true;
         bool UseVulkan = false;
         bool show;
         GLuint shaderProgram = 0;
