@@ -589,10 +589,14 @@ namespace Drizzle3D {
         Drizzle3D_API void InitGlRendering();
         Drizzle3D_API void RenderInitGlRendering();
         Drizzle3D_API void DrawVertGLRendering(Object& myOBJ);
+        Drizzle3D_API void InitVulkanRendering();
+        Drizzle3D_API void RenderInitVulkanRendering();
+        Drizzle3D_API void DrawVertVulkanRendering(Object& myOBJ);
     private:
         bool Lighting = true;
         bool fullscreen = false;
-        bool UseOpenGL = true;
+        bool UseOpenGL = false;
+        bool UseVulkan = false;
         bool show;
         GLuint shaderProgram = 0;
         GLuint OldshaderProgram = 0;
@@ -606,6 +610,7 @@ namespace Drizzle3D {
         GLuint lightsBuffer = 0;
         char* current_camera = (char*)"Default";
         std::shared_ptr<ResourceManager> resourcemgr;
+        Logging log;
     };
 
     /*

@@ -20,6 +20,7 @@ namespace Drizzle3D {
         flags.AddFlag("Fullscreen", fullscreen);
         flags.AddFlag("Show", show);
         flags.AddFlag("UseOpenGL", UseOpenGL);
+        flags.AddFlag("UseVulkan", UseVulkan);
     }
 
     Drizzle3D_API std::pair<std::vector<float>, std::vector<unsigned int>> LoadObjFile(const std::string& filePath) {
@@ -74,8 +75,18 @@ namespace Drizzle3D {
         // Index Buffer
         // Shader (not needed)
         
+        if (UseOpenGL && UseVulkan) {
+            UseOpenGL = true;
+            UseVulkan = false;
+        }
+        if (!UseOpenGL && !UseVulkan) {
+            UseOpenGL = true;
+            UseVulkan = false;
+        }
         if (UseOpenGL) {
             InitGlRendering();
+        } else if (UseVulkan) {
+            InitVulkanRendering();
         }
 
         Light pointLight;
@@ -115,8 +126,18 @@ namespace Drizzle3D {
         myOBJ.modelMatrix = modelMatrix;
         myOBJ.mat = shaderProgram;
         // Create Vertex Array Object (VAO), Vertex Buffer Object (VBO), and Element Buffer Object (EBO)
+        if (!UseOpenGL && !UseVulkan) {
+            UseOpenGL = true;
+            UseVulkan = false;
+        }
+        if (UseOpenGL && UseVulkan) {
+            UseOpenGL = true;
+            UseVulkan = false;
+        }
         if (UseOpenGL) {
             DrawVertGLRendering(myOBJ);
+        } else if (UseVulkan) {
+            DrawVertVulkanRendering(myOBJ);
         }
 
         return myOBJ;
@@ -129,8 +150,18 @@ namespace Drizzle3D {
             glfwRestoreWindow(pWindow->returnwindow());
         }
 
+        if (!UseOpenGL && !UseVulkan) {
+            UseOpenGL = true;
+            UseVulkan = false;
+        }
+        if (UseOpenGL && UseVulkan) {
+            UseOpenGL = true;
+            UseVulkan = false;
+        }
         if (UseOpenGL) {
             RenderInitGlRendering();
+        } else if (UseVulkan) {
+            RenderInitVulkanRendering();
         }
     }
 

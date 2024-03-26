@@ -82,7 +82,7 @@
     <Filter Include="Source Files\Flags">
       <UniqueIdentifier>{d2494ee0-6d9c-46f2-8671-60f383df2474}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Rendering\OpenGL">
+    <Filter Include="Source Files\Rendering\Renderers">
       <UniqueIdentifier>{55af9157-afcc-4973-b2b9-89fdb471e1d1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -166,7 +166,10 @@
       <Filter>Source Files\Flags</Filter>
     </ClCompile>
     <ClCompile Include="OpenGL.cpp">
-      <Filter>Source Files\Rendering\OpenGL</Filter>
+      <Filter>Source Files\Rendering\Renderers</Filter>
+    </ClCompile>
+    <ClCompile Include="Vulkan.cpp">
+      <Filter>Source Files\Rendering\Renderers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
