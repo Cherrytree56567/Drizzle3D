@@ -79,9 +79,18 @@ namespace Drizzle3D {
             UseOpenGL = true;
             UseVulkan = false;
         }
+        if (UseOpenGL && !UseOLDOpenGL) {
+            UseOLDOpenGL = UseOpenGL;
+            InitGlRendering();
+        } else if (UseVulkan && !UseOLDVulkan) {
+            UseOLDVulkan = UseVulkan;
+            InitVulkanRendering();
+        }
         if (UseOpenGL) {
+            UseOLDOpenGL = UseOpenGL;
             InitGlRendering();
         } else if (UseVulkan) {
+            UseOLDVulkan = UseVulkan;
             InitVulkanRendering();
         }
 
@@ -126,9 +135,19 @@ namespace Drizzle3D {
             UseOpenGL = true;
             UseVulkan = false;
         }
+        if (UseOpenGL && !UseOLDOpenGL) {
+            UseOLDOpenGL = UseOpenGL;
+            InitGlRendering();
+        }
+        else if (UseVulkan && !UseOLDVulkan) {
+            UseOLDVulkan = UseVulkan;
+            InitVulkanRendering();
+        }
         if (UseOpenGL) {
+            UseOLDOpenGL = UseOpenGL;
             DrawVertGLRendering(myOBJ);
         } else if (UseVulkan) {
+            UseOLDVulkan = UseVulkan;
             DrawVertVulkanRendering(myOBJ);
         }
 
@@ -146,9 +165,23 @@ namespace Drizzle3D {
             UseOpenGL = true;
             UseVulkan = false;
         }
+        if (!UseOpenGL && !UseVulkan) {
+            UseOpenGL = true;
+            UseVulkan = false;
+        }
+        if (UseOpenGL && !UseOLDOpenGL) {
+            UseOLDOpenGL = UseOpenGL;
+            InitGlRendering();
+        }
+        else if (UseVulkan && !UseOLDVulkan) {
+            UseOLDVulkan = UseVulkan;
+            InitVulkanRendering();
+        }
         if (UseOpenGL) {
+            UseOLDOpenGL = UseOpenGL;
             RenderInitGlRendering();
         } else if (UseVulkan) {
+            UseOLDVulkan = UseVulkan;
             RenderInitVulkanRendering();
         }
     }

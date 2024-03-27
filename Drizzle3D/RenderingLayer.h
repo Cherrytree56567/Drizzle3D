@@ -103,6 +103,8 @@ namespace Drizzle3D {
         bool fullscreen = false;
         bool UseOpenGL = true;
         bool UseVulkan = false;
+        bool UseOLDOpenGL = true;
+        bool UseOLDVulkan = false;
         bool show;
         GLuint shaderProgram = 0;
         GLuint OldshaderProgram = 0;
