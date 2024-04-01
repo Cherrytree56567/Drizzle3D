@@ -1,18 +1,3 @@
 ﻿  Scanning sources for module dependencies...
   App.cpp
-  Camera.cpp
-  FirstPersonCamera.cpp
-  Light.cpp
-C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Light.cpp(13,16): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  Object.cpp
-  OpenGL.cpp
-C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\OpenGL.cpp(179,59): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  RenderingLayer.cpp
-  Shader.cpp
-  Skybox.cpp
-  Vulkan.cpp
-  main.cpp
-  Generating Code...
-C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Camera.cpp(46,1): warning C4715: 'Drizzle3D::RenderingLayer::ReturnActiveCamera': not all control paths return a value
-C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\Camera.cpp(54,1): warning C4715: 'Drizzle3D::RenderingLayer::GetCameraFromID': not all control paths return a value
   Drizzle3D.vcxproj -> C:\Users\ronit\Desktop\Drizzle3D\x64\Debug\Drizzle3D.dll

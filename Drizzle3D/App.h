@@ -9,6 +9,7 @@
 #include "Window.h"
 #include "ImGuiLayer.h"
 #include "RenderingLayer.h"
+#include "RenderingLayer2D.h"
 #include "Layer.h"
 #include "Logging.h"
 #include "AppEvent.h"
@@ -55,6 +56,7 @@ namespace Drizzle3D {
 		// Layers
 		std::shared_ptr<ImGuiLayer> imguilayer;
 		std::shared_ptr<RenderingLayer> renderinglayer;
+		std::shared_ptr<RenderingLayer2D> renderinglayer2d;
 
 		// Dispatchers
 		EventDispatcher dispatch;

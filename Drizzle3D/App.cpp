@@ -8,8 +8,9 @@
 #include "App.h"
 
 namespace Drizzle3D {
-	App::App(char* WindowName, int width, int height) : D3DWindow(&dispatch, WindowName, width, height), imguilayer(std::make_shared<ImGuiLayer>(&D3DWindow)), resourcemgr(std::make_shared<ResourceManager>()), renderinglayer(std::make_shared<RenderingLayer>(&D3DWindow, resourcemgr)) {
+	App::App(char* WindowName, int width, int height) : D3DWindow(&dispatch, WindowName, width, height), imguilayer(std::make_shared<ImGuiLayer>(&D3DWindow)), resourcemgr(std::make_shared<ResourceManager>()), renderinglayer(std::make_shared<RenderingLayer>(&D3DWindow, resourcemgr)), renderinglayer2d(std::make_shared<RenderingLayer2D>(&D3DWindow, resourcemgr)) {
 		imguilayer->setIGUI(imguilayer);
+		LayerDispatcher.AddLayer(renderinglayer2d);
 		LayerDispatcher.AddLayer(renderinglayer);
 		LayerDispatcher.AddLayer(imguilayer);
 		LayerDispatcher.DispatchLayerAttach();
