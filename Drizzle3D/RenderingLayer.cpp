@@ -74,11 +74,7 @@ namespace Drizzle3D {
         // Vertex Buffer
         // Index Buffer
         // Shader (not needed)
-        
-        if (UseOpenGL && UseVulkan) {
-            UseOpenGL = true;
-            UseVulkan = false;
-        }
+
         if (UseOpenGL && !UseOLDOpenGL) {
             UseOLDOpenGL = UseOpenGL;
             InitGlRendering();
@@ -87,11 +83,21 @@ namespace Drizzle3D {
             InitVulkanRendering();
         }
         if (UseOpenGL) {
+            UseOpenGL = true;
+            UseVulkan = false;
             UseOLDOpenGL = UseOpenGL;
             InitGlRendering();
         } else if (UseVulkan) {
+            UseOpenGL = false;
+            UseVulkan = true;
             UseOLDVulkan = UseVulkan;
             InitVulkanRendering();
+        }
+        else {
+            UseOpenGL = true;
+            UseVulkan = false;
+            UseOLDOpenGL = UseOpenGL;
+            InitGlRendering();
         }
 
         Light pointLight;
@@ -131,10 +137,6 @@ namespace Drizzle3D {
         myOBJ.modelMatrix = modelMatrix;
         myOBJ.mat = shaderProgram;
         // Create Vertex Array Object (VAO), Vertex Buffer Object (VBO), and Element Buffer Object (EBO)
-        if (UseOpenGL && UseVulkan) {
-            UseOpenGL = true;
-            UseVulkan = false;
-        }
         if (UseOpenGL && !UseOLDOpenGL) {
             UseOLDOpenGL = UseOpenGL;
             InitGlRendering();
@@ -144,11 +146,22 @@ namespace Drizzle3D {
             InitVulkanRendering();
         }
         if (UseOpenGL) {
+            UseOpenGL = true;
+            UseVulkan = false;
             UseOLDOpenGL = UseOpenGL;
             DrawVertGLRendering(myOBJ);
-        } else if (UseVulkan) {
+        }
+        else if (UseVulkan) {
+            UseOpenGL = false;
+            UseVulkan = true;
             UseOLDVulkan = UseVulkan;
             DrawVertVulkanRendering(myOBJ);
+        }
+        else {
+            UseOpenGL = true;
+            UseVulkan = false;
+            UseOLDOpenGL = UseOpenGL;
+            DrawVertGLRendering(myOBJ);
         }
 
         return myOBJ;
@@ -161,14 +174,6 @@ namespace Drizzle3D {
             glfwRestoreWindow(pWindow->returnwindow());
         }
 
-        if (UseOpenGL && UseVulkan) {
-            UseOpenGL = true;
-            UseVulkan = false;
-        }
-        if (!UseOpenGL && !UseVulkan) {
-            UseOpenGL = true;
-            UseVulkan = false;
-        }
         if (UseOpenGL && !UseOLDOpenGL) {
             UseOLDOpenGL = UseOpenGL;
             InitGlRendering();
@@ -178,11 +183,22 @@ namespace Drizzle3D {
             InitVulkanRendering();
         }
         if (UseOpenGL) {
+            UseOpenGL = true;
+            UseVulkan = false;
             UseOLDOpenGL = UseOpenGL;
             RenderInitGlRendering();
-        } else if (UseVulkan) {
+        }
+        else if (UseVulkan) {
+            UseOpenGL = false;
+            UseVulkan = true;
             UseOLDVulkan = UseVulkan;
             RenderInitVulkanRendering();
+        }
+        else {
+            UseOpenGL = true;
+            UseVulkan = false;
+            UseOLDOpenGL = UseOpenGL;
+            RenderInitGlRendering();
         }
     }
 

@@ -80,6 +80,11 @@ int main() {
     * Key Released and Mouse Released
     */
     std::shared_ptr<Drizzle3D::App> app = std::make_shared<Drizzle3D::App>();
+
+    app->GetRenderingLayer()->GetFlags()->ChangeFlag("Lighting", false);
+    app->GetRenderingLayer()->GetFlags()->ChangeFlag("UseOpenGL", false);
+    app->GetRenderingLayer()->GetFlags()->ChangeFlag("UseVulkan", true);
+
     Drizzle3D::FirstPersonCamera fpc(app);
     Drizzle3D::Skybox sky(app, "skybox.png");
     Drizzle3D::Material mat1(app->GetResourceManager(), "Scene1_vertex.glsl", "Scene1_fragment.glsl");
@@ -89,10 +94,6 @@ int main() {
         });
 
     app->dispatcher()->AddEventListener(EWindowClose, Closed);
-
-    app->GetRenderingLayer()->GetFlags()->ChangeFlag("Lighting", false);
-    app->GetRenderingLayer()->GetFlags()->ChangeFlag("UseOpenGL", false);
-    app->GetRenderingLayer()->GetFlags()->ChangeFlag("UseVulkan", true);
 
     app->ImguiLayer()->code = ImGUICode;
     app->GetRenderingLayer()->AddObject("Cube", app->GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Cube.obj"), modelMatrix));

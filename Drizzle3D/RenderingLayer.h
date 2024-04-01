@@ -55,6 +55,7 @@ namespace Drizzle3D {
         GLuint textureID = NULL;
         GLuint mat = 0;
         char* name = (char*)"PLZ_SPECIFY_A_NAME";
+        // Add New Vulkan Shader here as pass it NULL by default.
     };
 
     struct Camera {

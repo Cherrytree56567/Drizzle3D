@@ -2,6 +2,7 @@
 
 namespace Drizzle3D {
 	void RenderingLayer::InitGlRendering() {
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glEnable(GL_DEPTH_TEST);
         glGenBuffers(1, &lightsBuffer);
         glBindBuffer(GL_UNIFORM_BUFFER, lightsBuffer);

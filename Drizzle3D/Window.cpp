@@ -19,7 +19,6 @@ namespace Drizzle3D {
 		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		window = glfwCreateWindow(width, height, WindowName, NULL, NULL);
 		if (window == NULL) {
 			std::cout << "[Drizzle3D::Core::Window] Error: Failed to create GLFW window." << std::endl;
