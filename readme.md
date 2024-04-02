@@ -3,7 +3,7 @@
 
 [![MSBuild](https://github.com/Cherrytree56567/Drizzle3D/actions/workflows/msbuild.yml/badge.svg)](https://github.com/Cherrytree56567/Drizzle3D/actions/workflows/msbuild.yml) [![CodeQL](https://github.com/Cherrytree56567/Drizzle3D/actions/workflows/codeql.yml/badge.svg)](https://github.com/Cherrytree56567/Drizzle3D/actions/workflows/codeql.yml)
 <br>
-Drizzle3D is a highly experimental and unstable 3D Game Engine created for educational and hobbyist purposes. Drizzle3D is Built upon C++20, Glfw, ImGui and Glad.
+Drizzle3D is a 3D Game Engine created for educational and hobbyist purposes and will hopefully be used to create some games. Drizzle3D is Built upon C++20, Glfw, ImGui and Glad.
 
 ## Preview
 ![](https://github.com/Cherrytree56567/Drizzle3D/blob/master/Images/preview.png?raw=true)
@@ -19,4 +19,4 @@ Features:
 - Lighting
 - Objects
 - Skybox
-
+- Materials
