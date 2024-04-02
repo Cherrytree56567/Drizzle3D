@@ -44,8 +44,10 @@ namespace Drizzle3D {
 		Drizzle3D_API Window* window() { return &D3DWindow; }
 		Drizzle3D_API std::shared_ptr<ImGuiLayer> ImguiLayer() { return imguilayer; }
 		Drizzle3D_API std::shared_ptr<RenderingLayer> GetRenderingLayer() { return renderinglayer; }
+		Drizzle3D_API std::shared_ptr<RenderingLayer2D> GetRenderingLayer2D() { return renderinglayer2d; }
 		Drizzle3D_API std::shared_ptr<ResourceManager> GetResourceManager() { return resourcemgr; }
 		Drizzle3D_API EventDispatcher* dispatcher() { return &dispatch; }
+		Drizzle3D_API LayerDispatch* Layerdispatcher() { return &LayerDispatcher; }
 
 	private:
 		// Managers

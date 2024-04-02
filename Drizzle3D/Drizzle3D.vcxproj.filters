@@ -64,12 +64,6 @@
     <Filter Include="Source Files\3D Rendering\Buffer">
       <UniqueIdentifier>{3bad7381-83b5-479f-a1b6-a639953fa29c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\3D Rendering\FirstPersonCamera">
-      <UniqueIdentifier>{3afec6ac-2f27-4589-bcb8-cc3779ac7222}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\3D Rendering\Skybox">
-      <UniqueIdentifier>{0f98b883-d20a-4c7d-a13c-4a95407191cb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\3D Rendering\Camera">
       <UniqueIdentifier>{a65fb70a-4c79-4168-8dd8-de32fb586571}</UniqueIdentifier>
     </Filter>
@@ -79,14 +73,20 @@
     <Filter Include="Source Files\3D Rendering\Lights">
       <UniqueIdentifier>{156949e9-c526-4a45-9430-febd9031ad5c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\3D Rendering\Material">
-      <UniqueIdentifier>{766b5aaf-57a2-477b-82c9-2cc16b3d97a4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\3D Rendering\Renderers">
       <UniqueIdentifier>{55af9157-afcc-4973-b2b9-89fdb471e1d1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\2D Renderer">
       <UniqueIdentifier>{2aac2e7d-bb0e-43b3-b883-d720a1ffd874}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Material">
+      <UniqueIdentifier>{766b5aaf-57a2-477b-82c9-2cc16b3d97a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FirstPersonCamera">
+      <UniqueIdentifier>{3afec6ac-2f27-4589-bcb8-cc3779ac7222}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skybox">
+      <UniqueIdentifier>{0f98b883-d20a-4c7d-a13c-4a95407191cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -142,10 +142,10 @@
       <Filter>Source Files\3D Rendering\Shader</Filter>
     </ClCompile>
     <ClCompile Include="FirstPersonCamera.cpp">
-      <Filter>Source Files\3D Rendering\FirstPersonCamera</Filter>
+      <Filter>Source Files\FirstPersonCamera</Filter>
     </ClCompile>
     <ClCompile Include="Skybox.cpp">
-      <Filter>Source Files\3D Rendering\Skybox</Filter>
+      <Filter>Source Files\Skybox</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Source Files\ResourceManager</Filter>
@@ -160,7 +160,7 @@
       <Filter>Source Files\3D Rendering\Lights</Filter>
     </ClCompile>
     <ClCompile Include="Material.cpp">
-      <Filter>Source Files\3D Rendering\Material</Filter>
+      <Filter>Source Files\Material</Filter>
     </ClCompile>
     <ClCompile Include="vendor\glm\glm\glm.cppm">
       <Filter>Vendor</Filter>
@@ -228,7 +228,7 @@
       <Filter>Source Files\3D Rendering</Filter>
     </ClInclude>
     <ClInclude Include="FirstPersonCamera.h">
-      <Filter>Source Files\3D Rendering\FirstPersonCamera</Filter>
+      <Filter>Source Files\FirstPersonCamera</Filter>
     </ClInclude>
     <ClInclude Include="MouseCodes.h">
       <Filter>Source Files\Events\Mouse</Filter>
@@ -246,13 +246,13 @@
       <Filter>Source Files\Events\App</Filter>
     </ClInclude>
     <ClInclude Include="Skybox.h">
-      <Filter>Source Files\3D Rendering\Skybox</Filter>
+      <Filter>Source Files\Skybox</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Source Files\ResourceManager</Filter>
     </ClInclude>
     <ClInclude Include="Material.h">
-      <Filter>Source Files\3D Rendering\Material</Filter>
+      <Filter>Source Files\Material</Filter>
     </ClInclude>
     <ClInclude Include="base.h">
       <Filter>Source Files</Filter>
