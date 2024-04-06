@@ -20,6 +20,17 @@
 #include "imgui.h"
 typedef unsigned int GLuint;
 typedef struct GLFWwindow GLFWwindow;
+typedef unsigned int GLenum;
+// Data types
+#define GL_BYTE                           0x1400
+#define GL_UNSIGNED_BYTE                  0x1401
+#define GL_SHORT                          0x1402
+#define GL_UNSIGNED_SHORT                 0x1403
+#define GL_INT                            0x1404
+#define GL_UNSIGNED_INT                   0x1405
+#define GL_FLOAT                          0x1406
+#define GL_DOUBLE                         0x140A
+#define GL_FIXED                          0x140C
 #define AddEventCallback dispatcher()->AddEventListener
 #define EWindowClose Drizzle3D::EventType::WindowClose
 #define EWindowResize Drizzle3D::EventType::WindowResize

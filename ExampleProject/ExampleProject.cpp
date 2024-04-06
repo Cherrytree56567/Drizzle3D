@@ -103,7 +103,7 @@ int main() {
 
     app->GetRenderingLayer()->AddObject("Plane", app->GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Plane.obj"), modelMatrix));
     app->GetRenderingLayer()->returnObject("Plane")->textureID = Drizzle3D::GetTexture("duck.png");
-    app->GetRenderingLayer()->retutnObject("Plane")->hide = true;
+    app->GetRenderingLayer()->returnObject("Plane")->hide = true;
 
     app->GetRenderingLayer()->AddObject("Cylinder", app->GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Cylinder.obj"), modelMatrix));
     app->GetRenderingLayer()->returnObject("Cylinder")->textureID = Drizzle3D::GetTexture("duck.png");
