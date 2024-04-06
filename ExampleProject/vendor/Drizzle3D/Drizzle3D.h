@@ -549,6 +549,7 @@ namespace Drizzle3D {
         GLuint textureID = NULL;
         GLuint mat = NULL;
         char* name;
+        bool hide = false;
     };
 
     struct Camera {
@@ -729,5 +730,6 @@ namespace Drizzle3D {
     public:
         Drizzle3D_API Material(std::shared_ptr<ResourceManager> resourcemgr, const char* fname, const char* fgname);
         Drizzle3D_API GLuint GetShaderProgram();
+        Drizzle3D_API void AddVariableToShader(const char* variableName, GLenum type, void* value);
     };
 }
