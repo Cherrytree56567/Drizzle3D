@@ -95,7 +95,7 @@ namespace Drizzle3D {
             glUniform1f(glGetUniformLocation(shaderProgram, (lightPrefix + ".quadratic").c_str()), Lights[i].quadratic);
         }
         for (const auto& obje : Objects) {
-        if (obje.hide)
+        if (obje.hide) {
             continue;
         } else {
             if (obje.mat != shaderProgram) {
