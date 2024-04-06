@@ -60,4 +60,62 @@ namespace Drizzle3D {
         glAttachShader(shaderProgram, fragmentShader);
         glLinkProgram(shaderProgram);
 	}
+
+    void Material::AddVariableToShader(const char* variableName, GLenum type, void* value) {
+        GLint location = glGetUniformLocation(shaderProgram, variableName);
+        if (location != -1) {
+            switch (type) {
+            case GL_FLOAT:
+                glUniform1fv(location, 1, (GLfloat*)value);
+                break;
+            case GL_FLOAT_VEC2:
+                glUniform2fv(location, 1, (GLfloat*)value);
+                break;
+            case GL_FLOAT_VEC3:
+                glUniform3fv(location, 1, (GLfloat*)value);
+                break;
+            case GL_FLOAT_VEC4:
+                glUniform4fv(location, 1, (GLfloat*)value);
+                break;
+            case GL_INT:
+                glUniform1iv(location, 1, (GLint*)value);
+                break;
+            case GL_INT_VEC2:
+                glUniform2iv(location, 1, (GLint*)value);
+                break;
+            case GL_INT_VEC3:
+                glUniform3iv(location, 1, (GLint*)value);
+                break;
+            case GL_INT_VEC4:
+                glUniform4iv(location, 1, (GLint*)value);
+                break;
+            case GL_BOOL:
+                glUniform1iv(location, 1, (GLint*)value);
+                break;
+            case GL_BOOL_VEC2:
+                glUniform2iv(location, 1, (GLint*)value);
+                break;
+            case GL_BOOL_VEC3:
+                glUniform3iv(location, 1, (GLint*)value);
+                break;
+            case GL_BOOL_VEC4:
+                glUniform4iv(location, 1, (GLint*)value);
+                break;
+            case GL_FLOAT_MAT2:
+                glUniformMatrix2fv(location, 1, GL_FALSE, (GLfloat*)value);
+                break;
+            case GL_FLOAT_MAT3:
+                glUniformMatrix3fv(location, 1, GL_FALSE, (GLfloat*)value);
+                break;
+            case GL_FLOAT_MAT4:
+                glUniformMatrix4fv(location, 1, GL_FALSE, (GLfloat*)value);
+                break;
+            default:
+                log.Error("Unsupported variable type");
+            }
+        }
+        else {
+            log.Error("Variable " + (std::string)variableName + " not found in shader");
+        }
+    }
 }
