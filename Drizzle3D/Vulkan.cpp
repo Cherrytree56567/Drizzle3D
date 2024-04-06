@@ -35,6 +35,9 @@ namespace Drizzle3D {
             // Set its values
         }
         for (const auto& obje : Objects) {
+            if (obje.hide) {
+                continue;
+            } else {
             // Look at Object struct in RenderingLayer.h
             if (false) { // If Default Vulkan shader is not equal to Vulkan Shader Inside "obje"
 
@@ -85,7 +88,7 @@ namespace Drizzle3D {
 
                 // Pass Vulkan Shader the ModelMatrix
             }
-
+            }
             // Bind Vertex Array inside of "obje"
             // Draw Vertexs
         }

@@ -95,6 +95,9 @@ namespace Drizzle3D {
             glUniform1f(glGetUniformLocation(shaderProgram, (lightPrefix + ".quadratic").c_str()), Lights[i].quadratic);
         }
         for (const auto& obje : Objects) {
+        if (obje.hide) {
+            continue;
+        } else {
             if (obje.mat != shaderProgram) {
                 glUseProgram(obje.mat);
                 GLuint viewMatrixLoc = glGetUniformLocation(obje.mat, "viewMatrix");
@@ -177,6 +180,7 @@ namespace Drizzle3D {
 
             glBindVertexArray(obje.VertexArray);
             glDrawElements(GL_TRIANGLES, obje.indices.size(), GL_UNSIGNED_INT, 0);
+        }
         }
 
         glUseProgram(0);
