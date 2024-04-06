@@ -88,6 +88,7 @@ int main() {
     Drizzle3D::FirstPersonCamera fpc(app);
     Drizzle3D::Skybox sky(app, "skybox.png");
     Drizzle3D::Material mat1(app->GetResourceManager(), "Scene1_vertex.glsl", "Scene1_fragment.glsl");
+    mat1.AddVariableToShader("red", GL_FLOAT, 0.8f);
 
     app->dispatcher()->AddEventListener(EMouseMoved, [](GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
         std::cout << "Mouse Moved\n";
@@ -102,6 +103,7 @@ int main() {
 
     app->GetRenderingLayer()->AddObject("Plane", app->GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Plane.obj"), modelMatrix));
     app->GetRenderingLayer()->returnObject("Plane")->textureID = Drizzle3D::GetTexture("duck.png");
+    app->GetRenderingLayer()->retutnObject("Plane")->hide = true;
 
     app->GetRenderingLayer()->AddObject("Cylinder", app->GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Cylinder.obj"), modelMatrix));
     app->GetRenderingLayer()->returnObject("Cylinder")->textureID = Drizzle3D::GetTexture("duck.png");
