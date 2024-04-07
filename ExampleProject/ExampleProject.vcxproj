@@ -142,6 +142,10 @@
       <Project>{9418676d-e791-4e18-9ade-b95c3a85f803}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Scene1_fragment.glsl" />
+    <None Include="Scene1_vertex.glsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

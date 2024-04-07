@@ -31,7 +31,8 @@ uniform vec3 viewPos;
 uniform Light lights[MAX_LIGHTS];
 uniform int numLights;
 uniform bool IsSkyBox;
+uniform float red;
 
 void main() {
-    FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+    FragColor = vec4(red, 1.0f, 1.0f, 1.0f);
 }
