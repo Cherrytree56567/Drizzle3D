@@ -79,7 +79,7 @@ int main() {
     * NOTE:
     * Key Released and Mouse Released
     */
-    std::shared_ptr<Drizzle3D::App> app = std::make_shared<Drizzle3D::App>(Drizzle3D::RenderingAPI::Vulkan);
+    std::shared_ptr<Drizzle3D::App> app = std::make_shared<Drizzle3D::App>(Drizzle3D::RenderingAPI::OpenGL);
 
     app->GetRenderingLayer()->GetFlags()->ChangeFlag("Lighting", false);
 
