@@ -68,7 +68,7 @@ namespace Drizzle3D {
 
     class RenderingLayer : public Layer {
     public:
-        Drizzle3D_API RenderingLayer(Window* window, std::shared_ptr<ResourceManager> resmgr);
+        Drizzle3D_API RenderingLayer(RenderingAPI rAPI, Window* window, std::shared_ptr<ResourceManager> resmgr);
 
         Drizzle3D_API void OnAttach() override;
         Drizzle3D_API void OnDetach() override {}
@@ -103,10 +103,7 @@ namespace Drizzle3D {
     private:
         bool Lighting = true;
         bool fullscreen = false;
-        bool UseOpenGL = true;
-        bool UseVulkan = false;
-        bool UseOLDOpenGL = true;
-        bool UseOLDVulkan = false;
+        RenderingAPI renderingAPI;
         bool show;
         GLuint shaderProgram = 0;
         GLuint OldshaderProgram = 0;

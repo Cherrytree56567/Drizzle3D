@@ -23,7 +23,7 @@ namespace Drizzle3D {
 
     class ImGuiLayer : public Layer {
     public:
-        Drizzle3D_API ImGuiLayer(Window* window) : name("ImGUI"), show(true), pWindow(window) {}
+        Drizzle3D_API ImGuiLayer(RenderingAPI rAPI, Window* window) : renderingAPI(rAPI), name("ImGUI"), show(true), pWindow(window) {}
 
         typedef void (*ImGUICode)(std::shared_ptr<ImGuiLayer> igui);
 
@@ -47,5 +47,7 @@ namespace Drizzle3D {
         Window* pWindow;
         std::shared_ptr<ImGuiLayer> igui;
         std::vector<SliderFloat> SliderFloats;
+        RenderingAPI renderingAPI;
+        Logging log;
     };
 }

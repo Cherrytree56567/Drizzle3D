@@ -9,3 +9,9 @@
 #define Drizzle3D_API __declspec(dllimport)
 #endif
 #endif
+
+namespace Drizzle3D {
+	enum RenderingAPI {
+		OpenGL, Vulkan
+	};
+}

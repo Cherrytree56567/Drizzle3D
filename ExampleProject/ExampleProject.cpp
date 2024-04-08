@@ -79,11 +79,9 @@ int main() {
     * NOTE:
     * Key Released and Mouse Released
     */
-    std::shared_ptr<Drizzle3D::App> app = std::make_shared<Drizzle3D::App>();
+    std::shared_ptr<Drizzle3D::App> app = std::make_shared<Drizzle3D::App>(Drizzle3D::RenderingAPI::Vulkan);
 
     app->GetRenderingLayer()->GetFlags()->ChangeFlag("Lighting", false);
-    /*app->GetRenderingLayer()->GetFlags()->ChangeFlag("UseOpenGL", false);
-    app->GetRenderingLayer()->GetFlags()->ChangeFlag("UseVulkan", true);*/
 
     Drizzle3D::FirstPersonCamera fpc(app);
     Drizzle3D::Skybox sky(app, "skybox.png");

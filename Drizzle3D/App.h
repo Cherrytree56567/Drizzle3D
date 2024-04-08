@@ -9,7 +9,7 @@
 #include "Window.h"
 #include "ImGuiLayer.h"
 #include "RenderingLayer.h"
-#include "RenderingLayer2D.h"
+#include "Renderer2D.h"
 #include "Layer.h"
 #include "Logging.h"
 #include "AppEvent.h"
@@ -37,7 +37,7 @@
 namespace Drizzle3D {
 	class App {
 	public:
-		Drizzle3D_API App(char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
+		Drizzle3D_API App(RenderingAPI rAPI = RenderingAPI::OpenGL, char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
 
 		Drizzle3D_API bool Run();
 
@@ -63,5 +63,8 @@ namespace Drizzle3D {
 		// Dispatchers
 		EventDispatcher dispatch;
 		LayerDispatch LayerDispatcher;
+
+		// Flags
+		RenderingAPI renderingAPI;
 	};
 }

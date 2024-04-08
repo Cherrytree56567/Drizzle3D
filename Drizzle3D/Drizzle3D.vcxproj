@@ -33,7 +33,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="RenderingLayer.cpp" />
-    <ClCompile Include="RenderingLayer2D.cpp" />
+    <ClCompile Include="Renderer2D.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Skybox.cpp" />
@@ -66,7 +66,7 @@
     <ClInclude Include="MouseCodes.h" />
     <ClInclude Include="MouseEvent.h" />
     <ClInclude Include="RenderingLayer.h" />
-    <ClInclude Include="RenderingLayer2D.h" />
+    <ClInclude Include="Renderer2D.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="vendor\imgui\backends\imgui_impl_glfw.h" />

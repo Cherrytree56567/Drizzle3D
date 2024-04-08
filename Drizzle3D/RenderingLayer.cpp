@@ -15,12 +15,10 @@
 
 namespace Drizzle3D {
 
-    RenderingLayer::RenderingLayer(Window* window, std::shared_ptr<ResourceManager> resmgr) : name("3DLayer"), show(true), pWindow(window), resourcemgr(resmgr) {
+    RenderingLayer::RenderingLayer(RenderingAPI rAPI, Window* window, std::shared_ptr<ResourceManager> resmgr) : renderingAPI(rAPI), name("3DLayer"), show(true), pWindow(window), resourcemgr(resmgr) {
         flags.AddFlag("Lighting", Lighting);
         flags.AddFlag("Fullscreen", fullscreen);
         flags.AddFlag("Show", show);
-        flags.AddFlag("UseOpenGL", UseOpenGL);
-        flags.AddFlag("UseVulkan", UseVulkan);
     }
 
     Drizzle3D_API std::pair<std::vector<float>, std::vector<unsigned int>> LoadObjFile(const std::string& filePath) {
@@ -75,29 +73,14 @@ namespace Drizzle3D {
         // Index Buffer
         // Shader (not needed)
 
-        if (UseOpenGL && !UseOLDOpenGL) {
-            UseOLDOpenGL = UseOpenGL;
+        switch (renderingAPI) {
+        case RenderingAPI::OpenGL:
             InitGlRendering();
-        } else if (UseVulkan && !UseOLDVulkan) {
-            UseOLDVulkan = UseVulkan;
+            break;
+
+        case RenderingAPI::Vulkan:
             InitVulkanRendering();
-        }
-        if (UseOpenGL) {
-            UseOpenGL = true;
-            UseVulkan = false;
-            UseOLDOpenGL = UseOpenGL;
-            InitGlRendering();
-        } else if (UseVulkan) {
-            UseOpenGL = false;
-            UseVulkan = true;
-            UseOLDVulkan = UseVulkan;
-            InitVulkanRendering();
-        }
-        else {
-            UseOpenGL = true;
-            UseVulkan = false;
-            UseOLDOpenGL = UseOpenGL;
-            InitGlRendering();
+            break;
         }
 
         Light pointLight;
@@ -137,31 +120,14 @@ namespace Drizzle3D {
         myOBJ.modelMatrix = modelMatrix;
         myOBJ.mat = shaderProgram;
         // Create Vertex Array Object (VAO), Vertex Buffer Object (VBO), and Element Buffer Object (EBO)
-        if (UseOpenGL && !UseOLDOpenGL) {
-            UseOLDOpenGL = UseOpenGL;
-            InitGlRendering();
-        }
-        else if (UseVulkan && !UseOLDVulkan) {
-            UseOLDVulkan = UseVulkan;
-            InitVulkanRendering();
-        }
-        if (UseOpenGL) {
-            UseOpenGL = true;
-            UseVulkan = false;
-            UseOLDOpenGL = UseOpenGL;
+        switch (renderingAPI) {
+        case RenderingAPI::OpenGL:
             DrawVertGLRendering(myOBJ);
-        }
-        else if (UseVulkan) {
-            UseOpenGL = false;
-            UseVulkan = true;
-            UseOLDVulkan = UseVulkan;
+            break;
+
+        case RenderingAPI::Vulkan:
             DrawVertVulkanRendering(myOBJ);
-        }
-        else {
-            UseOpenGL = true;
-            UseVulkan = false;
-            UseOLDOpenGL = UseOpenGL;
-            DrawVertGLRendering(myOBJ);
+            break;
         }
 
         return myOBJ;
@@ -174,31 +140,14 @@ namespace Drizzle3D {
             glfwRestoreWindow(pWindow->returnwindow());
         }
 
-        if (UseOpenGL && !UseOLDOpenGL) {
-            UseOLDOpenGL = UseOpenGL;
-            InitGlRendering();
-        }
-        else if (UseVulkan && !UseOLDVulkan) {
-            UseOLDVulkan = UseVulkan;
-            InitVulkanRendering();
-        }
-        if (UseOpenGL) {
-            UseOpenGL = true;
-            UseVulkan = false;
-            UseOLDOpenGL = UseOpenGL;
+        switch (renderingAPI) {
+        case RenderingAPI::OpenGL:
             RenderInitGlRendering();
-        }
-        else if (UseVulkan) {
-            UseOpenGL = false;
-            UseVulkan = true;
-            UseOLDVulkan = UseVulkan;
+            break;
+
+        case RenderingAPI::Vulkan:
             RenderInitVulkanRendering();
-        }
-        else {
-            UseOpenGL = true;
-            UseVulkan = false;
-            UseOLDOpenGL = UseOpenGL;
-            RenderInitGlRendering();
+            break;
         }
     }
 

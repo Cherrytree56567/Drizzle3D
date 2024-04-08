@@ -1421,6 +1421,10 @@ Drizzle3D_API int TestProgram();
 
 namespace Drizzle3D {
 
+    enum RenderingAPI {
+        OpenGL, Vulkan
+    };
+
     /*
     * Logging
     */
@@ -1931,7 +1935,7 @@ namespace Drizzle3D {
 
     class RenderingLayer : public Layer {
     public:
-        Drizzle3D_API RenderingLayer(Window* window, std::shared_ptr<ResourceManager> resmgr);
+        Drizzle3D_API RenderingLayer(RenderingAPI rAPI, Window* window, std::shared_ptr<ResourceManager> resmgr);
 
         Drizzle3D_API void OnAttach() override;
         Drizzle3D_API void OnDetach() override {}
@@ -1966,10 +1970,7 @@ namespace Drizzle3D {
     private:
         bool Lighting = true;
         bool fullscreen = false;
-        bool UseOpenGL = true;
-        bool UseVulkan = false;
-        bool UseOLDOpenGL = true;
-        bool UseOLDVulkan = false;
+        RenderingAPI renderingAPI;
         bool show;
         GLuint shaderProgram = 0;
         GLuint OldshaderProgram = 0;
@@ -2001,7 +2002,7 @@ namespace Drizzle3D {
 
     class ImGuiLayer : public Layer {
     public:
-        Drizzle3D_API ImGuiLayer(Window* window) : name("ImGUI"), show(true), pWindow(window) {}
+        Drizzle3D_API ImGuiLayer(RenderingAPI rAPI, Window* window) : renderingAPI(rAPI), name("ImGUI"), show(true), pWindow(window) {}
 
         typedef void (*ImGUICode)(std::shared_ptr<ImGuiLayer> igui);
 
@@ -2025,6 +2026,34 @@ namespace Drizzle3D {
         Window* pWindow;
         std::shared_ptr<ImGuiLayer> igui;
         std::vector<SliderFloat> SliderFloats;
+        RenderingAPI renderingAPI;
+    };
+
+    /*
+    * Rendering Layer 2D
+    */
+
+    class RenderingLayer2D : public Layer {
+    public:
+        Drizzle3D_API RenderingLayer2D(RenderingAPI rAPI, Window* window, std::shared_ptr<ResourceManager> resmgr);
+
+        Drizzle3D_API void OnAttach() override;
+        Drizzle3D_API void OnDetach() override {}
+        Drizzle3D_API void Render() override;
+
+        Drizzle3D_API bool IsShown() const override { return show; }
+        Drizzle3D_API const std::string& GetName() const override { return name; }
+        Drizzle3D_API void SetShow(bool value) override { show = value; }
+
+        Drizzle3D_API Flags* GetFlags() { return &flags; }
+    private:
+        bool show;
+        Flags flags;
+        std::string name;
+        Window* pWindow;
+        std::shared_ptr<ResourceManager> resourcemgr;
+        Logging log;
+        RenderingAPI renderingAPI;
     };
 
     /*
@@ -2033,15 +2062,17 @@ namespace Drizzle3D {
 
     class App {
     public:
-        Drizzle3D_API App(char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
+        Drizzle3D_API App(RenderingAPI rAPI = RenderingAPI::OpenGL, char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
 
         Drizzle3D_API bool Run();
 
         Drizzle3D_API Window* window() { return &D3DWindow; }
         Drizzle3D_API std::shared_ptr<ImGuiLayer> ImguiLayer() { return imguilayer; }
         Drizzle3D_API std::shared_ptr<RenderingLayer> GetRenderingLayer() { return renderinglayer; }
+        Drizzle3D_API std::shared_ptr<RenderingLayer2D> GetRenderingLayer2D() { return renderinglayer2d; }
         Drizzle3D_API std::shared_ptr<ResourceManager> GetResourceManager() { return resourcemgr; }
         Drizzle3D_API EventDispatcher* dispatcher() { return &dispatch; }
+        Drizzle3D_API LayerDispatch* Layerdispatcher() { return &LayerDispatcher; }
 
     private:
         // Managers
@@ -2052,10 +2083,14 @@ namespace Drizzle3D {
         // Layers
         std::shared_ptr<ImGuiLayer> imguilayer;
         std::shared_ptr<RenderingLayer> renderinglayer;
+        std::shared_ptr<RenderingLayer2D> renderinglayer2d;
 
         // Dispatchers
         EventDispatcher dispatch;
         LayerDispatch LayerDispatcher;
+
+        // Flags
+        RenderingAPI renderingAPI;
     };
 
     /*

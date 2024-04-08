@@ -55,30 +55,6 @@
     <Filter Include="Source Files\Flags">
       <UniqueIdentifier>{d2494ee0-6d9c-46f2-8671-60f383df2474}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\3D Rendering">
-      <UniqueIdentifier>{2e56a764-a819-4f6c-ac7a-47180eec5afb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\3D Rendering\Shader">
-      <UniqueIdentifier>{391e6664-ed24-40b2-8f7a-fde64a48eb2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\3D Rendering\Buffer">
-      <UniqueIdentifier>{3bad7381-83b5-479f-a1b6-a639953fa29c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\3D Rendering\Camera">
-      <UniqueIdentifier>{a65fb70a-4c79-4168-8dd8-de32fb586571}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\3D Rendering\Object">
-      <UniqueIdentifier>{f9fdecd7-beb9-4b0f-b132-bd91d445e62e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\3D Rendering\Lights">
-      <UniqueIdentifier>{156949e9-c526-4a45-9430-febd9031ad5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\3D Rendering\Renderers">
-      <UniqueIdentifier>{55af9157-afcc-4973-b2b9-89fdb471e1d1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\2D Renderer">
-      <UniqueIdentifier>{2aac2e7d-bb0e-43b3-b883-d720a1ffd874}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Material">
       <UniqueIdentifier>{766b5aaf-57a2-477b-82c9-2cc16b3d97a4}</UniqueIdentifier>
     </Filter>
@@ -87,6 +63,30 @@
     </Filter>
     <Filter Include="Source Files\Skybox">
       <UniqueIdentifier>{0f98b883-d20a-4c7d-a13c-4a95407191cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer3D">
+      <UniqueIdentifier>{2e56a764-a819-4f6c-ac7a-47180eec5afb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer3D\Shader">
+      <UniqueIdentifier>{391e6664-ed24-40b2-8f7a-fde64a48eb2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer3D\Buffer">
+      <UniqueIdentifier>{3bad7381-83b5-479f-a1b6-a639953fa29c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer3D\Camera">
+      <UniqueIdentifier>{a65fb70a-4c79-4168-8dd8-de32fb586571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer3D\Object">
+      <UniqueIdentifier>{f9fdecd7-beb9-4b0f-b132-bd91d445e62e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer3D\Lights">
+      <UniqueIdentifier>{156949e9-c526-4a45-9430-febd9031ad5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer3D\Renderers">
+      <UniqueIdentifier>{55af9157-afcc-4973-b2b9-89fdb471e1d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer2D">
+      <UniqueIdentifier>{2aac2e7d-bb0e-43b3-b883-d720a1ffd874}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -136,10 +136,10 @@
       <Filter>Source Files\Layers</Filter>
     </ClCompile>
     <ClCompile Include="RenderingLayer.cpp">
-      <Filter>Source Files\3D Rendering</Filter>
+      <Filter>Source Files\Renderer3D</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
-      <Filter>Source Files\3D Rendering\Shader</Filter>
+      <Filter>Source Files\Renderer3D\Shader</Filter>
     </ClCompile>
     <ClCompile Include="FirstPersonCamera.cpp">
       <Filter>Source Files\FirstPersonCamera</Filter>
@@ -151,13 +151,13 @@
       <Filter>Source Files\ResourceManager</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Source Files\3D Rendering\Camera</Filter>
+      <Filter>Source Files\Renderer3D\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
-      <Filter>Source Files\3D Rendering\Object</Filter>
+      <Filter>Source Files\Renderer3D\Object</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
-      <Filter>Source Files\3D Rendering\Lights</Filter>
+      <Filter>Source Files\Renderer3D\Lights</Filter>
     </ClCompile>
     <ClCompile Include="Material.cpp">
       <Filter>Source Files\Material</Filter>
@@ -169,13 +169,13 @@
       <Filter>Source Files\Flags</Filter>
     </ClCompile>
     <ClCompile Include="OpenGL.cpp">
-      <Filter>Source Files\3D Rendering\Renderers</Filter>
+      <Filter>Source Files\Renderer3D\Renderers</Filter>
     </ClCompile>
     <ClCompile Include="Vulkan.cpp">
-      <Filter>Source Files\3D Rendering\Renderers</Filter>
+      <Filter>Source Files\Renderer3D\Renderers</Filter>
     </ClCompile>
-    <ClCompile Include="RenderingLayer2D.cpp">
-      <Filter>Source Files\2D Renderer</Filter>
+    <ClCompile Include="Renderer2D.cpp">
+      <Filter>Source Files\Renderer2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -225,7 +225,7 @@
       <Filter>Source Files\Layers</Filter>
     </ClInclude>
     <ClInclude Include="RenderingLayer.h">
-      <Filter>Source Files\3D Rendering</Filter>
+      <Filter>Source Files\Renderer3D</Filter>
     </ClInclude>
     <ClInclude Include="FirstPersonCamera.h">
       <Filter>Source Files\FirstPersonCamera</Filter>
@@ -263,18 +263,18 @@
     <ClInclude Include="Flags.h">
       <Filter>Source Files\Flags</Filter>
     </ClInclude>
-    <ClInclude Include="RenderingLayer2D.h">
-      <Filter>Source Files\2D Renderer</Filter>
+    <ClInclude Include="Renderer2D.h">
+      <Filter>Source Files\Renderer2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.glsl">
-      <Filter>Source Files\3D Rendering\Shader</Filter>
+      <Filter>Source Files\Renderer3D\Shader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl">
-      <Filter>Source Files\3D Rendering\Shader</Filter>
+      <Filter>Source Files\Renderer3D\Shader</Filter>
     </None>
   </ItemGroup>
 </Project>

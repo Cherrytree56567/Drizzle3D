@@ -27,23 +27,59 @@ namespace Drizzle3D {
     }
 
 	void ImGuiLayer::Render() {
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
+        switch (renderingAPI) {
+        case RenderingAPI::OpenGL:
+            ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplGlfw_NewFrame();
+            // ---- //
+            ImGui::NewFrame();
 
-        code(igui);
+            code(igui);
+            // ---- //
+            break;
+
+        case RenderingAPI::Vulkan:
+            log.Warning("ImGui Vulkan Frames Not Supported.");
+            break;
+        }
+        // TODO: After Vulkan Implementation transfer `ImGui::NewFrame();` and `code(igui);` here
+
+        
 
         IterateSliderFloat();
         SliderFloats.clear();
 
         // Rendering
-        ImGui::Render();
-        int display_w, display_h;
-        glfwGetFramebufferSize(pWindow->returnwindow(), &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
+        /*
+        * TODO: After Vulkan Implementation transfer ```ImGui::Render();
+                                                        int display_w, display_h;
+                                                        glfwGetFramebufferSize(pWindow->returnwindow(), &display_w, &display_h);``` here.
+        */
+        switch (renderingAPI) {
+        case RenderingAPI::OpenGL:
+            // ---- //
+            ImGui::Render();
+            int display_w, display_h;
+            glfwGetFramebufferSize(pWindow->returnwindow(), &display_w, &display_h);
+            // ----- //
+            glViewport(0, 0, display_w, display_h);
+            break;
 
-        // Render ImGui
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        case RenderingAPI::Vulkan:
+            log.Warning("ImGui Vulkan Viewporting Not Supported.");
+            break;
+        }
+
+        switch (renderingAPI) {
+        case RenderingAPI::OpenGL:
+            // Render ImGui
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+            break;
+
+        case RenderingAPI::Vulkan:
+            log.Warning("ImGui Vulkan Rendering Not Supported.");
+            break;
+        }
 	}
 
     void ImGuiLayer::OnAttach() {
@@ -52,10 +88,18 @@ namespace Drizzle3D {
         ImGui::CreateContext();
         imguiContext = ImGui::GetCurrentContext();
         ImGuiIO& io = ImGui::GetIO(); (void)io;
-        // Setup ImGui GLFW binding
-        ImGui_ImplGlfw_InitForOpenGL(pWindow->returnwindow(), true);
 
-        // Setup ImGui OpenGL binding
-        ImGui_ImplOpenGL3_Init("#version 330 core");
+        switch (renderingAPI) {
+        case RenderingAPI::OpenGL:
+            // Setup ImGui GLFW binding
+            ImGui_ImplGlfw_InitForOpenGL(pWindow->returnwindow(), true);
+            // Setup ImGui OpenGL binding
+            ImGui_ImplOpenGL3_Init("#version 330 core");
+            break;
+
+        case RenderingAPI::Vulkan:
+            log.Warning("ImGui Vulkan Initialization Not Supported.");
+            break;
+        }
     }
 }
