@@ -1,5 +1,7 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   Scanning sources for module dependencies...
+  OpenGL.cpp
+C:\Users\ronit\Desktop\Drizzle3D\Drizzle3D\OpenGL.cpp(185,59): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   Drizzle3D.vcxproj -> C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.dll
   C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.dll
   1 File(s) copied

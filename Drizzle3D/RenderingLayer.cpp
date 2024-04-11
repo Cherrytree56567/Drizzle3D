@@ -21,7 +21,7 @@ namespace Drizzle3D {
         flags.AddFlag("Show", show);
     }
 
-    std::pair<std::vector<float>, std::vector<unsigned int>> LoadObjFile(const std::string& filePath) {
+    Drizzle3D_API std::pair<std::vector<float>, std::vector<unsigned int>> LoadObjFile(const std::string& filePath) {
         std::vector<float> vertices;
         std::vector<unsigned int> indices;
 
@@ -151,7 +151,7 @@ namespace Drizzle3D {
         }
     }
 
-    GLuint GetTexture(const char* TexturePath) {
+    Drizzle3D_API GLuint GetTexture(const char* TexturePath) {
         // Load image using stb_image
         int width, height, channels;
         unsigned char* image = stbi_load(TexturePath, &width, &height, &channels, STBI_rgb);
