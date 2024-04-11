@@ -1,3 +1,16 @@
 .vs
 .o
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 .so
+*.lib
+=======
+.so
+>>>>>>> parent of 90c45da (Modified Git Ignore)
+=======
+.so
+>>>>>>> parent of 90c45da (Modified Git Ignore)
+=======
+.so
+>>>>>>> parent of 90c45da (Modified Git Ignore)
