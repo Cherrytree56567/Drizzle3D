@@ -9,6 +9,9 @@
 #include <functional>
 #include <deque>
 
+#define GLFW_INCLUDE_VULKAN
+#include <GLFW/glfw3.h>
+
 #include <vulkan/vulkan.h>
 #include <vulkan/vk_enum_string_helper.h>
 #include <vk_mem_alloc.h>
@@ -27,5 +30,6 @@
 
 namespace Drizzle3D {
     struct VulkanPipeline {
+        VkInstance instance;
     };
 }
