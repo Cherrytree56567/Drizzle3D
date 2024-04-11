@@ -88,6 +88,15 @@
     <Filter Include="Source Files\Renderer2D">
       <UniqueIdentifier>{2aac2e7d-bb0e-43b3-b883-d720a1ffd874}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Vendor\VkBootstrap">
+      <UniqueIdentifier>{fa2fa255-673a-463e-9733-2a34ef7f52c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer3D\Renderers\Vulkan">
+      <UniqueIdentifier>{216d96cf-4910-492e-a470-01ceb10bc11e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer3D\Renderers\OpenGL">
+      <UniqueIdentifier>{24491997-d0b6-4f55-b431-bb163eb68d07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -168,14 +177,17 @@
     <ClCompile Include="Flags.cpp">
       <Filter>Source Files\Flags</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGL.cpp">
-      <Filter>Source Files\Renderer3D\Renderers</Filter>
-    </ClCompile>
-    <ClCompile Include="Vulkan.cpp">
-      <Filter>Source Files\Renderer3D\Renderers</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer2D.cpp">
       <Filter>Source Files\Renderer2D</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\VkBootstrap\VkBootstrap.cpp">
+      <Filter>Vendor\VkBootstrap</Filter>
+    </ClCompile>
+    <ClCompile Include="Vulkan.cpp">
+      <Filter>Source Files\Renderer3D\Renderers\Vulkan</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL.cpp">
+      <Filter>Source Files\Renderer3D\Renderers\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +277,9 @@
     </ClInclude>
     <ClInclude Include="Renderer2D.h">
       <Filter>Source Files\Renderer2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Vulkan.h">
+      <Filter>Source Files\Renderer3D\Renderers\Vulkan</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

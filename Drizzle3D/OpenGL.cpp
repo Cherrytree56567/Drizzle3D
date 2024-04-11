@@ -13,7 +13,10 @@ namespace Drizzle3D {
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 
         GLuint projectionMatrixLoc = glGetUniformLocation(shaderProgram, "projectionMatrix");
-        Create_Shader("VertexShader.glsl", "FragmentShader.glsl");
+        const char* vertexshader = "#version 330 core\n\nlayout(location = 0) in vec3 aPos;\nlayout(location = 1) in vec2 aTexCoord;\nlayout(location = 2) in vec3 aNormal;\n\nout vec2 texCoord;\nout vec3 Normal;\nout vec3 FragPos;\n\nuniform mat4 projectionMatrix;\nuniform mat4 viewMatrix;\nuniform mat4 modelMatrix;\n\nvoid main() {\n    gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0);\n    texCoord = aTexCoord;\n    Normal = aNormal;\n    FragPos = vec3(modelMatrix * vec4(aPos, 1.0));\n}";
+        const char* fragshader = "#version 330 core\n#define MAX_LIGHTS 10\nin vec2 texCoord;in vec3 Normal;in vec3 FragPos;out vec4 FragColor;struct Light {vec3 direction;vec3 position;vec3 color;float strength;float SpecularStrength;vec3 ambient;vec3 diffuse;vec3 specular;int type;int id;float constant;float linear;float quadratic;};uniform sampler2D textureSampler;uniform vec3 viewPos;uniform Light lights[MAX_LIGHTS];uniform int numLights;uniform bool IsSkyBox;void main() {vec3 ambient = vec3(0.0);vec3 diffuse = vec3(0.0);vec3 specular = vec3(0.0);vec3 norm = normalize(Normal);vec3 viewDir = normalize(viewPos - FragPos);for (int i = 0; i < numLights; ++i) {vec3 lightDir;float attenuation = 1.0;if (lights[i].type == 0) {lightDir = normalize(-lights[i].direction);} else if (lights[i].type == 1) {lightDir = normalize(lights[i].position - FragPos);float distance = length(lights[i].position - FragPos);attenuation = 1.0 / (lights[i].constant + lights[i].linear * distance + lights[i].quadratic * (distance * distance));}float adjustedStrength = lights[i].strength * attenuation;ambient += adjustedStrength * lights[i].color * lights[i].ambient;float diff = max(dot(norm, lightDir), 0.0);diffuse += diff * lights[i].diffuse * lights[i].color;vec3 reflectDir = reflect(-lightDir, norm);float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);specular += attenuation * lights[i].SpecularStrength * spec * lights[i].specular * lights[i].color;}vec3 result = ambient + diffuse + specular;if (IsSkyBox == true) {FragColor = texture(textureSampler, texCoord);} else {FragColor = vec4(result, 1.0f) * texture(textureSampler, texCoord);}}";
+
+        Create_DefaultShader(vertexshader, fragshader);
         OldshaderProgram = shaderProgram;
         glUniformMatrix4fv(projectionMatrixLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
         glUseProgram(0);
@@ -187,4 +190,108 @@ namespace Drizzle3D {
         glDisable(GL_CULL_FACE);
     }
 
+    void RenderingLayer::Create_OpenGLShader(const char* fname, const char* fgname) {
+        Resource frag = resourcemgr->loadFile(fname, "r");
+
+        const char* VSSource = frag.content.c_str();
+
+        Resource vert = resourcemgr->loadFile(fgname, "r");
+
+        const char* FSSource = vert.content.c_str();
+
+        GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vertexShader, 1, &VSSource, 0);
+        glCompileShader(vertexShader);
+
+        GLint isCompiled = 0;
+        glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isCompiled);
+        if (isCompiled == GL_FALSE) {
+            std::cerr << "[Drizzle3D::Core::RenderingLayer] Error: Error compiling Vertex Shader" << std::endl;
+
+            // Print compilation log
+            GLint maxLength = 0;
+            glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength);
+            std::vector<GLchar> errorLog(maxLength);
+            glGetShaderInfoLog(vertexShader, maxLength, &maxLength, &errorLog[0]);
+            std::cerr << "Vertex Shader Compilation Log:\n" << &errorLog[0] << std::endl;
+
+            return;
+        }
+
+        GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(fragmentShader, 1, &FSSource, NULL);
+        glCompileShader(fragmentShader);
+
+        GLint isCompileda = 0;
+        glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &isCompileda);
+        if (isCompileda == GL_FALSE) {
+            std::cerr << "[Drizzle3D::Core::RenderingLayer] Error: Error compiling Fragment Shader" << std::endl;
+
+            // Print compilation log
+            GLint maxLength = 0;
+            glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &maxLength);
+            std::vector<GLchar> errorLog(maxLength);
+            glGetShaderInfoLog(fragmentShader, maxLength, &maxLength, &errorLog[0]);
+            std::cerr << "Fragment Shader Compilation Log:\n" << &errorLog[0] << std::endl;
+
+            return;
+        }
+
+        shaderProgram = glCreateProgram();
+        glAttachShader(shaderProgram, vertexShader);
+        glAttachShader(shaderProgram, fragmentShader);
+        glLinkProgram(shaderProgram);
+
+        glUseProgram(shaderProgram);
+    }
+
+    void RenderingLayer::Create_DefaultOpenGLShader(const char* fname, const char* fgname) {
+        const char* VSSource = fname;
+        const char* FSSource = fgname;
+
+        GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vertexShader, 1, &VSSource, 0);
+        glCompileShader(vertexShader);
+
+        GLint isCompiled = 0;
+        glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isCompiled);
+        if (isCompiled == GL_FALSE) {
+            std::cerr << "[Drizzle3D::Core::RenderingLayer] Error: Error compiling Vertex Shader" << std::endl;
+
+            // Print compilation log
+            GLint maxLength = 0;
+            glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength);
+            std::vector<GLchar> errorLog(maxLength);
+            glGetShaderInfoLog(vertexShader, maxLength, &maxLength, &errorLog[0]);
+            std::cerr << "Vertex Shader Compilation Log:\n" << &errorLog[0] << std::endl;
+
+            return;
+        }
+
+        GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(fragmentShader, 1, &FSSource, NULL);
+        glCompileShader(fragmentShader);
+
+        GLint isCompileda = 0;
+        glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &isCompileda);
+        if (isCompileda == GL_FALSE) {
+            std::cerr << "[Drizzle3D::Core::RenderingLayer] Error: Error compiling Fragment Shader" << std::endl;
+
+            // Print compilation log
+            GLint maxLength = 0;
+            glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &maxLength);
+            std::vector<GLchar> errorLog(maxLength);
+            glGetShaderInfoLog(fragmentShader, maxLength, &maxLength, &errorLog[0]);
+            std::cerr << "Fragment Shader Compilation Log:\n" << &errorLog[0] << std::endl;
+
+            return;
+        }
+
+        shaderProgram = glCreateProgram();
+        glAttachShader(shaderProgram, vertexShader);
+        glAttachShader(shaderProgram, fragmentShader);
+        glLinkProgram(shaderProgram);
+
+        glUseProgram(shaderProgram);
+    }
 }

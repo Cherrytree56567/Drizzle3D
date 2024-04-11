@@ -3,8 +3,11 @@
 namespace Drizzle3D {
 	void RenderingLayer::InitVulkanRendering() {
 		log.Warning("Vulkan Initialization Not Implemented.");
-		// Set GLFW Flags to NO_CLIENT_API
+        // Switch GLFW_CLIENT_API to GLFW_NO_API
+		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+
 		// Initialize Vulkan
+
 		glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 		// Init Vulkan Shaders
 		// Create shader modules for vertex and fragment shaders
@@ -104,4 +107,12 @@ namespace Drizzle3D {
 		// Copy vertex data to vertex buffer
 		// Create index buffer (similar to vertex buffer)
 	}
+
+    void RenderingLayer::Create_VulkanShader(const char* fname, const char* fgname) {
+
+    }
+
+    void RenderingLayer::Create_DefaultVulkanShader(const char* fname, const char* fgname) {
+
+    }
 }

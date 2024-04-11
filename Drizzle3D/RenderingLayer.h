@@ -17,6 +17,7 @@
 #include "ResourceManager.h"
 #include "base.h"
 #include "Flags.h"
+#include "Vulkan.h"
 
 namespace Drizzle3D {
 
@@ -79,6 +80,11 @@ namespace Drizzle3D {
         Drizzle3D_API void SetShow(bool value) override { show = value; }
 
         Drizzle3D_API void Create_Shader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        Drizzle3D_API void Create_OpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        Drizzle3D_API void Create_VulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        Drizzle3D_API void Create_DefaultShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        Drizzle3D_API void Create_DefaultOpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        Drizzle3D_API void Create_DefaultVulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
         Drizzle3D_API Object DrawVerts(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix = glm::mat4(1.0f));
         Drizzle3D_API void AddObject(const char* name, Object theObject);
         Drizzle3D_API Object* returnObject(const char* name);
@@ -109,6 +115,7 @@ namespace Drizzle3D {
         GLuint OldshaderProgram = 0;
         std::string name;
         Window* pWindow;
+        VulkanPipeline pVulkanPipe;
         std::vector<Object> Objects;
         std::vector<Light> Lights;
         std::vector<Camera> Cameras;

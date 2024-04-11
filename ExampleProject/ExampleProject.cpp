@@ -79,15 +79,15 @@ int main() {
     * NOTE:
     * Key Released and Mouse Released
     */
-    std::shared_ptr<Drizzle3D::App> app = std::make_shared<Drizzle3D::App>(Drizzle3D::RenderingAPI::OpenGL);
+    std::shared_ptr<Drizzle3D::App> app = std::make_shared<Drizzle3D::App>(Drizzle3D::RenderingAPI::Vulkan);
 
     app->GetRenderingLayer()->GetFlags()->ChangeFlag("Lighting", false);
 
     Drizzle3D::FirstPersonCamera fpc(app);
     Drizzle3D::Skybox sky(app, "skybox.png");
     Drizzle3D::Material mat1(app->GetResourceManager(), "Scene1_vertex.glsl", "Scene1_fragment.glsl");
-    float red = 1.0f;
-    mat1.AddVariableToShader("red", Drizzle3D_FLOAT, &red);
+    /*Fix code: float red = 1.0f;
+    mat1.AddVariableToShader("red", Drizzle3D_FLOAT, &red);*/
 
     app->dispatcher()->AddEventListener(EMouseMoved, [](GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
         std::cout << "Mouse Moved\n";
