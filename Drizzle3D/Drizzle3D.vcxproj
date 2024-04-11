@@ -187,7 +187,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>Drizzle3D_EXPORTS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>vendor\VkBootstrap;vendor;vendor\glm;vendor\Glad\include;vendor\imgui;vendor\GLFW\include;vendor\vulkan;vendor\Assimp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>vendor\VkBootstrap;vendor\vma;vendor;vendor\glm;vendor\Glad\include;vendor\imgui;vendor\GLFW\include;vendor\vulkan;vendor\Assimp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
