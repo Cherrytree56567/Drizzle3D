@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.dll</FullPath>
+      <FullPath>C:\Users\ronit\Desktop\Drizzle3D\Debug\Drizzle3D.dll</FullPath>
     </ProjectOutput>
     <ProjectOutput>
       <FullPath>C:\Users\ronit\Desktop\Drizzle3D\ExampleProject\x64\Debug\ExampleProject.exe</FullPath>

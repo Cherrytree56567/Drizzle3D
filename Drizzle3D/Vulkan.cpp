@@ -2,19 +2,25 @@
 
 namespace Drizzle3D {
 	void RenderingLayer::InitVulkanRendering() {
+        glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
 		log.Warning("Vulkan Initialization Not Implemented.");
         // Switch GLFW_CLIENT_API to GLFW_NO_API
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 
 		// Initialize Vulkan
+        uint32_t extensionCount = 0;
+        vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
 
-		glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+        //log.Info(std::to_string(extensionCount) + " Extensions Supported.");
+
 		// Init Vulkan Shaders
 		// Create shader modules for vertex and fragment shaders
 		// Create pipeline layout
 		// Create render pass
 		// Create graphics pipeline
 		// Create command buffers
+
+        log.Info("Vulkan Breakpoint.");
 	}
 
 	void RenderingLayer::RenderInitVulkanRendering() {
