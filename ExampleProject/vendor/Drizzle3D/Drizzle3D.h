@@ -17,6 +17,7 @@
 #include <map>
 #include <vector>
 #include <iostream>
+#include <vulkan/vulkan.h>
 #include "imgui.h"
 typedef unsigned int GLuint;
 typedef struct GLFWwindow GLFWwindow;
@@ -1891,6 +1892,10 @@ namespace Drizzle3D {
     Drizzle3D_API std::pair<std::vector<float>, std::vector<unsigned int>> LoadObjFile(const std::string& filePath);
     Drizzle3D_API GLuint GetTexture(const char* texturePath);
 
+    struct VulkanPipeline {
+        VkInstance instance;
+    };
+
     enum Lights {
         Directional,
         Point
@@ -1946,11 +1951,7 @@ namespace Drizzle3D {
         Drizzle3D_API void SetShow(bool value) override { show = value; }
 
         Drizzle3D_API void Create_Shader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        Drizzle3D_API void Create_OpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        Drizzle3D_API void Create_VulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
         Drizzle3D_API void Create_DefaultShader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        Drizzle3D_API void Create_DefaultOpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        Drizzle3D_API void Create_DefaultVulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
         Drizzle3D_API Object DrawVerts(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix = glm::mat4(1.0f));
         Drizzle3D_API void AddObject(const char* name, Object theObject);
         Drizzle3D_API Object* returnObject(const char* name);
@@ -1966,13 +1967,20 @@ namespace Drizzle3D {
         Drizzle3D_API Camera ReturnActiveCamera();
         Drizzle3D_API Camera GetCameraFromID(char* cam);
         Drizzle3D_API Flags* GetFlags() { return &flags; }
-        Drizzle3D_API void InitGlRendering();
-        Drizzle3D_API void RenderInitGlRendering();
-        Drizzle3D_API void DrawVertGLRendering(Object& myOBJ);
-        Drizzle3D_API void InitVulkanRendering();
-        Drizzle3D_API void RenderInitVulkanRendering();
-        Drizzle3D_API void DrawVertVulkanRendering(Object& myOBJ);
     private:
+        void InitGlRendering();
+        void RenderInitGlRendering();
+        void DrawVertGLRendering(Object& myOBJ);
+        void InitVulkanRendering();
+        void RenderInitVulkanRendering();
+        void DrawVertVulkanRendering(Object& myOBJ);
+        void Create_DefaultOpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        void Create_DefaultVulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        void Create_OpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        void Create_VulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+
+        bool checkValidationLayerSupport();
+
         bool Lighting = true;
         bool fullscreen = false;
         RenderingAPI renderingAPI;
@@ -1981,15 +1989,26 @@ namespace Drizzle3D {
         GLuint OldshaderProgram = 0;
         std::string name;
         Window* pWindow;
+        VulkanPipeline pVulkanPipe;
         std::vector<Object> Objects;
         std::vector<Light> Lights;
         std::vector<Camera> Cameras;
         Flags flags;
-
         GLuint lightsBuffer = 0;
         char* current_camera = (char*)"Default";
         std::shared_ptr<ResourceManager> resourcemgr;
         Logging log;
+        const uint32_t WIDTH = 800;
+        const uint32_t HEIGHT = 600;
+        const std::vector<const char*> validationLayers = {
+            "VK_LAYER_KHRONOS_validation"
+        };
+
+#ifdef NDEBUG
+        const bool enableValidationLayers = false;
+#else
+        const bool enableValidationLayers = true;
+#endif
     };
 
     /*

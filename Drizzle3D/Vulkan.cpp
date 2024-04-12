@@ -1,7 +1,7 @@
 #include "RenderingLayer.h"
 
 namespace Drizzle3D {
-    bool checkValidationLayerSupport() {
+    bool RenderingLayer::checkValidationLayerSupport() {
         uint32_t layerCount;
         vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
@@ -61,6 +61,8 @@ namespace Drizzle3D {
         vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
 
         log.Info(std::to_string(extensionCount) + " Extensions Supported.");
+
+        
 
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
         // Init Vulkan Shaders

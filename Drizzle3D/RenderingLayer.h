@@ -80,11 +80,7 @@ namespace Drizzle3D {
         Drizzle3D_API void SetShow(bool value) override { show = value; }
 
         Drizzle3D_API void Create_Shader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        Drizzle3D_API void Create_OpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        Drizzle3D_API void Create_VulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
         Drizzle3D_API void Create_DefaultShader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        Drizzle3D_API void Create_DefaultOpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        Drizzle3D_API void Create_DefaultVulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
         Drizzle3D_API Object DrawVerts(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix = glm::mat4(1.0f));
         Drizzle3D_API void AddObject(const char* name, Object theObject);
         Drizzle3D_API Object* returnObject(const char* name);
@@ -105,7 +101,14 @@ namespace Drizzle3D {
         void RenderInitGlRendering();
         void DrawVertGLRendering(Object& myOBJ);
         void InitVulkanRendering();
-        void RenderIn DrawVertVulkanRendering(Object& myOBJ);
+        void RenderInitVulkanRendering();
+        void DrawVertVulkanRendering(Object& myOBJ);
+        void Create_DefaultOpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        void Create_DefaultVulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        void Create_OpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        void Create_VulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+
+        bool checkValidationLayerSupport();
 
         bool Lighting = true;
         bool fullscreen = false;
@@ -120,12 +123,12 @@ namespace Drizzle3D {
         std::vector<Light> Lights;
         std::vector<Camera> Cameras;
         Flags flags;
-
-        // Vulkan Variable
-
+        GLuint lightsBuffer = 0;
+        char* current_camera = (char*)"Default";
+        std::shared_ptr<ResourceManager> resourcemgr;
+        Logging log;
         const uint32_t WIDTH = 800;
         const uint32_t HEIGHT = 600;
-
         const std::vector<const char*> validationLayers = {
             "VK_LAYER_KHRONOS_validation"
         };
@@ -135,10 +138,5 @@ namespace Drizzle3D {
 #else
         const bool enableValidationLayers = true;
 #endif
-
-        GLuint lightsBuffer = 0;
-        char* current_camera = (char*)"Default";
-        std::shared_ptr<ResourceManager> resourcemgr;
-        Logging log;
 	};
 }
