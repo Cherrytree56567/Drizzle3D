@@ -187,7 +187,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>Drizzle3D_EXPORTS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>vendor\VkBootstrap;vendor;vendor\glm;vendor\Glad\include;vendor\imgui;vendor\GLFW\include;vendor\vulkan;vendor\Assimp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>vendor\VkBootstrap;vendor\vma;vendor;vendor\glm;vendor\Glad\include;vendor\imgui;vendor\GLFW\include;vendor\vulkan;vendor\Assimp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -211,7 +211,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>Drizzle3D_EXPORTS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>vendor;vendor\glm;vendor\Glad\include;vendor\imgui;vendor\GLFW\include;vendor\Assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>vendor\VkBootstrap;vendor\vma;vendor;vendor\glm;vendor\Glad\include;vendor\imgui;vendor\GLFW\include;vendor\vulkan;vendor\Assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -222,7 +222,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>vendor\GLFW\lib-vc2022\glfw3.lib;vendor\GLFW\lib-vc2022\glfw3_mt.lib;vendor\GLFW\lib-vc2022\glfw3dll.lib;vendor\Assimp\lib\x64\assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vendor\GLFW\lib-vc2022\glfw3.lib;vendor\GLFW\lib-vc2022\glfw3_mt.lib;vendor\GLFW\lib-vc2022\glfw3dll.lib;vendor\Assimp\lib\x64\assimp-vc143-mt.lib;vendor\lib\*.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
