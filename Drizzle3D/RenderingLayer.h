@@ -100,13 +100,13 @@ namespace Drizzle3D {
         Drizzle3D_API Camera ReturnActiveCamera();
         Drizzle3D_API Camera GetCameraFromID(char* cam);
         Drizzle3D_API Flags* GetFlags() { return &flags; }
-        Drizzle3D_API void InitGlRendering();
-        Drizzle3D_API void RenderInitGlRendering();
-        Drizzle3D_API void DrawVertGLRendering(Object &myOBJ);
-        Drizzle3D_API void InitVulkanRendering();
-        Drizzle3D_API void RenderInitVulkanRendering();
-        Drizzle3D_API void DrawVertVulkanRendering(Object& myOBJ);
     private:
+        void InitGlRendering();
+        void RenderInitGlRendering();
+        void DrawVertGLRendering(Object& myOBJ);
+        void InitVulkanRendering();
+        void RenderIn DrawVertVulkanRendering(Object& myOBJ);
+
         bool Lighting = true;
         bool fullscreen = false;
         RenderingAPI renderingAPI;
@@ -120,6 +120,21 @@ namespace Drizzle3D {
         std::vector<Light> Lights;
         std::vector<Camera> Cameras;
         Flags flags;
+
+        // Vulkan Variable
+
+        const uint32_t WIDTH = 800;
+        const uint32_t HEIGHT = 600;
+
+        const std::vector<const char*> validationLayers = {
+            "VK_LAYER_KHRONOS_validation"
+        };
+
+#ifdef NDEBUG
+        const bool enableValidationLayers = false;
+#else
+        const bool enableValidationLayers = true;
+#endif
 
         GLuint lightsBuffer = 0;
         char* current_camera = (char*)"Default";

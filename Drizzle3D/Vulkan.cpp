@@ -1,12 +1,37 @@
 #include "RenderingLayer.h"
 
 namespace Drizzle3D {
-	void RenderingLayer::InitVulkanRendering() {
-		log.Warning("Vulkan Initialization Not Implemented.");
-        // Switch GLFW_CLIENT_API to GLFW_NO_API
-		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    bool checkValidationLayerSupport() {
+        uint32_t layerCount;
+        vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
-		// Initialize Vulkan
+        std::vector<VkLayerProperties> availableLayers(layerCount);
+        vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
+
+        for (const char* layerName : validationLayers) {
+            bool layerFound = false;
+
+            for (const auto& layerProperties : availableLayers) {
+                if (strcmp(layerName, layerProperties.layerName) == 0) {
+                    layerFound = true;
+                    break;
+                }
+            }
+
+            if (!layerFound) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    void RenderingLayer::InitVulkanRendering() {
+        log.Warning("Vulkan Initialization Not Implemented.");
+        // Switch GLFW_CLIENT_API to GLFW_NO_API
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+
+        // Initialize Vulkan
         VkApplicationInfo appInfo{};
         appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
         appInfo.pApplicationName = "New Drizzle3D Game";
@@ -32,17 +57,21 @@ namespace Drizzle3D {
             throw std::runtime_error("failed to create instance!");
         }
 
-        /*uint32_t extensionCount = 0;
-        vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);*/
+        uint32_t extensionCount = 0;
+        vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
 
-		glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-		// Init Vulkan Shaders
-		// Create shader modules for vertex and fragment shaders
-		// Create pipeline layout
-		// Create render pass
-		// Create graphics pipeline
-		// Create command buffers
-	}
+        log.Info(std::to_string(extensionCount) + " Extensions Supported.");
+
+        glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+        // Init Vulkan Shaders
+        // Create shader modules for vertex and fragment shaders
+        // Create pipeline layout
+        // Create render pass
+        // Create graphics pipeline
+        // Create command buffers
+
+        exit(0);
+    }
 
 	void RenderingLayer::RenderInitVulkanRendering() {
 		log.Warning("Vulkan Rendering Not Implemented.");

@@ -196,7 +196,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>vendor\GLFW\lib-vc2022\glfw3.lib;vendor\GLFW\lib-vc2022\glfw3_mt.lib;vendor\GLFW\lib-vc2022\glfw3dll.lib;vendor\Assimp\lib\x64\assimp-vc143-mt.lib;vendor\lib\*.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>vendor\GLFW\lib-vc2022\glfw3.lib;vendor\GLFW\lib-vc2022\glfw3_mt.lib;vendor\GLFW\lib-vc2022\glfw3dll.lib;vendor\Assimp\lib\x64\assimp-vc143-mt.lib;vendor\lib\vulkan-1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>vendor\lib\</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y "$(SolutionDir)ExampleProject\vendor\Drizzle3D\Drizzle3D.dll" "$(SolutionDir)ExampleProject\$(Platform)\$(Configuration)\"</Command>
