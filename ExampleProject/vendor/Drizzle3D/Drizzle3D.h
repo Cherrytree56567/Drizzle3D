@@ -25,6 +25,7 @@ VK_DEFINE_HANDLE(VkPhysicalDevice)
 VK_DEFINE_HANDLE(VkDevice)
 VK_DEFINE_HANDLE(VkQueue)
 VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkDebugUtilsMessengerEXT)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkSurfaceKHR)
 #include "imgui.h"
 typedef unsigned int GLuint;
 typedef struct GLFWwindow GLFWwindow;
@@ -1904,6 +1905,8 @@ namespace Drizzle3D {
         VkDebugUtilsMessengerEXT debugMessenger;
         VkDevice device;
         VkQueue graphicsQueue;
+        VkSurfaceKHR surface;
+        VkQueue presentQueue;
     };
 
     enum Lights {
@@ -1932,6 +1935,7 @@ namespace Drizzle3D {
 
     struct QueueFamilyIndices {
         std::optional<uint32_t> graphicsFamily;
+        std::optional<uint32_t> presentFamily;
 
         bool isComplete() {
             return graphicsFamily.has_value();
