@@ -107,8 +107,11 @@ namespace Drizzle3D {
         void Create_DefaultVulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
         void Create_OpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
         void Create_VulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        void VulkanDestroy();
 
         bool checkValidationLayerSupport();
+        std::vector<const char*> getRequiredExtensions();
+        int rateDeviceSuitability(VkPhysicalDevice device);
 
         bool Lighting = true;
         bool fullscreen = false;

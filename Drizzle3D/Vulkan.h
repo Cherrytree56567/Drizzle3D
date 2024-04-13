@@ -31,5 +31,6 @@
 namespace Drizzle3D {
     struct VulkanPipeline {
         VkInstance instance;
+        VkDebugUtilsMessengerEXT debugMessenger;
     };
 }

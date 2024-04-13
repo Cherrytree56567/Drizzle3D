@@ -18,10 +18,12 @@
 #include <vector>
 #include <iostream>
 #define VK_DEFINE_HANDLE(object) typedef struct object##_T* object;
+#define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef struct object##_T *object;
 VK_DEFINE_HANDLE(VkInstance)
 VK_DEFINE_HANDLE(VkPhysicalDevice)
 VK_DEFINE_HANDLE(VkDevice)
 VK_DEFINE_HANDLE(VkQueue)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkDebugUtilsMessengerEXT)
 #include "imgui.h"
 typedef unsigned int GLuint;
 typedef struct GLFWwindow GLFWwindow;
@@ -1898,6 +1900,7 @@ namespace Drizzle3D {
 
     struct VulkanPipeline {
         VkInstance instance;
+        VkDebugUtilsMessengerEXT debugMessenger;
     };
 
     enum Lights {
@@ -1982,8 +1985,11 @@ namespace Drizzle3D {
         void Create_DefaultVulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
         void Create_OpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
         void Create_VulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        void VulkanDestroy();
 
         bool checkValidationLayerSupport();
+        std::vector<const char*> getRequiredExtensions();
+        int rateDeviceSuitability(VkPhysicalDevice device);
 
         bool Lighting = true;
         bool fullscreen = false;

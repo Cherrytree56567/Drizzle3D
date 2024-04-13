@@ -86,6 +86,34 @@ namespace Drizzle3D {
         vkDestroyInstance(pVulkanPipe.instance, nullptr);
     }
 
+    int RenderingLayer::rateDeviceSuitability(VkPhysicalDevice device) {
+
+        VkPhysicalDeviceProperties deviceProperties;
+        VkPhysicalDeviceFeatures deviceFeatures;
+        vkGetPhysicalDeviceProperties(device, &deviceProperties);
+        vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
+
+        int score = 0;
+
+        
+        // Discrete GPUs have a significant performance advantage
+        if (deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU) {
+            score += 1000;
+        }
+
+        // Maximum possible size of textures affects graphics quality
+        score += deviceProperties.limits.maxImageDimension2D;
+
+        // Application can't function without geometry shaders
+        if (!deviceFeatures.geometryShader) {
+            return 0;
+        }
+
+        log.Info((std::string)deviceProperties.deviceName + (std::string)": " + std::to_string(score) + (std::string)" Points.", "[Drizzle3D::Core::Vulkan] ");
+
+        return score;
+    }
+
     void RenderingLayer::InitVulkanRendering() {
         log.Warning("Vulkan Initialization Not Implemented.");
         // Switch GLFW_CLIENT_API to GLFW_NO_API
@@ -104,9 +132,9 @@ namespace Drizzle3D {
 
         VkApplicationInfo appInfo{};
         appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-        appInfo.pApplicationName = "Hello Triangle";
+        appInfo.pApplicationName = "New Drizzle3D Game";
         appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-        appInfo.pEngineName = "No Engine";
+        appInfo.pEngineName = "Drizzle3D";
         appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
         appInfo.apiVersion = VK_API_VERSION_1_0;
 
@@ -133,7 +161,7 @@ namespace Drizzle3D {
         }
 
         if (vkCreateInstance(&createInfo, nullptr, &pVulkanPipe.instance) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create instance!");
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create instance!");
         }
 
         // Setup Debug Messenger
@@ -143,8 +171,36 @@ namespace Drizzle3D {
             populateDebugMessengerCreateInfo(createInfo);
 
             if (CreateDebugUtilsMessengerEXT(pVulkanPipe.instance, &createInfo, nullptr, &pVulkanPipe.debugMessenger) != VK_SUCCESS) {
-                throw std::runtime_error("failed to set up debug messenger!");
+                throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to set up debug messenger!");
             }
+        }
+
+        // Pick Physical Device
+        VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+
+        uint32_t deviceCount = 0;
+        vkEnumeratePhysicalDevices(pVulkanPipe.instance, &deviceCount, nullptr);
+
+        if (deviceCount == 0) {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to find GPUs with Vulkan support!");
+        }
+
+        std::vector<VkPhysicalDevice> devices(deviceCount);
+        vkEnumeratePhysicalDevices(pVulkanPipe.instance, &deviceCount, devices.data());
+
+        std::multimap<int, VkPhysicalDevice> candidates;
+
+        for (const auto& device : devices) {
+            int score = rateDeviceSuitability(device);
+            candidates.insert(std::make_pair(score, device));
+        }
+
+        // Check if the best candidate is suitable at all
+        if (candidates.rbegin()->first > 0) {
+            physicalDevice = candidates.rbegin()->second;
+        }
+        else {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to find a suitable GPU!");
         }
 
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
