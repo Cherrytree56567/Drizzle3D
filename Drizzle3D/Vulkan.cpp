@@ -234,6 +234,43 @@ namespace Drizzle3D {
             throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to find a suitable GPU!");
         }
 
+        // Create Logical Devices
+        QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+
+        VkDeviceQueueCreateInfo queueCreateInfo{};
+        queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+        queueCreateInfo.queueFamilyIndex = indices.graphicsFamily.value();
+        queueCreateInfo.queueCount = 1;
+
+        float queuePriority = 1.0f;
+        queueCreateInfo.pQueuePriorities = &queuePriority;
+
+        VkPhysicalDeviceFeatures deviceFeatures{};
+
+        VkDeviceCreateInfo createInfoDev{};
+        createInfoDev.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+
+        createInfoDev.pQueueCreateInfos = &queueCreateInfo;
+        createInfoDev.queueCreateInfoCount = 1;
+
+        createInfoDev.pEnabledFeatures = &deviceFeatures;
+
+        createInfoDev.enabledExtensionCount = 0;
+
+        if (enableValidationLayers) {
+            createInfoDev.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
+            createInfoDev.ppEnabledLayerNames = validationLayers.data();
+        }
+        else {
+            createInfoDev.enabledLayerCount = 0;
+        }
+
+        if (vkCreateDevice(physicalDevice, &createInfoDev, nullptr, &pVulkanPipe.device) != VK_SUCCESS) {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create logical device!");
+        }
+
+        vkGetDeviceQueue(pVulkanPipe.device, indices.graphicsFamily.value(), 0, &pVulkanPipe.graphicsQueue);
+
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
         // Init Vulkan Shaders
         // Create shader modules for vertex and fragment shaders
