@@ -17,7 +17,11 @@
 #include <map>
 #include <vector>
 #include <iostream>
-#include <vulkan/vulkan.h>
+#define VK_DEFINE_HANDLE(object) typedef struct object##_T* object;
+VK_DEFINE_HANDLE(VkInstance)
+VK_DEFINE_HANDLE(VkPhysicalDevice)
+VK_DEFINE_HANDLE(VkDevice)
+VK_DEFINE_HANDLE(VkQueue)
 #include "imgui.h"
 typedef unsigned int GLuint;
 typedef struct GLFWwindow GLFWwindow;
