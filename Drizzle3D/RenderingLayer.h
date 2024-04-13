@@ -112,6 +112,7 @@ namespace Drizzle3D {
         bool checkValidationLayerSupport();
         std::vector<const char*> getRequiredExtensions();
         int rateDeviceSuitability(VkPhysicalDevice device);
+        QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
 
         bool Lighting = true;
         bool fullscreen = false;

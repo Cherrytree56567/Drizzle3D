@@ -14,6 +14,7 @@
 #include <vector>
 #include <string>
 #include <any>
+#include <optional>
 #include <map>
 #include <vector>
 #include <iostream>
@@ -1927,6 +1928,14 @@ namespace Drizzle3D {
         float quadratic;
     };
 
+    struct QueueFamilyIndices {
+        std::optional<uint32_t> graphicsFamily;
+
+        bool isComplete() {
+            return graphicsFamily.has_value();
+        }
+    };
+
     struct Object {
         GLuint VertexArray, VertexBuffer, IndexBuffer;
         std::vector<float> vertices;
@@ -1990,6 +1999,7 @@ namespace Drizzle3D {
         bool checkValidationLayerSupport();
         std::vector<const char*> getRequiredExtensions();
         int rateDeviceSuitability(VkPhysicalDevice device);
+        QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
 
         bool Lighting = true;
         bool fullscreen = false;

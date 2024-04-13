@@ -33,4 +33,12 @@ namespace Drizzle3D {
         VkInstance instance;
         VkDebugUtilsMessengerEXT debugMessenger;
     };
+
+    struct QueueFamilyIndices {
+        std::optional<uint32_t> graphicsFamily;
+
+        bool isComplete() {
+            return graphicsFamily.has_value();
+        }
+    };
 }
