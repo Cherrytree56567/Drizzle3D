@@ -37,6 +37,7 @@ namespace Drizzle3D {
         VkQueue graphicsQueue;
         VkSurfaceKHR surface;
         VkQueue presentQueue;
+        VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
     };
 
     struct QueueFamilyIndices {
@@ -44,7 +45,7 @@ namespace Drizzle3D {
         std::optional<uint32_t> presentFamily;
 
         bool isComplete() {
-            return graphicsFamily.has_value();
+            return graphicsFamily.has_value() && presentFamily.has_value();
         }
     };
 }

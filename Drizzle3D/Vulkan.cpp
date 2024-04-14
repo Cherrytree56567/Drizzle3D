@@ -216,8 +216,12 @@ namespace Drizzle3D {
             }
         }
 
+        // Create Surface
+        if (glfwCreateWindowSurface(pVulkanPipe.instance, pWindow->returnwindow(), nullptr, &pVulkanPipe.surface) != VK_SUCCESS) {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create window surface!");
+        }
+
         // Pick Physical Device
-        VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 
         uint32_t deviceCount = 0;
         vkEnumeratePhysicalDevices(pVulkanPipe.instance, &deviceCount, nullptr);
@@ -238,14 +242,14 @@ namespace Drizzle3D {
 
         // Check if the best candidate is suitable at all
         if (candidates.rbegin()->first > 0) {
-            physicalDevice = candidates.rbegin()->second;
+            pVulkanPipe.physicalDevice = candidates.rbegin()->second;
         }
         else {
             throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to find a suitable GPU!");
         }
 
         // Create Logical Devices
-        QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+        QueueFamilyIndices indices = findQueueFamilies(pVulkanPipe.physicalDevice);
 
         std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
         std::set<uint32_t> uniqueQueueFamilies = { indices.graphicsFamily.value(), indices.presentFamily.value() };
@@ -280,17 +284,12 @@ namespace Drizzle3D {
             createInfoDev.enabledLayerCount = 0;
         }
 
-        if (vkCreateDevice(physicalDevice, &createInfoDev, nullptr, &pVulkanPipe.device) != VK_SUCCESS) {
+        if (vkCreateDevice(pVulkanPipe.physicalDevice, &createInfoDev, nullptr, &pVulkanPipe.device) != VK_SUCCESS) {
             throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create logical device!");
         }
 
         vkGetDeviceQueue(pVulkanPipe.device, indices.graphicsFamily.value(), 0, &pVulkanPipe.graphicsQueue);
         vkGetDeviceQueue(pVulkanPipe.device, indices.presentFamily.value(), 0, &pVulkanPipe.presentQueue);
-
-        // Create Surface
-        if (glfwCreateWindowSurface(pVulkanPipe.instance, pWindow->returnwindow(), nullptr, &pVulkanPipe.surface) != VK_SUCCESS) {
-            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create window surface!");
-        }
 
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
         // Init Vulkan Shaders

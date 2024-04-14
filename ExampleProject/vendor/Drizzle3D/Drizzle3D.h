@@ -26,6 +26,7 @@ VK_DEFINE_HANDLE(VkDevice)
 VK_DEFINE_HANDLE(VkQueue)
 VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkDebugUtilsMessengerEXT)
 VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkSurfaceKHR)
+#define VK_NULL_HANDLE nullptr
 #include "imgui.h"
 typedef unsigned int GLuint;
 typedef struct GLFWwindow GLFWwindow;
@@ -1907,6 +1908,7 @@ namespace Drizzle3D {
         VkQueue graphicsQueue;
         VkSurfaceKHR surface;
         VkQueue presentQueue;
+        VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
     };
 
     enum Lights {
@@ -1938,7 +1940,7 @@ namespace Drizzle3D {
         std::optional<uint32_t> presentFamily;
 
         bool isComplete() {
-            return graphicsFamily.has_value();
+            return graphicsFamily.has_value() && presentFamily.has_value();
         }
     };
 
