@@ -16,7 +16,6 @@
 #include <vulkan/vk_enum_string_helper.h>
 #include <vk_mem_alloc.h>
 #include <VkBootstrap.h>
-#include <set>
 
 #include <glm/mat4x4.hpp>
 #include <glm/vec4.hpp>
@@ -36,16 +35,13 @@ namespace Drizzle3D {
         VkDevice device;
         VkQueue graphicsQueue;
         VkSurfaceKHR surface;
-        VkQueue presentQueue;
-        VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
     };
 
     struct QueueFamilyIndices {
         std::optional<uint32_t> graphicsFamily;
-        std::optional<uint32_t> presentFamily;
 
         bool isComplete() {
-            return graphicsFamily.has_value() && presentFamily.has_value();
+            return graphicsFamily.has_value();
         }
     };
 }
