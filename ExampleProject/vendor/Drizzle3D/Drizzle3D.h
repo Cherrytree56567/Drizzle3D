@@ -23,10 +23,12 @@
 VK_DEFINE_HANDLE(VkInstance)
 VK_DEFINE_HANDLE(VkPhysicalDevice)
 VK_DEFINE_HANDLE(VkDevice)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkSwapchainKHR)
 VK_DEFINE_HANDLE(VkQueue)
 VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkDebugUtilsMessengerEXT)
 VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkSurfaceKHR)
 #define VK_KHR_SWAPCHAIN_EXTENSION_NAME   "VK_KHR_swapchain"
+#define VK_NULL_HANDLE nullptr
 
 typedef struct VkExtent2D {
     uint32_t    width;
@@ -2290,6 +2292,8 @@ namespace Drizzle3D {
         VkQueue graphicsQueue;
         VkSurfaceKHR surface;
         VkQueue presentQueue;
+        VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+        VkSwapchainKHR swapChain;
     };
 
     enum Lights {
@@ -2397,7 +2401,17 @@ namespace Drizzle3D {
         QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
         bool isDeviceSuitable(VkPhysicalDevice device);
         bool checkDeviceExtensionSupport(VkPhysicalDevice device);
-        SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device)
+        SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
+        VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
+        VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
+        VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
+
+        void createInstance();
+        void setupDebugMessenger();
+        void createSurface();
+        void pickPhysicalDevice();
+        void createLogicalDevice();
+        void createSwapChain();
 
         bool Lighting = true;
         bool fullscreen = false;

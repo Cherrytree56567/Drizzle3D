@@ -79,6 +79,7 @@ namespace Drizzle3D {
     }
 
     void RenderingLayer::VulkanDestroy() {
+        vkDestroySwapchainKHR(pVulkanPipe.device, pVulkanPipe.swapChain, nullptr);
         if (enableValidationLayers) {
             DestroyDebugUtilsMessengerEXT(pVulkanPipe.instance, pVulkanPipe.debugMessenger, nullptr);
         }
@@ -273,7 +274,13 @@ namespace Drizzle3D {
 
         bool extensionsSupported = checkDeviceExtensionSupport(device);
 
-        return indices.isComplete() && extensionsSupported;
+        bool swapChainAdequate = false;
+        if (extensionsSupported) {
+            SwapChainSupportDetails swapChainSupport = querySwapChainSupport(device);
+            swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
+        }
+
+        return indices.isComplete() && extensionsSupported && swapChainAdequate;
     }
 
     bool RenderingLayer::checkDeviceExtensionSupport(VkPhysicalDevice device) {
@@ -321,7 +328,7 @@ namespace Drizzle3D {
             return 0;
         }
 
-        if (isDeviceSuitable(device)) {
+        if (!isDeviceSuitable(device)) {
             score = 0;
             return 0;
         }
@@ -334,23 +341,68 @@ namespace Drizzle3D {
     SwapChainSupportDetails RenderingLayer::querySwapChainSupport(VkPhysicalDevice device) {
         SwapChainSupportDetails details;
 
+        vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, pVulkanPipe.surface, &details.capabilities);
+
+        uint32_t formatCount;
+        vkGetPhysicalDeviceSurfaceFormatsKHR(device, pVulkanPipe.surface, &formatCount, nullptr);
+
+        if (formatCount != 0) {
+            details.formats.resize(formatCount);
+            vkGetPhysicalDeviceSurfaceFormatsKHR(device, pVulkanPipe.surface, &formatCount, details.formats.data());
+        }
+
+        uint32_t presentModeCount;
+        vkGetPhysicalDeviceSurfacePresentModesKHR(device, pVulkanPipe.surface, &presentModeCount, nullptr);
+
+        if (presentModeCount != 0) {
+            details.presentModes.resize(presentModeCount);
+            vkGetPhysicalDeviceSurfacePresentModesKHR(device, pVulkanPipe.surface, &presentModeCount, details.presentModes.data());
+        }
+
         return details;
     }
 
-    void RenderingLayer::InitVulkanRendering() {
-        /* TODO: Carry on from step
-         * We'll now create a new function querySwapChainSupport that will populate this struct.
-        */
+    VkSurfaceFormatKHR RenderingLayer::chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats) {
+        for (const auto& availableFormat : availableFormats) {
+            if (availableFormat.format == VK_FORMAT_B8G8R8A8_SRGB && availableFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR) {
+                return availableFormat;
+            }
+        }
 
-        log.Warning("Vulkan Initialization Not Implemented.");
+        return availableFormats[0];
+    }
 
-        // Basic Info
-        uint32_t extensionCount = 0;
-        vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
+    VkPresentModeKHR RenderingLayer::chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes) {
+        for (const auto& availablePresentMode : availablePresentModes) {
+            if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR) {
+                return availablePresentMode;
+            }
+        }
 
-        log.Info(std::to_string(extensionCount) + " Extensions Supported.", "[Drizzle3D::Core::Vulkan] ");
+        return VK_PRESENT_MODE_FIFO_KHR;
+    }
 
-        // Initialize Vulkan
+    VkExtent2D RenderingLayer::chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities) {
+        if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
+            return capabilities.currentExtent;
+        }
+        else {
+            int width, height;
+            glfwGetFramebufferSize(pWindow->returnwindow(), &width, &height);
+
+            VkExtent2D actualExtent = {
+                static_cast<uint32_t>(width),
+                static_cast<uint32_t>(height)
+            };
+
+            actualExtent.width = std::clamp(actualExtent.width, capabilities.minImageExtent.width, capabilities.maxImageExtent.width);
+            actualExtent.height = std::clamp(actualExtent.height, capabilities.minImageExtent.height, capabilities.maxImageExtent.height);
+
+            return actualExtent;
+        }
+    }
+
+    void RenderingLayer::createInstance() {
         if (enableValidationLayers && !checkValidationLayerSupport()) {
             throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Validation layers requested, but not available!");
         }
@@ -388,8 +440,9 @@ namespace Drizzle3D {
         if (vkCreateInstance(&createInfo, nullptr, &pVulkanPipe.instance) != VK_SUCCESS) {
             throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create instance!");
         }
+    }
 
-        // Setup Debug Messenger
+    void RenderingLayer::setupDebugMessenger() {
         if (!enableValidationLayers) {
 
             VkDebugUtilsMessengerCreateInfoEXT createInfo;
@@ -399,8 +452,9 @@ namespace Drizzle3D {
                 throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to set up debug messenger!");
             }
         }
+    }
 
-        // Create Surface
+    void RenderingLayer::createSurface() {
         uint32_t count = 0;
         glfwGetRequiredInstanceExtensions(&count);
 
@@ -411,10 +465,9 @@ namespace Drizzle3D {
             switchError(s);
             throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create window surface!");
         }
+    }
 
-        // Pick Physical Device
-        VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-
+    void RenderingLayer::pickPhysicalDevice() {
         uint32_t deviceCount = 0;
         vkEnumeratePhysicalDevices(pVulkanPipe.instance, &deviceCount, nullptr);
 
@@ -434,14 +487,15 @@ namespace Drizzle3D {
 
         // Check if the best candidate is suitable at all
         if (candidates.rbegin()->first > 0) {
-            physicalDevice = candidates.rbegin()->second;
+            pVulkanPipe.physicalDevice = candidates.rbegin()->second;
         }
         else {
             throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to find a suitable GPU!");
         }
+    }
 
-        // Create Logical Devices
-        QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+    void RenderingLayer::createLogicalDevice() {
+        QueueFamilyIndices indices = findQueueFamilies(pVulkanPipe.physicalDevice);
 
         std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
         std::set<uint32_t> uniqueQueueFamilies = { indices.graphicsFamily.value(), indices.presentFamily.value() };
@@ -458,31 +512,100 @@ namespace Drizzle3D {
 
         VkPhysicalDeviceFeatures deviceFeatures{};
 
-        VkDeviceCreateInfo createInfoDev{};
-        createInfoDev.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+        VkDeviceCreateInfo createInfo{};
+        createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 
-        createInfoDev.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
-        createInfoDev.pQueueCreateInfos = queueCreateInfos.data();
+        createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
+        createInfo.pQueueCreateInfos = queueCreateInfos.data();
 
-        createInfoDev.pEnabledFeatures = &deviceFeatures;
+        createInfo.pEnabledFeatures = &deviceFeatures;
 
         createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());
         createInfo.ppEnabledExtensionNames = deviceExtensions.data();
 
         if (enableValidationLayers) {
-            createInfoDev.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
-            createInfoDev.ppEnabledLayerNames = validationLayers.data();
+            createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
+            createInfo.ppEnabledLayerNames = validationLayers.data();
         }
         else {
-            createInfoDev.enabledLayerCount = 0;
+            createInfo.enabledLayerCount = 0;
         }
 
-        if (vkCreateDevice(physicalDevice, &createInfoDev, nullptr, &pVulkanPipe.device) != VK_SUCCESS) {
+        if (vkCreateDevice(pVulkanPipe.physicalDevice, &createInfo, nullptr, &pVulkanPipe.device) != VK_SUCCESS) {
             throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create logical device!");
         }
 
         vkGetDeviceQueue(pVulkanPipe.device, indices.graphicsFamily.value(), 0, &pVulkanPipe.graphicsQueue);
         vkGetDeviceQueue(pVulkanPipe.device, indices.presentFamily.value(), 0, &pVulkanPipe.presentQueue);
+    }
+
+    void RenderingLayer::createSwapChain() {
+        SwapChainSupportDetails swapChainSupport = querySwapChainSupport(pVulkanPipe.physicalDevice);
+
+        VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
+        VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
+        VkExtent2D extent = chooseSwapExtent(swapChainSupport.capabilities);
+
+        uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
+
+        if (swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount) {
+            imageCount = swapChainSupport.capabilities.maxImageCount;
+        }
+
+        VkSwapchainCreateInfoKHR createInfo{};
+        createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
+        createInfo.surface = pVulkanPipe.surface;
+        createInfo.minImageCount = imageCount;
+        createInfo.imageFormat = surfaceFormat.format;
+        createInfo.imageColorSpace = surfaceFormat.colorSpace;
+        createInfo.imageExtent = extent;
+        createInfo.imageArrayLayers = 1;
+        createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+
+        QueueFamilyIndices indices = findQueueFamilies(pVulkanPipe.physicalDevice);
+        uint32_t queueFamilyIndices[] = { indices.graphicsFamily.value(), indices.presentFamily.value() };
+
+        if (indices.graphicsFamily != indices.presentFamily) {
+            createInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
+            createInfo.queueFamilyIndexCount = 2;
+            createInfo.pQueueFamilyIndices = queueFamilyIndices;
+        }
+        else {
+            createInfo.imageSharingMode = VK_SHARING_MODE_EXCLUSIVE;
+            createInfo.queueFamilyIndexCount = 0; // Optional
+            createInfo.pQueueFamilyIndices = nullptr; // Optional
+        }
+
+        createInfo.preTransform = swapChainSupport.capabilities.currentTransform;
+        createInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
+        createInfo.presentMode = presentMode;
+        createInfo.clipped = VK_TRUE;
+        createInfo.oldSwapchain = VK_NULL_HANDLE;
+
+        if (vkCreateSwapchainKHR(pVulkanPipe.device, &createInfo, nullptr, &pVulkanPipe.swapChain) != VK_SUCCESS) {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create swap chain!");
+        }
+    }
+
+    void RenderingLayer::InitVulkanRendering() {
+        /* TODO: Carry on from step
+         * We'll now create a new function querySwapChainSupport that will populate this struct.
+        */
+
+        log.Warning("Vulkan Initialization Not Implemented.");
+
+        // Basic Info
+        uint32_t extensionCount = 0;
+        vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
+
+        log.Info(std::to_string(extensionCount) + " Extensions Supported.", "[Drizzle3D::Core::Vulkan] ");
+
+        createInstance();
+        setupDebugMessenger();
+        createSurface();
+        pickPhysicalDevice();
+        createLogicalDevice();
+        createSwapChain();
 
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
         // Init Vulkan Shaders

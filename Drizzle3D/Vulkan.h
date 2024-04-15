@@ -37,6 +37,8 @@ namespace Drizzle3D {
         VkQueue graphicsQueue;
         VkSurfaceKHR surface;
         VkQueue presentQueue;
+        VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+        VkSwapchainKHR swapChain;
     };
 
     struct QueueFamilyIndices {
