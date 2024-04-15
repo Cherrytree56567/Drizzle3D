@@ -585,6 +585,13 @@ namespace Drizzle3D {
         if (vkCreateSwapchainKHR(pVulkanPipe.device, &createInfo, nullptr, &pVulkanPipe.swapChain) != VK_SUCCESS) {
             throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create swap chain!");
         }
+
+        vkGetSwapchainImagesKHR(pVulkanPipe.device, pVulkanPipe.swapChain, &imageCount, nullptr);
+        pVulkanPipe.swapChainImages.resize(imageCount);
+        vkGetSwapchainImagesKHR(pVulkanPipe.device, pVulkanPipe.swapChain, &imageCount, pVulkanPipe.swapChainImages.data());
+
+        pVulkanPipe.swapChainImageFormat = surfaceFormat.format;
+        pVulkanPipe.swapChainExtent = extent;
     }
 
     void RenderingLayer::InitVulkanRendering() {
