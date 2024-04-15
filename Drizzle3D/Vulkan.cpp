@@ -119,6 +119,155 @@ namespace Drizzle3D {
         return indices;
     }
 
+    void switchError(VkResult s) {
+        switch (s) {
+        case VK_NOT_READY:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_NOT_READY: A fence or query has not yet completed." << std::endl;
+            break;
+        case VK_TIMEOUT:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_TIMEOUT: A wait operation has not completed in the specified time." << std::endl;
+            break;
+        case VK_EVENT_SET:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_EVENT_SET: An event is signaled." << std::endl;
+            break;
+        case VK_EVENT_RESET:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_EVENT_RESET: An event is unsignaled." << std::endl;
+            break;
+        case VK_INCOMPLETE:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_INCOMPLETE: A return array was too small for the result." << std::endl;
+            break;
+        case VK_ERROR_OUT_OF_HOST_MEMORY:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_OUT_OF_HOST_MEMORY: A host memory allocation has failed." << std::endl;
+            break;
+        case VK_ERROR_OUT_OF_DEVICE_MEMORY:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_OUT_OF_DEVICE_MEMORY: A device memory allocation has failed." << std::endl;
+            break;
+        case VK_ERROR_INITIALIZATION_FAILED:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_INITIALIZATION_FAILED: Initialization of an object could not be completed for implementation-specific reasons." << std::endl;
+            break;
+        case VK_ERROR_DEVICE_LOST:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_DEVICE_LOST: The logical or physical device has been lost." << std::endl;
+            break;
+        case VK_ERROR_MEMORY_MAP_FAILED:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_MEMORY_MAP_FAILED: Mapping of a memory object has failed." << std::endl;
+            break;
+        case VK_ERROR_LAYER_NOT_PRESENT:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_LAYER_NOT_PRESENT: A requested layer is not present or could not be loaded." << std::endl;
+            break;
+        case VK_ERROR_EXTENSION_NOT_PRESENT:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_EXTENSION_NOT_PRESENT: A requested extension is not supported." << std::endl;
+            break;
+        case VK_ERROR_FEATURE_NOT_PRESENT:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_FEATURE_NOT_PRESENT: A requested feature is not supported." << std::endl;
+            break;
+        case VK_ERROR_INCOMPATIBLE_DRIVER:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_INCOMPATIBLE_DRIVER: The requested version of Vulkan is not supported by the driver or is otherwise incompatible for implementation-specific reasons." << std::endl;
+            break;
+        case VK_ERROR_TOO_MANY_OBJECTS:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_TOO_MANY_OBJECTS: Too many objects of the type have already been created." << std::endl;
+            break;
+        case VK_ERROR_FORMAT_NOT_SUPPORTED:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_FORMAT_NOT_SUPPORTED: A requested format is not supported on this device." << std::endl;
+            break;
+        case VK_ERROR_FRAGMENTED_POOL:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_FRAGMENTED_POOL: A pool allocation has failed due to fragmentation of the pool's memory." << std::endl;
+            break;
+        case VK_ERROR_UNKNOWN:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_UNKNOWN: An unknown error occurred." << std::endl;
+            break;
+        case VK_ERROR_OUT_OF_POOL_MEMORY:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_OUT_OF_POOL_MEMORY: A pool memory allocation has failed." << std::endl;
+            break;
+        case VK_ERROR_INVALID_EXTERNAL_HANDLE:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_INVALID_EXTERNAL_HANDLE: An external handle is not a valid handle." << std::endl;
+            break;
+        case VK_ERROR_FRAGMENTATION_EXT:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_FRAGMENTATION_EXT: A descriptor pool creation has failed due to fragmentation." << std::endl;
+            break;
+        case VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS: An opaque capture address is not valid." << std::endl;
+            break;
+        case VK_ERROR_SURFACE_LOST_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_SURFACE_LOST_KHR: The surface is no longer available." << std::endl;
+            break;
+        case VK_ERROR_NATIVE_WINDOW_IN_USE_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_NATIVE_WINDOW_IN_USE_KHR: The requested window is already in use by Vulkan or another API in a manner which prevents it from being used again." << std::endl;
+            break;
+        case VK_SUBOPTIMAL_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_SUBOPTIMAL_KHR: A swapchain no longer matches the surface properties exactly, but can still be used to present to the surface successfully." << std::endl;
+            break;
+        case VK_ERROR_OUT_OF_DATE_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_OUT_OF_DATE_KHR: A surface has changed in such a way that it is no longer compatible with the swapchain, and further presentation requests using the swapchain will fail." << std::endl;
+            break;
+        case VK_ERROR_INCOMPATIBLE_DISPLAY_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_INCOMPATIBLE_DISPLAY_KHR: The display used by a swapchain does not use the same presentable image layout, or is incompatible in a way that prevents sharing an image." << std::endl;
+            break;
+        case VK_ERROR_VALIDATION_FAILED_EXT:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_VALIDATION_FAILED_EXT: A validation layer found an error." << std::endl;
+            break;
+        case VK_ERROR_INVALID_SHADER_NV:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_INVALID_SHADER_NV: One or more shaders failed to compile or link." << std::endl;
+            break;
+        case VK_ERROR_INVALID_VIDEO_STD_PARAMETERS_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_INVALID_VIDEO_STD_PARAMETERS_KHR: One or more parameters provided to CreateVideoSessionKHR are not within valid ranges." << std::endl;
+            break;
+        case VK_ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT: Layout in DRM Format Modifier is not supported." << std::endl;
+            break;
+        case VK_ERROR_NOT_PERMITTED_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_NOT_PERMITTED_KHR: Requested operation is not permitted." << std::endl;
+            break;
+        case VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT: An operation on a swapchain created with a full-screen exclusive mode presentation type failed because the mode is no longer supported." << std::endl;
+            break;
+        case VK_THREAD_IDLE_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_THREAD_IDLE_KHR: A deferred operation is waiting on a thread." << std::endl;
+            break;
+        case VK_THREAD_DONE_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_THREAD_DONE_KHR: A deferred operation is blocked on a thread." << std::endl;
+            break;
+        case VK_OPERATION_DEFERRED_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_OPERATION_DEFERRED_KHR: A deferred operation was requested and no deferred operation is pending." << std::endl;
+            break;
+        case VK_OPERATION_NOT_DEFERRED_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_OPERATION_NOT_DEFERRED_KHR: A deferred operation is pending and a deferred operation was requested but not performed." << std::endl;
+            break;
+        case VK_ERROR_COMPRESSION_EXHAUSTED_EXT:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_COMPRESSION_EXHAUSTED_EXT: A block of compressed data was too large to be processed or contained an invalid block." << std::endl;
+            break;
+        case VK_INCOMPATIBLE_SHADER_BINARY_EXT:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_INCOMPATIBLE_SHADER_BINARY_EXT: The shader binary is not compatible with one or more of the rest of the pipeline state." << std::endl;
+            break;
+        case VK_PIPELINE_COMPILE_REQUIRED:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_PIPELINE_COMPILE_REQUIRED: A requested pipeline creation requires compilation but the application has not made use of the pipeline compilation feedback information." << std::endl;
+            break;
+        case VK_ERROR_IMAGE_USAGE_NOT_SUPPORTED_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_IMAGE_USAGE_NOT_SUPPORTED_KHR: The image usage is not supported by the current queue family." << std::endl;
+            break;
+        case VK_ERROR_VIDEO_PICTURE_LAYOUT_NOT_SUPPORTED_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_VIDEO_PICTURE_LAYOUT_NOT_SUPPORTED_KHR: The video decoder is not capable of changing the video picture layout." << std::endl;
+            break;
+        case VK_ERROR_VIDEO_PROFILE_OPERATION_NOT_SUPPORTED_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_VIDEO_PROFILE_OPERATION_NOT_SUPPORTED_KHR: The video decoder cannot create the requested video picture layout." << std::endl;
+            break;
+        case VK_ERROR_VIDEO_PROFILE_FORMAT_NOT_SUPPORTED_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_VIDEO_PROFILE_FORMAT_NOT_SUPPORTED_KHR: The video decoder cannot create the requested video picture layout because it doesn't support it in the requested format." << std::endl;
+            break;
+        case VK_ERROR_VIDEO_PROFILE_CODEC_NOT_SUPPORTED_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_VIDEO_PROFILE_CODEC_NOT_SUPPORTED_KHR: The video decoder cannot create the requested video picture layout because it doesn't support the requested codec." << std::endl;
+            break;
+        case VK_ERROR_VIDEO_STD_VERSION_NOT_SUPPORTED_KHR:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_ERROR_VIDEO_STD_VERSION_NOT_SUPPORTED_KHR: The video decoder cannot create the requested video picture layout because it doesn't support the requested standard version." << std::endl;
+            break;
+        case VK_RESULT_MAX_ENUM:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: VK_RESULT_MAX_ENUM: Maximum value of an enumeration." << std::endl;
+            break;
+        default:
+            std::cout << "[Drizzle3D::Core::Vulkan] Error: Unknown Vulkan error code: " << s << std::endl;
+            break;
+        }
+    }
+
     int RenderingLayer::rateDeviceSuitability(VkPhysicalDevice device) {
 
         VkPhysicalDeviceProperties deviceProperties;
@@ -215,8 +364,15 @@ namespace Drizzle3D {
         }
 
         // Create Surface
+        uint32_t count = 0;
+        glfwGetRequiredInstanceExtensions(&count);
+
+        std::cout << "Required Instance Extensions: " << count << "\n";
+
         GLFWwindow* currentContext = glfwGetCurrentContext();
-        if (glfwCreateWindowSurface(pVulkanPipe.instance, currentContext, nullptr, &pVulkanPipe.surface) != VK_SUCCESS) {
+        VkResult s = glfwCreateWindowSurface(pVulkanPipe.instance, currentContext, nullptr, &pVulkanPipe.surface);
+        if (s != VK_SUCCESS) {
+            switchError(s);
             throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create window surface!");
         }
 
