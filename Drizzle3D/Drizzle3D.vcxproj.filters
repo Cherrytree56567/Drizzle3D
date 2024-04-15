@@ -282,14 +282,4 @@
       <Filter>Source Files\Renderer3D\Renderers\Vulkan</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="VertexShader.glsl">
-      <Filter>Source Files\Renderer3D\Shader</Filter>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="FragmentShader.glsl">
-      <Filter>Source Files\Renderer3D\Shader</Filter>
-    </None>
-  </ItemGroup>
 </Project>

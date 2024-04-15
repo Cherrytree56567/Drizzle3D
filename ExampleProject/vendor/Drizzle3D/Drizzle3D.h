@@ -15,19 +15,41 @@
 #include <string>
 #include <any>
 #include <optional>
+#include <variant>
 #include <map>
 #include <vector>
 #include <iostream>
 #define VK_DEFINE_HANDLE(object) typedef struct object##_T* object;
 #define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef struct object##_T *object;
-VK_DEFINE_HANDLE(VkInstance)
-VK_DEFINE_HANDLE(VkPhysicalDevice)
-VK_DEFINE_HANDLE(VkDevice)
 VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkSwapchainKHR)
-VK_DEFINE_HANDLE(VkQueue)
 VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkImage)
 VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkDebugUtilsMessengerEXT)
 VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkSurfaceKHR)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkBuffer)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkImage)
+VK_DEFINE_HANDLE(VkInstance)
+VK_DEFINE_HANDLE(VkPhysicalDevice)
+VK_DEFINE_HANDLE(VkDevice)
+VK_DEFINE_HANDLE(VkQueue)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkSemaphore)
+VK_DEFINE_HANDLE(VkCommandBuffer)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkFence)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkDeviceMemory)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkEvent)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkQueryPool)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkBufferView)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkImageView)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkShaderModule)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkPipelineCache)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkPipelineLayout)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkPipeline)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkRenderPass)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkDescriptorSetLayout)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkSampler)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkDescriptorSet)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkDescriptorPool)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkFramebuffer)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkCommandPool)
 #define VK_KHR_SWAPCHAIN_EXTENSION_NAME   "VK_KHR_swapchain"
 #define VK_NULL_HANDLE nullptr
 
@@ -2298,12 +2320,15 @@ namespace Drizzle3D {
         std::vector<VkImage> swapChainImages;
         VkFormat swapChainImageFormat;
         VkExtent2D swapChainExtent;
+        std::vector<VkImageView> swapChainImageViews;
     };
 
     enum Lights {
         Directional,
         Point
     };
+
+    typedef std::pair<VkShaderModule, VkShaderModule> VkDrizzleShader;
 
     struct Light {
         glm::vec3 direction;
@@ -2342,6 +2367,7 @@ namespace Drizzle3D {
         GLuint mat = NULL;
         char* name;
         bool hide = false;
+        VkDrizzleShader Vkshader;
     };
 
     struct Camera {
@@ -2369,8 +2395,8 @@ namespace Drizzle3D {
         Drizzle3D_API const std::string& GetName() const override { return name; }
         Drizzle3D_API void SetShow(bool value) override { show = value; }
 
-        Drizzle3D_API void Create_Shader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        Drizzle3D_API void Create_DefaultShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        Drizzle3D_API std::variant<VkDrizzleShader, GLuint> Create_Shader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        Drizzle3D_API std::variant<VkDrizzleShader, GLuint> Create_DefaultShader(const char* vertexShaderSource, const char* fragmentShaderSource);
         Drizzle3D_API Object DrawVerts(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix = glm::mat4(1.0f));
         Drizzle3D_API void AddObject(const char* name, Object theObject);
         Drizzle3D_API Object* returnObject(const char* name);
@@ -2393,10 +2419,10 @@ namespace Drizzle3D {
         void InitVulkanRendering();
         void RenderInitVulkanRendering();
         void DrawVertVulkanRendering(Object& myOBJ);
-        void Create_DefaultOpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        void Create_DefaultVulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        void Create_OpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        void Create_VulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        GLuint Create_DefaultOpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        VkDrizzleShader Create_DefaultVulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        GLuint Create_OpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        VkDrizzleShader Create_VulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
         void VulkanDestroy();
 
         bool checkValidationLayerSupport();
@@ -2416,6 +2442,8 @@ namespace Drizzle3D {
         void pickPhysicalDevice();
         void createLogicalDevice();
         void createSwapChain();
+        void createImageViews();
+        void createGraphicsPipeline(const char* fname, const char* fgname);
 
         bool Lighting = true;
         bool fullscreen = false;
@@ -2429,6 +2457,7 @@ namespace Drizzle3D {
         std::vector<Object> Objects;
         std::vector<Light> Lights;
         std::vector<Camera> Cameras;
+        VkDrizzleShader defaultShader;
         Flags flags;
         GLuint lightsBuffer = 0;
         char* current_camera = (char*)"Default";

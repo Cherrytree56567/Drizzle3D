@@ -79,7 +79,16 @@ namespace Drizzle3D {
     }
 
     void RenderingLayer::VulkanDestroy() {
+        vkDestroyShaderModule(pVulkanPipe.device, defaultShader.first, nullptr);
+        vkDestroyShaderModule(pVulkanPipe.device, defaultShader.second, nullptr);
+
+        for (auto imageView : pVulkanPipe.swapChainImageViews) {
+            vkDestroyImageView(pVulkanPipe.device, imageView, nullptr);
+        }
+
         vkDestroySwapchainKHR(pVulkanPipe.device, pVulkanPipe.swapChain, nullptr);
+        vkDestroyDevice(pVulkanPipe.device, nullptr);
+
         if (enableValidationLayers) {
             DestroyDebugUtilsMessengerEXT(pVulkanPipe.instance, pVulkanPipe.debugMessenger, nullptr);
         }
@@ -594,10 +603,61 @@ namespace Drizzle3D {
         pVulkanPipe.swapChainExtent = extent;
     }
 
+    void RenderingLayer::createImageViews() {
+        pVulkanPipe.swapChainImageViews.resize(pVulkanPipe.swapChainImages.size());
+
+        for (size_t i = 0; i < pVulkanPipe.swapChainImages.size(); i++) {
+            VkImageViewCreateInfo createInfo{};
+            createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+            createInfo.image = pVulkanPipe.swapChainImages[i];
+            createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+            createInfo.format = pVulkanPipe.swapChainImageFormat;
+            createInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
+            createInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
+            createInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
+            createInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
+            createInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+            createInfo.subresourceRange.baseMipLevel = 0;
+            createInfo.subresourceRange.levelCount = 1;
+            createInfo.subresourceRange.baseArrayLayer = 0;
+            createInfo.subresourceRange.layerCount = 1;
+
+            if (vkCreateImageView(pVulkanPipe.device, &createInfo, nullptr, &pVulkanPipe.swapChainImageViews[i]) != VK_SUCCESS) {
+                throw std::runtime_error("failed to create image views!");
+            }
+        }
+    }
+
+    void RenderingLayer::createGraphicsPipeline(const char* fname, const char* fgname) {
+        VkDrizzleShader ShaderModule = Create_VulkanShader(fname, fgname);
+
+        VkPipelineShaderStageCreateInfo vertShaderStageInfo{};
+        vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+        vertShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
+        vertShaderStageInfo.module = ShaderModule.first;
+        vertShaderStageInfo.pName = "main";
+        VkPipelineShaderStageCreateInfo fragShaderStageInfo{};
+        fragShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+        fragShaderStageInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+        fragShaderStageInfo.module = ShaderModule.second;
+        fragShaderStageInfo.pName = "main";
+
+        VkPipelineShaderStageCreateInfo shaderStages[] = { vertShaderStageInfo, fragShaderStageInfo };
+
+        std::vector<VkDynamicState> dynamicStates = {
+            VK_DYNAMIC_STATE_VIEWPORT,
+            VK_DYNAMIC_STATE_SCISSOR
+        };
+
+        VkPipelineDynamicStateCreateInfo dynamicState{};
+        dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
+        dynamicState.dynamicStateCount = static_cast<uint32_t>(dynamicStates.size());
+        dynamicState.pDynamicStates = dynamicStates.data();
+
+
+    }
+
     void RenderingLayer::InitVulkanRendering() {
-        /* TODO: Carry on from step
-         * We'll now create a new function querySwapChainSupport that will populate this struct.
-        */
 
         log.Warning("Vulkan Initialization Not Implemented.");
 
@@ -613,6 +673,8 @@ namespace Drizzle3D {
         pickPhysicalDevice();
         createLogicalDevice();
         createSwapChain();
+        createImageViews();
+        createGraphicsPipeline("vert.spv", "frag.spv");
 
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
         // Init Vulkan Shaders
@@ -716,11 +778,60 @@ namespace Drizzle3D {
 		// Create index buffer (similar to vertex buffer)
 	}
 
-    void RenderingLayer::Create_VulkanShader(const char* fname, const char* fgname) {
+    VkDrizzleShader RenderingLayer::Create_VulkanShader(const char* fname, const char* fgname) {
 
+        std::ifstream file(fname, std::ios::ate | std::ios::binary);
+
+        if (!file.is_open()) {
+            throw std::runtime_error("failed to open file!");
+        }
+
+        size_t fileSize = (size_t)file.tellg();
+        std::vector<char> buffer(fileSize);
+
+        file.seekg(0);
+        file.read(buffer.data(), fileSize);
+
+        file.close();
+
+        VkShaderModuleCreateInfo createInfo{};
+        createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+        createInfo.codeSize = buffer.size();
+        createInfo.pCode = reinterpret_cast<const uint32_t*>(buffer.data());
+
+        VkShaderModule vertShader;
+        if (vkCreateShaderModule(pVulkanPipe.device, &createInfo, nullptr, &vertShader) != VK_SUCCESS) {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create Vertex shader module!");
+        }
+
+        std::ifstream filefrag(fgname, std::ios::ate | std::ios::binary);
+
+        if (!filefrag.is_open()) {
+            throw std::runtime_error("failed to open file!");
+        }
+
+        size_t fileSizefrag = (size_t)filefrag.tellg();
+        std::vector<char> bufferfrag(fileSizefrag);
+
+        filefrag.seekg(0);
+        filefrag.read(bufferfrag.data(), fileSizefrag);
+
+        filefrag.close();
+
+        VkShaderModuleCreateInfo createInfoFrag{};
+        createInfoFrag.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+        createInfoFrag.codeSize = bufferfrag.size();
+        createInfoFrag.pCode = reinterpret_cast<const uint32_t*>(bufferfrag.data());
+
+        VkShaderModule fragShader;
+        if (vkCreateShaderModule(pVulkanPipe.device, &createInfoFrag, nullptr, &fragShader) != VK_SUCCESS) {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create Fragment shader module!");
+        }
+
+        return std::make_pair(vertShader, fragShader);
     }
 
-    void RenderingLayer::Create_DefaultVulkanShader(const char* fname, const char* fgname) {
-
+    VkDrizzleShader RenderingLayer::Create_DefaultVulkanShader(const char* fname, const char* fgname) {
+        return std::make_pair((VkShaderModule)NULL, (VkShaderModule)NULL);
     }
 }

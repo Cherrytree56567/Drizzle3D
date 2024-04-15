@@ -8,27 +8,30 @@
 #include "RenderingLayer.h"
 
 namespace Drizzle3D {
-    void RenderingLayer::Create_Shader(const char* fname, const char* fgname) {
+    std::variant<VkDrizzleShader, GLuint> RenderingLayer::Create_Shader(const char* fname, const char* fgname) {
         switch (renderingAPI) {
         case RenderingAPI::OpenGL:
-            Create_OpenGLShader(fname, fgname);
+            return Create_OpenGLShader(fname, fgname);
             break;
 
         case RenderingAPI::Vulkan:
-            Create_VulkanShader(fname, fgname);
+            return Create_VulkanShader(fname, fgname);
             break;
         }
+        return (GLuint)NULL;
     }
 
-    void RenderingLayer::Create_DefaultShader(const char* fname, const char* fgname) {
+    std::variant<VkDrizzleShader, GLuint> RenderingLayer::Create_DefaultShader(const char* fname, const char* fgname) {
         switch (renderingAPI) {
         case RenderingAPI::OpenGL:
-            Create_DefaultOpenGLShader(fname, fgname);
+            return Create_DefaultOpenGLShader(fname, fgname);
             break;
 
         case RenderingAPI::Vulkan:
-            Create_DefaultVulkanShader(fname, fgname);
+            return Create_DefaultVulkanShader(fname, fgname);
             break;
         }
+
+        return (GLuint)NULL;
     }
 }

@@ -10,6 +10,7 @@
 #include <sstream>
 #include <vector>
 #include <glm/glm.hpp>
+#include <variant>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Layer.h"
@@ -28,6 +29,8 @@ namespace Drizzle3D {
         Directional,
         Point
     };
+
+    typedef std::pair<VkShaderModule, VkShaderModule> VkDrizzleShader;
 
     struct Light {
         glm::vec3 direction;
@@ -57,7 +60,7 @@ namespace Drizzle3D {
         GLuint mat = 0;
         char* name = (char*)"PLZ_SPECIFY_A_NAME";
         bool hide = false;
-        // Add New Vulkan Shader here as pass it NULL by default.
+        VkDrizzleShader Vkshader;
     };
 
     struct Camera {
@@ -79,8 +82,8 @@ namespace Drizzle3D {
         Drizzle3D_API const std::string& GetName() const override { return name; }
         Drizzle3D_API void SetShow(bool value) override { show = value; }
 
-        Drizzle3D_API void Create_Shader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        Drizzle3D_API void Create_DefaultShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        Drizzle3D_API std::variant<VkDrizzleShader, GLuint> Create_Shader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        Drizzle3D_API std::variant<VkDrizzleShader, GLuint> Create_DefaultShader(const char* vertexShaderSource, const char* fragmentShaderSource);
         Drizzle3D_API Object DrawVerts(std::pair<std::vector<float>, std::vector<unsigned int>> vf, glm::mat4 modelMatrix = glm::mat4(1.0f));
         Drizzle3D_API void AddObject(const char* name, Object theObject);
         Drizzle3D_API Object* returnObject(const char* name);
@@ -103,10 +106,10 @@ namespace Drizzle3D {
         void InitVulkanRendering();
         void RenderInitVulkanRendering();
         void DrawVertVulkanRendering(Object& myOBJ);
-        void Create_DefaultOpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        void Create_DefaultVulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        void Create_OpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
-        void Create_VulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        GLuint Create_DefaultOpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        VkDrizzleShader Create_DefaultVulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        GLuint Create_OpenGLShader(const char* vertexShaderSource, const char* fragmentShaderSource);
+        VkDrizzleShader Create_VulkanShader(const char* vertexShaderSource, const char* fragmentShaderSource);
         void VulkanDestroy();
 
         bool checkValidationLayerSupport();
@@ -126,6 +129,8 @@ namespace Drizzle3D {
         void pickPhysicalDevice();
         void createLogicalDevice();
         void createSwapChain();
+        void createImageViews();
+        void createGraphicsPipeline(const char* fname, const char* fgname);
 
         bool Lighting = true;
         bool fullscreen = false;
@@ -139,6 +144,7 @@ namespace Drizzle3D {
         std::vector<Object> Objects;
         std::vector<Light> Lights;
         std::vector<Camera> Cameras;
+        VkDrizzleShader defaultShader;
         Flags flags;
         GLuint lightsBuffer = 0;
         char* current_camera = (char*)"Default";
