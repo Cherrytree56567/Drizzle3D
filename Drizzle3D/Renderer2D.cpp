@@ -1,7 +1,7 @@
 #include "Renderer2D.h"
 
 namespace Drizzle3D {
-    RenderingLayer2D::RenderingLayer2D(RenderingAPI rAPI, Window* window, std::shared_ptr<ResourceManager> resmgr) : name("3DLayer"), show(true), pWindow(window), resourcemgr(resmgr) {
+    RenderingLayer2D::RenderingLayer2D(RenderingAPI rAPI, std::shared_ptr<Window> window, std::shared_ptr<ResourceManager> resmgr) : name("3DLayer"), show(true), pWindow(window), resourcemgr(resmgr) {
         flags.AddFlag("Show", show);
     }
 

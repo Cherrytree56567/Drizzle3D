@@ -15,19 +15,26 @@ namespace Drizzle3D {
 		xffset = xoffset;
 		yffset = yoffset;
 	}
-	Window::Window(EventDispatcher* dispatch, char* WindowName, int width, int height) : dispatcher(dispatch) {
+	Window::Window(RenderingAPI rAPI, std::shared_ptr<EventDispatcher> dispatch, char* WindowName, int width, int height) : dispatcher(dispatch), renderingAPI(rAPI) {
 		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		if (renderingAPI == RenderingAPI::OpenGL) {
+			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		} else if (renderingAPI = RenderingAPI::Vulkan) {
+			glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+		}
 		window = glfwCreateWindow(width, height, WindowName, NULL, NULL);
 		if (window == NULL) {
 			std::cout << "[Drizzle3D::Core::Window] Error: Failed to create GLFW window." << std::endl;
 			glfwTerminate();
 		}
 		glfwMakeContextCurrent(window);
-		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-			std::cout << "[Drizzle3D::Core::Window] Error: Failed to Load GL Loader." << std::endl;
-			exit(-1);
+		if (renderingAPI == RenderingAPI::OpenGL) {
+			if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+				std::cout << "[Drizzle3D::Core::Window] Error: Failed to Load GL Loader." << std::endl;
+				exit(-1);
+			}
 		}
 		winwidth = width;
 		winheight = height;

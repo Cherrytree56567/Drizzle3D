@@ -304,8 +304,6 @@ namespace Drizzle3D {
 
     void RenderingLayer::InitVulkanRendering() {
         log.Warning("Vulkan Initialization Not Implemented.");
-        // Switch GLFW_CLIENT_API to GLFW_NO_API
-        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 
         // Basic Info
         uint32_t extensionCount = 0;
@@ -369,8 +367,7 @@ namespace Drizzle3D {
 
         std::cout << "Required Instance Extensions: " << count << "\n";
 
-        GLFWwindow* currentContext = glfwGetCurrentContext();
-        VkResult s = glfwCreateWindowSurface(pVulkanPipe.instance, currentContext, nullptr, &pVulkanPipe.surface);
+        VkResult s = glfwCreateWindowSurface(pVulkanPipe.instance, pWindow->returnwindow(), nullptr, &pVulkanPipe.surface);
         if (s != VK_SUCCESS) {
             switchError(s);
             throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create window surface!");

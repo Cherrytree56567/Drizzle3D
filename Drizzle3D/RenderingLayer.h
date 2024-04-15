@@ -69,7 +69,7 @@ namespace Drizzle3D {
 
     class RenderingLayer : public Layer {
     public:
-        Drizzle3D_API RenderingLayer(RenderingAPI rAPI, Window* window, std::shared_ptr<ResourceManager> resmgr);
+        Drizzle3D_API RenderingLayer(RenderingAPI rAPI, std::shared_ptr<Window> window, std::shared_ptr<ResourceManager> resmgr);
 
         Drizzle3D_API void OnAttach() override;
         Drizzle3D_API void OnDetach() override {}
@@ -121,7 +121,7 @@ namespace Drizzle3D {
         GLuint shaderProgram = 0;
         GLuint OldshaderProgram = 0;
         std::string name;
-        Window* pWindow;
+        std::shared_ptr<Window> pWindow;
         VulkanPipeline pVulkanPipe;
         std::vector<Object> Objects;
         std::vector<Light> Lights;

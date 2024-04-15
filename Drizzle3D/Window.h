@@ -22,7 +22,7 @@ namespace Drizzle3D {
 
 	class Window {
 	public:
-		Drizzle3D_API Window(EventDispatcher* dispatch, char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
+		Drizzle3D_API Window(RenderingAPI rAPI, std::shared_ptr<EventDispatcher> dispatch, char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
 		Drizzle3D_API ~Window();
 
 		Drizzle3D_API GLFWwindow* returnwindow() { return window; };
@@ -40,9 +40,10 @@ namespace Drizzle3D {
 		Drizzle3D_API void ProcessEvents();
 		Drizzle3D_API void Render();
 
-		EventDispatcher* dispatcher;
+		std::shared_ptr<EventDispatcher> dispatcher;
 	private:
 		GLFWwindow* window = NULL;
+		RenderingAPI renderingAPI;
 		int winwidth;
 		int winheight;
 		int winx;

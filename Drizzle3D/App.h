@@ -41,19 +41,19 @@ namespace Drizzle3D {
 
 		Drizzle3D_API bool Run();
 
-		Drizzle3D_API Window* window() { return &D3DWindow; }
+		Drizzle3D_API std::shared_ptr<Window> window() { return D3DWindow; }
 		Drizzle3D_API std::shared_ptr<ImGuiLayer> ImguiLayer() { return imguilayer; }
 		Drizzle3D_API std::shared_ptr<RenderingLayer> GetRenderingLayer() { return renderinglayer; }
 		Drizzle3D_API std::shared_ptr<RenderingLayer2D> GetRenderingLayer2D() { return renderinglayer2d; }
 		Drizzle3D_API std::shared_ptr<ResourceManager> GetResourceManager() { return resourcemgr; }
-		Drizzle3D_API EventDispatcher* dispatcher() { return &dispatch; }
-		Drizzle3D_API LayerDispatch* Layerdispatcher() { return &LayerDispatcher; }
+		Drizzle3D_API std::shared_ptr<EventDispatcher> dispatcher() { return dispatch; }
+		Drizzle3D_API std::shared_ptr<LayerDispatch> Layerdispatcher() { return LayerDispatcher; }
 
 	private:
 		// Managers
 		std::shared_ptr<ResourceManager> resourcemgr;
 
-		Window D3DWindow;
+		std::shared_ptr<Window> D3DWindow;
 
 		// Layers
 		std::shared_ptr<ImGuiLayer> imguilayer;
@@ -61,8 +61,8 @@ namespace Drizzle3D {
 		std::shared_ptr<RenderingLayer2D> renderinglayer2d;
 
 		// Dispatchers
-		EventDispatcher dispatch;
-		LayerDispatch LayerDispatcher;
+		std::shared_ptr<EventDispatcher> dispatch;
+		std::shared_ptr<LayerDispatch> LayerDispatcher;
 
 		// Flags
 		RenderingAPI renderingAPI;

@@ -1834,7 +1834,7 @@ namespace Drizzle3D {
         Drizzle3D_API void ProcessEvents();
         Drizzle3D_API void Render();
 
-        EventDispatcher* dispatcher;
+        std::shared_ptr<EventDispatcher> dispatcher;
     private:
         GLFWwindow* window = NULL;
         int winwidth;
@@ -1962,7 +1962,7 @@ namespace Drizzle3D {
 
     class RenderingLayer : public Layer {
     public:
-        Drizzle3D_API RenderingLayer(RenderingAPI rAPI, Window* window, std::shared_ptr<ResourceManager> resmgr);
+        Drizzle3D_API RenderingLayer(RenderingAPI rAPI, std::shared_ptr<Window> window, std::shared_ptr<ResourceManager> resmgr);
 
         Drizzle3D_API void OnAttach() override;
         Drizzle3D_API void OnDetach() override {}
@@ -2014,7 +2014,7 @@ namespace Drizzle3D {
         GLuint shaderProgram = 0;
         GLuint OldshaderProgram = 0;
         std::string name;
-        Window* pWindow;
+        std::shared_ptr<Window> pWindow;
         VulkanPipeline pVulkanPipe;
         std::vector<Object> Objects;
         std::vector<Light> Lights;
@@ -2052,7 +2052,7 @@ namespace Drizzle3D {
 
     class ImGuiLayer : public Layer {
     public:
-        Drizzle3D_API ImGuiLayer(RenderingAPI rAPI, Window* window) : renderingAPI(rAPI), name("ImGUI"), show(true), pWindow(window) {}
+        Drizzle3D_API ImGuiLayer(RenderingAPI rAPI, std::shared_ptr<Window> window) : renderingAPI(rAPI), name("ImGUI"), show(true), pWindow(window) {}
 
         typedef void (*ImGUICode)(std::shared_ptr<ImGuiLayer> igui);
 
@@ -2073,10 +2073,11 @@ namespace Drizzle3D {
     private:
         bool show;
         std::string name;
-        Window* pWindow;
+        std::shared_ptr<Window> pWindow;
         std::shared_ptr<ImGuiLayer> igui;
         std::vector<SliderFloat> SliderFloats;
         RenderingAPI renderingAPI;
+        Logging log;
     };
 
     /*
@@ -2085,7 +2086,7 @@ namespace Drizzle3D {
 
     class RenderingLayer2D : public Layer {
     public:
-        Drizzle3D_API RenderingLayer2D(RenderingAPI rAPI, Window* window, std::shared_ptr<ResourceManager> resmgr);
+        Drizzle3D_API RenderingLayer2D(RenderingAPI rAPI, std::shared_ptr<Window> window, std::shared_ptr<ResourceManager> resmgr);
 
         Drizzle3D_API void OnAttach() override;
         Drizzle3D_API void OnDetach() override {}
@@ -2100,7 +2101,7 @@ namespace Drizzle3D {
         bool show;
         Flags flags;
         std::string name;
-        Window* pWindow;
+        std::shared_ptr<Window> pWindow;
         std::shared_ptr<ResourceManager> resourcemgr;
         Logging log;
         RenderingAPI renderingAPI;
@@ -2116,19 +2117,19 @@ namespace Drizzle3D {
 
         Drizzle3D_API bool Run();
 
-        Drizzle3D_API Window* window() { return &D3DWindow; }
+        Drizzle3D_API std::shared_ptr<Window> window() { return D3DWindow; }
         Drizzle3D_API std::shared_ptr<ImGuiLayer> ImguiLayer() { return imguilayer; }
         Drizzle3D_API std::shared_ptr<RenderingLayer> GetRenderingLayer() { return renderinglayer; }
         Drizzle3D_API std::shared_ptr<RenderingLayer2D> GetRenderingLayer2D() { return renderinglayer2d; }
         Drizzle3D_API std::shared_ptr<ResourceManager> GetResourceManager() { return resourcemgr; }
-        Drizzle3D_API EventDispatcher* dispatcher() { return &dispatch; }
-        Drizzle3D_API LayerDispatch* Layerdispatcher() { return &LayerDispatcher; }
+        Drizzle3D_API std::shared_ptr<EventDispatcher> dispatcher() { return dispatch; }
+        Drizzle3D_API std::shared_ptr<LayerDispatch> Layerdispatcher() { return LayerDispatcher; }
 
     private:
         // Managers
         std::shared_ptr<ResourceManager> resourcemgr;
 
-        Window D3DWindow;
+        std::shared_ptr<Window> D3DWindow;
 
         // Layers
         std::shared_ptr<ImGuiLayer> imguilayer;
@@ -2136,8 +2137,8 @@ namespace Drizzle3D {
         std::shared_ptr<RenderingLayer2D> renderinglayer2d;
 
         // Dispatchers
-        EventDispatcher dispatch;
-        LayerDispatch LayerDispatcher;
+        std::shared_ptr<EventDispatcher> dispatch;
+        std::shared_ptr<LayerDispatch> LayerDispatcher;
 
         // Flags
         RenderingAPI renderingAPI;

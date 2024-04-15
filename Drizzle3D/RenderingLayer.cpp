@@ -15,7 +15,7 @@
 
 namespace Drizzle3D {
 
-    RenderingLayer::RenderingLayer(RenderingAPI rAPI, Window* window, std::shared_ptr<ResourceManager> resmgr) : renderingAPI(rAPI), name("3DLayer"), show(true), pWindow(window), resourcemgr(resmgr) {
+    RenderingLayer::RenderingLayer(RenderingAPI rAPI, std::shared_ptr<Window> window, std::shared_ptr<ResourceManager> resmgr) : renderingAPI(rAPI), name("3DLayer"), show(true), pWindow(window), resourcemgr(resmgr) {
         flags.AddFlag("Lighting", Lighting);
         flags.AddFlag("Fullscreen", fullscreen);
         flags.AddFlag("Show", show);
