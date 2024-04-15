@@ -47,4 +47,10 @@ namespace Drizzle3D {
             return graphicsFamily.has_value() && presentFamily.has_value();
         }
     };
+
+    struct SwapChainSupportDetails {
+        VkSurfaceCapabilitiesKHR capabilities;
+        std::vector<VkSurfaceFormatKHR> formats;
+        std::vector<VkPresentModeKHR> presentModes;
+    };
 }

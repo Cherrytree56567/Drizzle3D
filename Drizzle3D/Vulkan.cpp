@@ -268,6 +268,30 @@ namespace Drizzle3D {
         }
     }
 
+    bool RenderingLayer::isDeviceSuitable(VkPhysicalDevice device) {
+        QueueFamilyIndices indices = findQueueFamilies(device);
+
+        bool extensionsSupported = checkDeviceExtensionSupport(device);
+
+        return indices.isComplete() && extensionsSupported;
+    }
+
+    bool RenderingLayer::checkDeviceExtensionSupport(VkPhysicalDevice device) {
+        uint32_t extensionCount;
+        vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
+
+        std::vector<VkExtensionProperties> availableExtensions(extensionCount);
+        vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
+
+        std::set<std::string> requiredExtensions(deviceExtensions.begin(), deviceExtensions.end());
+
+        for (const auto& extension : availableExtensions) {
+            requiredExtensions.erase(extension.extensionName);
+        }
+
+        return requiredExtensions.empty();
+    }
+
     int RenderingLayer::rateDeviceSuitability(VkPhysicalDevice device) {
 
         VkPhysicalDeviceProperties deviceProperties;
@@ -297,12 +321,27 @@ namespace Drizzle3D {
             return 0;
         }
 
+        if (isDeviceSuitable(device)) {
+            score = 0;
+            return 0;
+        }
+
         log.Info((std::string)deviceProperties.deviceName + (std::string)": " + std::to_string(score) + (std::string)" Points.", "[Drizzle3D::Core::Vulkan] ");
 
         return score;
     }
 
+    SwapChainSupportDetails RenderingLayer::querySwapChainSupport(VkPhysicalDevice device) {
+        SwapChainSupportDetails details;
+
+        return details;
+    }
+
     void RenderingLayer::InitVulkanRendering() {
+        /* TODO: Carry on from step
+         * We'll now create a new function querySwapChainSupport that will populate this struct.
+        */
+
         log.Warning("Vulkan Initialization Not Implemented.");
 
         // Basic Info
@@ -427,7 +466,8 @@ namespace Drizzle3D {
 
         createInfoDev.pEnabledFeatures = &deviceFeatures;
 
-        createInfoDev.enabledExtensionCount = 0;
+        createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());
+        createInfo.ppEnabledExtensionNames = deviceExtensions.data();
 
         if (enableValidationLayers) {
             createInfoDev.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());

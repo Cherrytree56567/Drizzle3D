@@ -113,6 +113,9 @@ namespace Drizzle3D {
         std::vector<const char*> getRequiredExtensions();
         int rateDeviceSuitability(VkPhysicalDevice device);
         QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
+        bool isDeviceSuitable(VkPhysicalDevice device);
+        bool checkDeviceExtensionSupport(VkPhysicalDevice device);
+        SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device)
 
         bool Lighting = true;
         bool fullscreen = false;
@@ -135,6 +138,9 @@ namespace Drizzle3D {
         const uint32_t HEIGHT = 600;
         const std::vector<const char*> validationLayers = {
             "VK_LAYER_KHRONOS_validation"
+        };
+        const std::vector<const char*> deviceExtensions = {
+            VK_KHR_SWAPCHAIN_EXTENSION_NAME
         };
 
 #ifdef NDEBUG
