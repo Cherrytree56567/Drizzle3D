@@ -102,6 +102,13 @@ namespace Drizzle3D {
                 indices.graphicsFamily = i;
             }
 
+            VkBool32 presentSupport = false;
+            vkGetPhysicalDeviceSurfaceSupportKHR(device, i, pVulkanPipe.surface, &presentSupport);
+
+            if (presentSupport) {
+                indices.presentFamily = i;
+            }
+
             if (indices.isComplete()) {
                 break;
             }
@@ -208,8 +215,9 @@ namespace Drizzle3D {
         }
 
         // Create Surface
-        if (glfwCreateWindowSurface(pVulkanPipe.instance, pWindow->returnwindow(), nullptr, &pVulkanPipe.surface) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create window surface!");
+        GLFWwindow* currentContext = glfwGetCurrentContext();
+        if (glfwCreateWindowSurface(pVulkanPipe.instance, currentContext, nullptr, &pVulkanPipe.surface) != VK_SUCCESS) {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create window surface!");
         }
 
         // Pick Physical Device
@@ -243,21 +251,26 @@ namespace Drizzle3D {
         // Create Logical Devices
         QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
 
-        VkDeviceQueueCreateInfo queueCreateInfo{};
-        queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-        queueCreateInfo.queueFamilyIndex = indices.graphicsFamily.value();
-        queueCreateInfo.queueCount = 1;
+        std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
+        std::set<uint32_t> uniqueQueueFamilies = { indices.graphicsFamily.value(), indices.presentFamily.value() };
 
         float queuePriority = 1.0f;
-        queueCreateInfo.pQueuePriorities = &queuePriority;
+        for (uint32_t queueFamily : uniqueQueueFamilies) {
+            VkDeviceQueueCreateInfo queueCreateInfo{};
+            queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+            queueCreateInfo.queueFamilyIndex = queueFamily;
+            queueCreateInfo.queueCount = 1;
+            queueCreateInfo.pQueuePriorities = &queuePriority;
+            queueCreateInfos.push_back(queueCreateInfo);
+        }
 
         VkPhysicalDeviceFeatures deviceFeatures{};
 
         VkDeviceCreateInfo createInfoDev{};
         createInfoDev.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 
-        createInfoDev.pQueueCreateInfos = &queueCreateInfo;
-        createInfoDev.queueCreateInfoCount = 1;
+        createInfoDev.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
+        createInfoDev.pQueueCreateInfos = queueCreateInfos.data();
 
         createInfoDev.pEnabledFeatures = &deviceFeatures;
 
@@ -276,6 +289,7 @@ namespace Drizzle3D {
         }
 
         vkGetDeviceQueue(pVulkanPipe.device, indices.graphicsFamily.value(), 0, &pVulkanPipe.graphicsQueue);
+        vkGetDeviceQueue(pVulkanPipe.device, indices.presentFamily.value(), 0, &pVulkanPipe.presentQueue);
 
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
         // Init Vulkan Shaders

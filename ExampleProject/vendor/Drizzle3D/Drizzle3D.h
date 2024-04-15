@@ -1906,6 +1906,7 @@ namespace Drizzle3D {
         VkDevice device;
         VkQueue graphicsQueue;
         VkSurfaceKHR surface;
+        VkQueue presentQueue;
     };
 
     enum Lights {
@@ -1934,9 +1935,10 @@ namespace Drizzle3D {
 
     struct QueueFamilyIndices {
         std::optional<uint32_t> graphicsFamily;
+        std::optional<uint32_t> presentFamily;
 
         bool isComplete() {
-            return graphicsFamily.has_value();
+            return graphicsFamily.has_value() && presentFamily.has_value();
         }
     };
 
