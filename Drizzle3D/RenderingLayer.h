@@ -122,6 +122,7 @@ namespace Drizzle3D {
         VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
         VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
         VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
+        void recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
 
         void createInstance();
         void setupDebugMessenger();
@@ -133,6 +134,8 @@ namespace Drizzle3D {
         VkPipeline createGraphicsPipeline(const char* fname, const char* fgname, VkViewport viewport);
         void createRenderPass();
         void createFramebuffers();
+        void createCommandPool();
+        void createCommandBuffer();
 
         bool Lighting = true;
         bool fullscreen = false;

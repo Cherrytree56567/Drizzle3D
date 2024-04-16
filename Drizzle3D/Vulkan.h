@@ -47,6 +47,8 @@ namespace Drizzle3D {
         VkPipelineLayout pipelineLayout;
         VkPipeline DefaultgraphicsPipeline;
         std::vector<VkFramebuffer> swapChainFramebuffers;
+        VkCommandPool commandPool;
+        VkCommandBuffer commandBuffer;
     };
 
     struct QueueFamilyIndices {

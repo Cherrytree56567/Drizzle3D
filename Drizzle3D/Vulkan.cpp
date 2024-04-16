@@ -79,6 +79,7 @@ namespace Drizzle3D {
     }
 
     void RenderingLayer::VulkanDestroy() {
+        vkDestroyCommandPool(pVulkanPipe.device, pVulkanPipe.commandPool, nullptr);
         for (auto framebuffer : pVulkanPipe.swapChainFramebuffers) {
             vkDestroyFramebuffer(pVulkanPipe.device, framebuffer, nullptr);
         }
@@ -805,6 +806,77 @@ namespace Drizzle3D {
         }
     }
 
+    void RenderingLayer::createCommandPool() {
+        QueueFamilyIndices queueFamilyIndices = findQueueFamilies(pVulkanPipe.physicalDevice);
+
+        VkCommandPoolCreateInfo poolInfo{};
+        poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
+        poolInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
+        poolInfo.queueFamilyIndex = queueFamilyIndices.graphicsFamily.value();
+
+        if (vkCreateCommandPool(pVulkanPipe.device, &poolInfo, nullptr, &pVulkanPipe.commandPool) != VK_SUCCESS) {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create command pool!");
+        }
+    }
+
+    void RenderingLayer::createCommandBuffer() {
+        VkCommandBufferAllocateInfo allocInfo{};
+        allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+        allocInfo.commandPool = pVulkanPipe.commandPool;
+        allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+        allocInfo.commandBufferCount = 1;
+
+        if (vkAllocateCommandBuffers(pVulkanPipe.device, &allocInfo, &pVulkanPipe.commandBuffer) != VK_SUCCESS) {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to allocate command buffers!");
+        }
+    }
+
+    void RenderingLayer::recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex) {
+        VkCommandBufferBeginInfo beginInfo{};
+        beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+        beginInfo.flags = 0; // Optional
+        beginInfo.pInheritanceInfo = nullptr; // Optional
+
+        if (vkBeginCommandBuffer(commandBuffer, &beginInfo) != VK_SUCCESS) {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to begin recording command buffer!");
+        }
+
+        VkRenderPassBeginInfo renderPassInfo{};
+        renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+        renderPassInfo.renderPass = pVulkanPipe.renderPass;
+        renderPassInfo.framebuffer = pVulkanPipe.swapChainFramebuffers[imageIndex];
+        renderPassInfo.renderArea.offset = { 0, 0 };
+        renderPassInfo.renderArea.extent = pVulkanPipe.swapChainExtent;
+        VkClearValue clearColor = { {{0.0f, 0.0f, 0.0f, 1.0f}} };
+        renderPassInfo.clearValueCount = 1;
+        renderPassInfo.pClearValues = &clearColor;
+        vkCmdBeginRenderPass(commandBuffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+        vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pVulkanPipe.DefaultgraphicsPipeline);
+
+        VkViewport viewport{};
+        viewport.x = 0.0f;
+        viewport.y = 0.0f;
+        viewport.width = static_cast<float>(pVulkanPipe.swapChainExtent.width);
+        viewport.height = static_cast<float>(pVulkanPipe.swapChainExtent.height);
+        viewport.minDepth = 0.0f;
+        viewport.maxDepth = 1.0f;
+        vkCmdSetViewport(commandBuffer, 0, 1, &viewport);
+
+        VkRect2D scissor{};
+        scissor.offset = { 0, 0 };
+        scissor.extent = pVulkanPipe.swapChainExtent;
+        vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
+
+        vkCmdDraw(commandBuffer, 3, 1, 0, 0);
+
+        vkCmdEndRenderPass(commandBuffer);
+
+        if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS) {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to record command buffer!");
+        }
+    }
+
     void RenderingLayer::InitVulkanRendering() {
 
         log.Warning("Vulkan Initialization Not Implemented.");
@@ -833,6 +905,8 @@ namespace Drizzle3D {
         createRenderPass();
         pVulkanPipe.DefaultgraphicsPipeline = createGraphicsPipeline("vert.spv", "frag.spv", viewport);
         createFramebuffers();
+        createCommandPool();
+        createCommandBuffer();
 
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
         // Init Vulkan Shaders
