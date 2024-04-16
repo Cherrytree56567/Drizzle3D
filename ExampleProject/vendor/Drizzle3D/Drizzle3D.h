@@ -2335,6 +2335,9 @@ namespace Drizzle3D {
         std::vector<VkFramebuffer> swapChainFramebuffers;
         VkCommandPool commandPool;
         VkCommandBuffer commandBuffer;
+        VkSemaphore imageAvailableSemaphore;
+        VkSemaphore renderFinishedSemaphore;
+        VkFence inFlightFence;
     };
 
     enum Lights {
