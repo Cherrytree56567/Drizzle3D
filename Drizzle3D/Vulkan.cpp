@@ -79,6 +79,7 @@ namespace Drizzle3D {
     }
 
     void RenderingLayer::VulkanDestroy() {
+        vkDeviceWaitIdle(pVulkanPipe.device);
         vkDestroySemaphore(pVulkanPipe.device, pVulkanPipe.imageAvailableSemaphore, nullptr);
         vkDestroySemaphore(pVulkanPipe.device, pVulkanPipe.renderFinishedSemaphore, nullptr);
         vkDestroyFence(pVulkanPipe.device, pVulkanPipe.inFlightFence, nullptr);
