@@ -79,6 +79,10 @@ namespace Drizzle3D {
     }
 
     void RenderingLayer::VulkanDestroy() {
+        vkDestroySemaphore(pVulkanPipe.device, pVulkanPipe.imageAvailableSemaphore, nullptr);
+        vkDestroySemaphore(pVulkanPipe.device, pVulkanPipe.renderFinishedSemaphore, nullptr);
+        vkDestroyFence(pVulkanPipe.device, pVulkanPipe.inFlightFence, nullptr);
+
         vkDestroyCommandPool(pVulkanPipe.device, pVulkanPipe.commandPool, nullptr);
         for (auto framebuffer : pVulkanPipe.swapChainFramebuffers) {
             vkDestroyFramebuffer(pVulkanPipe.device, framebuffer, nullptr);
@@ -753,10 +757,8 @@ namespace Drizzle3D {
         VkAttachmentDescription colorAttachment{};
         colorAttachment.format = pVulkanPipe.swapChainImageFormat;
         colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
-
         colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
         colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
-
         colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
         colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
         colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
@@ -771,12 +773,22 @@ namespace Drizzle3D {
         subpass.colorAttachmentCount = 1;
         subpass.pColorAttachments = &colorAttachmentRef;
 
+        VkSubpassDependency dependency{};
+        dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
+        dependency.dstSubpass = 0;
+        dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+        dependency.srcAccessMask = 0;
+        dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+        dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+
         VkRenderPassCreateInfo renderPassInfo{};
         renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
         renderPassInfo.attachmentCount = 1;
         renderPassInfo.pAttachments = &colorAttachment;
         renderPassInfo.subpassCount = 1;
         renderPassInfo.pSubpasses = &subpass;
+        renderPassInfo.dependencyCount = 1;
+        renderPassInfo.pDependencies = &dependency;
 
         if (vkCreateRenderPass(pVulkanPipe.device, &renderPassInfo, nullptr, &pVulkanPipe.renderPass) != VK_SUCCESS) {
             throw std::runtime_error("failed to create render pass!");
@@ -877,6 +889,66 @@ namespace Drizzle3D {
         }
     }
 
+    void RenderingLayer::createSyncObjects() {
+        VkSemaphoreCreateInfo semaphoreInfo{};
+        semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+
+        VkFenceCreateInfo fenceInfo{};
+        fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+        fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+
+        if (vkCreateSemaphore(pVulkanPipe.device, &semaphoreInfo, nullptr, &pVulkanPipe.imageAvailableSemaphore) != VK_SUCCESS ||
+            vkCreateSemaphore(pVulkanPipe.device, &semaphoreInfo, nullptr, &pVulkanPipe.renderFinishedSemaphore) != VK_SUCCESS ||
+            vkCreateFence(pVulkanPipe.device, &fenceInfo, nullptr, &pVulkanPipe.inFlightFence) != VK_SUCCESS) {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create semaphores!");
+        }
+    }
+
+    void RenderingLayer::drawFrame() {
+        vkWaitForFences(pVulkanPipe.device, 1, &pVulkanPipe.inFlightFence, VK_TRUE, UINT64_MAX);
+        vkResetFences(pVulkanPipe.device, 1, &pVulkanPipe.inFlightFence);
+
+        uint32_t imageIndex;
+        vkAcquireNextImageKHR(pVulkanPipe.device, pVulkanPipe.swapChain, UINT64_MAX, pVulkanPipe.imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
+
+        vkResetCommandBuffer(pVulkanPipe.commandBuffer, /*VkCommandBufferResetFlagBits*/ 0);
+        recordCommandBuffer(pVulkanPipe.commandBuffer, imageIndex);
+
+        VkSubmitInfo submitInfo{};
+        submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+
+        VkSemaphore waitSemaphores[] = { pVulkanPipe.imageAvailableSemaphore };
+        VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
+        submitInfo.waitSemaphoreCount = 1;
+        submitInfo.pWaitSemaphores = waitSemaphores;
+        submitInfo.pWaitDstStageMask = waitStages;
+
+        submitInfo.commandBufferCount = 1;
+        submitInfo.pCommandBuffers = &pVulkanPipe.commandBuffer;
+
+        VkSemaphore signalSemaphores[] = { pVulkanPipe.renderFinishedSemaphore };
+        submitInfo.signalSemaphoreCount = 1;
+        submitInfo.pSignalSemaphores = signalSemaphores;
+
+        if (vkQueueSubmit(pVulkanPipe.graphicsQueue, 1, &submitInfo, pVulkanPipe.inFlightFence) != VK_SUCCESS) {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to submit draw command buffer!");
+        }
+
+        VkPresentInfoKHR presentInfo{};
+        presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+
+        presentInfo.waitSemaphoreCount = 1;
+        presentInfo.pWaitSemaphores = signalSemaphores;
+
+        VkSwapchainKHR swapChains[] = { pVulkanPipe.swapChain };
+        presentInfo.swapchainCount = 1;
+        presentInfo.pSwapchains = swapChains;
+        presentInfo.pImageIndices = &imageIndex;
+        presentInfo.pResults = nullptr; // Optional
+
+        vkQueuePresentKHR(pVulkanPipe.presentQueue, &presentInfo);
+    }
+
     void RenderingLayer::InitVulkanRendering() {
 
         log.Warning("Vulkan Initialization Not Implemented.");
@@ -907,6 +979,7 @@ namespace Drizzle3D {
         createFramebuffers();
         createCommandPool();
         createCommandBuffer();
+        createSyncObjects();
 
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
         // Init Vulkan Shaders
@@ -915,8 +988,6 @@ namespace Drizzle3D {
         // Create render pass
         // Create graphics pipeline
         // Create command buffers
-
-        exit(0);
     }
 
 	void RenderingLayer::RenderInitVulkanRendering() {
@@ -927,6 +998,8 @@ namespace Drizzle3D {
         glm::mat4 viewMatrix = glm::lookAt(returnCamera(current_camera)->position, returnCamera(current_camera)->look_at_position, returnCamera(current_camera)->up);
         //glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         glm::vec3 cameraPosition = glm::inverse(viewMatrix)[3];
+
+        drawFrame();
 
         // Pass ProjectionMatrix, ViewMatrix and CameraPosition to Vulkan Shader
 

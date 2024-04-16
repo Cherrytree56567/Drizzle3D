@@ -48,7 +48,7 @@ namespace Drizzle3D {
 		Drizzle3D_API std::shared_ptr<ResourceManager> GetResourceManager() { return resourcemgr; }
 		Drizzle3D_API std::shared_ptr<EventDispatcher> dispatcher() { return dispatch; }
 		Drizzle3D_API std::shared_ptr<LayerDispatch> Layerdispatcher() { return LayerDispatcher; }
-
+		Drizzle3D_API RenderingAPI getRenderingAPI() { return renderingAPI; }
 	private:
 		// Managers
 		std::shared_ptr<ResourceManager> resourcemgr;

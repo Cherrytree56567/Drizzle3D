@@ -9,7 +9,14 @@
 
 namespace Drizzle3D {
 	Skybox::Skybox(std::shared_ptr<App> app, const char* skyboxtex, float size) : application(app) {
-		glDisable(GL_CULL_FACE);
+		switch (app->getRenderingAPI()) {
+		case RenderingAPI::OpenGL:
+			glDisable(GL_CULL_FACE);
+			break;
+
+		case RenderingAPI::Vulkan:
+			std::cout << "[Drizzle3D::Core::Skybox] Warning: Vulkan Support is experimental";
+		}
 		glm::mat4 model = glm::mat4(1.0f);
 		float d = size;
 
@@ -17,7 +24,7 @@ namespace Drizzle3D {
 		model[1][1] = size; // Scaling along Y-axis
 		model[2][2] = size; // Scaling along Z-axis
 		application->GetRenderingLayer()->AddObject("Skybox", application->GetRenderingLayer()->DrawVerts(LoadObjFile("Skybox.obj"), model));
-		application->GetRenderingLayer()->returnObject("Skybox")->textureID = Drizzle3D::GetTexture(skyboxtex);
+		application->GetRenderingLayer()->returnObject("Skybox")->textureID = app->GetRenderingLayer()->GetTexture(skyboxtex);
 
 		application->dispatcher()->AddEventListener(EventType::AppUpdate, [](GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
 			Skybox* al = std::any_cast<Skybox*>(a);

@@ -151,7 +151,7 @@ namespace Drizzle3D {
         }
     }
 
-    Drizzle3D_API GLuint GetTexture(const char* TexturePath) {
+    GLuint RenderingLayer::GetTexture(const char* TexturePath) {
         // Load image using stb_image
         int width, height, channels;
         unsigned char* image = stbi_load(TexturePath, &width, &height, &channels, STBI_rgb);
@@ -162,23 +162,32 @@ namespace Drizzle3D {
             return -1;
         }
 
-        // Generate texture
-        GLuint textureID;
-        glGenTextures(1, &textureID);
-        glBindTexture(GL_TEXTURE_2D, textureID);
+        switch (renderingAPI) {
+        case (RenderingAPI::OpenGL):
+            // Generate texture
+            GLuint textureID;
+            glGenTextures(1, &textureID);
+            glBindTexture(GL_TEXTURE_2D, textureID);
 
-        // Set texture parameters
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            // Set texture parameters
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-        // Provide texture data
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-        glGenerateMipmap(GL_TEXTURE_2D);
+            // Provide texture data
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+            glGenerateMipmap(GL_TEXTURE_2D);
 
-        // Free the image data
-        stbi_image_free(image);
-        return textureID;
+            stbi_image_free(image);
+            return textureID;
+            break;
+            
+        case (RenderingAPI::Vulkan):
+            std::cout << "[Drizzle3D::Core] Warning: Vulkan Textures not Supported. Try switching to the OpenGL API.\n";
+            stbi_image_free(image);
+            return 0;
+            break;
+        }
     }
 }

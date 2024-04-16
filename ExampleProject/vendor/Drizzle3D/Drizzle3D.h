@@ -2314,7 +2314,6 @@ namespace Drizzle3D {
     */
 
     Drizzle3D_API std::pair<std::vector<float>, std::vector<unsigned int>> LoadObjFile(const std::string& filePath);
-    Drizzle3D_API GLuint GetTexture(const char* texturePath);
 
     struct VulkanPipeline {
         VkInstance instance;
@@ -2429,6 +2428,7 @@ namespace Drizzle3D {
         Drizzle3D_API Camera ReturnActiveCamera();
         Drizzle3D_API Camera GetCameraFromID(char* cam);
         Drizzle3D_API Flags* GetFlags() { return &flags; }
+        Drizzle3D_API GLuint GetTexture(const char* TexturePath);
     private:
         void InitGlRendering();
         void RenderInitGlRendering();
@@ -2466,6 +2466,8 @@ namespace Drizzle3D {
         void createFramebuffers();
         void createCommandPool();
         void createCommandBuffer();
+        void createSyncObjects();
+        void drawFrame();
 
         bool Lighting = true;
         bool fullscreen = false;
@@ -2587,7 +2589,7 @@ namespace Drizzle3D {
         Drizzle3D_API std::shared_ptr<ResourceManager> GetResourceManager() { return resourcemgr; }
         Drizzle3D_API std::shared_ptr<EventDispatcher> dispatcher() { return dispatch; }
         Drizzle3D_API std::shared_ptr<LayerDispatch> Layerdispatcher() { return LayerDispatcher; }
-
+        Drizzle3D_API RenderingAPI getRenderingAPI() { return renderingAPI; }
     private:
         // Managers
         std::shared_ptr<ResourceManager> resourcemgr;
@@ -2647,7 +2649,7 @@ namespace Drizzle3D {
 
     class Material {
     public:
-        Drizzle3D_API Material(std::shared_ptr<ResourceManager> resourcemgr, const char* fname, const char* fgname);
+        Drizzle3D_API Material(std::shared_ptr<ResourceManager> resourcemgr, const char* fname, const char* fgname, RenderingAPI rAPI);
         Drizzle3D_API GLuint GetShaderProgram();
         Drizzle3D_API void AddVariableToShader(const char* variableName, GLenum type, std::any value);
     };

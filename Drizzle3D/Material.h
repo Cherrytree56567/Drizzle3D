@@ -21,11 +21,12 @@
 namespace Drizzle3D {
 	class Material {
 	public:
-		Drizzle3D_API Material(std::shared_ptr<ResourceManager> resourcemgr, const char* fname, const char* fgname);
+		Drizzle3D_API Material(std::shared_ptr<ResourceManager> resourcemgr, const char* fname, const char* fgname, RenderingAPI rAPI);
 		Drizzle3D_API GLuint GetShaderProgram() { return shaderProgram; }
 		Drizzle3D_API void AddVariableToShader(const char* variableName, GLenum type, std::any value);
 	private:
 		GLuint shaderProgram;
 		Logging log;
+		RenderingAPI renderingAPI;
 	};
 }
