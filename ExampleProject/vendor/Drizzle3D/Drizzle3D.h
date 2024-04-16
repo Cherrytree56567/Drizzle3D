@@ -28,6 +28,14 @@ VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkSurfaceKHR)
 VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkBuffer)
 VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkImage)
 VK_DEFINE_HANDLE(VkInstance)
+typedef struct VkViewport {
+    float    x;
+    float    y;
+    float    width;
+    float    height;
+    float    minDepth;
+    float    maxDepth;
+} VkViewport;
 VK_DEFINE_HANDLE(VkPhysicalDevice)
 VK_DEFINE_HANDLE(VkDevice)
 VK_DEFINE_HANDLE(VkQueue)
@@ -2321,6 +2329,7 @@ namespace Drizzle3D {
         VkFormat swapChainImageFormat;
         VkExtent2D swapChainExtent;
         std::vector<VkImageView> swapChainImageViews;
+        VkPipelineLayout pipelineLayout;
     };
 
     enum Lights {
@@ -2443,7 +2452,7 @@ namespace Drizzle3D {
         void createLogicalDevice();
         void createSwapChain();
         void createImageViews();
-        void createGraphicsPipeline(const char* fname, const char* fgname);
+        void createGraphicsPipeline(const char* fname, const char* fgname, VkViewport viewport);
 
         bool Lighting = true;
         bool fullscreen = false;

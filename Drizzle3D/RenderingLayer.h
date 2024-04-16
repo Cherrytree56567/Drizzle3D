@@ -130,7 +130,7 @@ namespace Drizzle3D {
         void createLogicalDevice();
         void createSwapChain();
         void createImageViews();
-        void createGraphicsPipeline(const char* fname, const char* fgname);
+        void createGraphicsPipeline(const char* fname, const char* fgname, VkViewport viewport);
 
         bool Lighting = true;
         bool fullscreen = false;
