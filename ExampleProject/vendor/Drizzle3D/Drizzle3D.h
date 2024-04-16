@@ -2329,7 +2329,9 @@ namespace Drizzle3D {
         VkFormat swapChainImageFormat;
         VkExtent2D swapChainExtent;
         std::vector<VkImageView> swapChainImageViews;
+        VkRenderPass renderPass;
         VkPipelineLayout pipelineLayout;
+        VkPipeline graphicsPipeline;
     };
 
     enum Lights {
@@ -2376,7 +2378,7 @@ namespace Drizzle3D {
         GLuint mat = NULL;
         char* name;
         bool hide = false;
-        VkDrizzleShader Vkshader;
+        VkPipeline graphicsPipeline;
     };
 
     struct Camera {
@@ -2452,7 +2454,8 @@ namespace Drizzle3D {
         void createLogicalDevice();
         void createSwapChain();
         void createImageViews();
-        void createGraphicsPipeline(const char* fname, const char* fgname, VkViewport viewport);
+        VkPipeline createGraphicsPipeline(const char* fname, const char* fgname, VkViewport viewport);
+        void createRenderPass();
 
         bool Lighting = true;
         bool fullscreen = false;
@@ -2466,7 +2469,6 @@ namespace Drizzle3D {
         std::vector<Object> Objects;
         std::vector<Light> Lights;
         std::vector<Camera> Cameras;
-        VkDrizzleShader defaultShader;
         Flags flags;
         GLuint lightsBuffer = 0;
         char* current_camera = (char*)"Default";

@@ -43,7 +43,9 @@ namespace Drizzle3D {
         VkFormat swapChainImageFormat;
         VkExtent2D swapChainExtent;
         std::vector<VkImageView> swapChainImageViews;
+        VkRenderPass renderPass;
         VkPipelineLayout pipelineLayout;
+        VkPipeline DefaultgraphicsPipeline;
     };
 
     struct QueueFamilyIndices {

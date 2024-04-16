@@ -60,7 +60,7 @@ namespace Drizzle3D {
         GLuint mat = 0;
         char* name = (char*)"PLZ_SPECIFY_A_NAME";
         bool hide = false;
-        VkDrizzleShader Vkshader;
+        VkPipeline Pipeline;
     };
 
     struct Camera {
@@ -130,7 +130,8 @@ namespace Drizzle3D {
         void createLogicalDevice();
         void createSwapChain();
         void createImageViews();
-        void createGraphicsPipeline(const char* fname, const char* fgname, VkViewport viewport);
+        VkPipeline createGraphicsPipeline(const char* fname, const char* fgname, VkViewport viewport);
+        void createRenderPass();
 
         bool Lighting = true;
         bool fullscreen = false;
@@ -144,7 +145,6 @@ namespace Drizzle3D {
         std::vector<Object> Objects;
         std::vector<Light> Lights;
         std::vector<Camera> Cameras;
-        VkDrizzleShader defaultShader;
         Flags flags;
         GLuint lightsBuffer = 0;
         char* current_camera = (char*)"Default";

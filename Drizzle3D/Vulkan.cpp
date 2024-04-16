@@ -79,10 +79,9 @@ namespace Drizzle3D {
     }
 
     void RenderingLayer::VulkanDestroy() {
+        vkDestroyPipeline(pVulkanPipe.device, pVulkanPipe.DefaultgraphicsPipeline, nullptr);
         vkDestroyPipelineLayout(pVulkanPipe.device, pVulkanPipe.pipelineLayout, nullptr);
-
-        vkDestroyShaderModule(pVulkanPipe.device, defaultShader.first, nullptr);
-        vkDestroyShaderModule(pVulkanPipe.device, defaultShader.second, nullptr);
+        vkDestroyRenderPass(pVulkanPipe.device, pVulkanPipe.renderPass, nullptr);
 
         for (auto imageView : pVulkanPipe.swapChainImageViews) {
             vkDestroyImageView(pVulkanPipe.device, imageView, nullptr);
@@ -630,7 +629,7 @@ namespace Drizzle3D {
         }
     }
 
-    void RenderingLayer::createGraphicsPipeline(const char* fname, const char* fgname, VkViewport viewport) {
+    VkPipeline RenderingLayer::createGraphicsPipeline(const char* fname, const char* fgname, VkViewport viewport) {
         VkDrizzleShader ShaderModule = Create_VulkanShader(fname, fgname);
 
         VkPipelineShaderStageCreateInfo vertShaderStageInfo{};
@@ -711,8 +710,72 @@ namespace Drizzle3D {
             throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create pipeline layout!");
         }
 
+        VkGraphicsPipelineCreateInfo pipelineInfo{};
+        pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+        pipelineInfo.stageCount = 2;
+        pipelineInfo.pStages = shaderStages;
+
+        pipelineInfo.pVertexInputState = &vertexInputInfo;
+        pipelineInfo.pInputAssemblyState = &inputAssembly;
+        pipelineInfo.pViewportState = &viewportState;
+        pipelineInfo.pRasterizationState = &rasterizer;
+        pipelineInfo.pMultisampleState = &multisampling;
+        pipelineInfo.pDepthStencilState = nullptr; // Optional
+        pipelineInfo.pColorBlendState = &colorBlending;
+        pipelineInfo.pDynamicState = &dynamicState;
+
+        pipelineInfo.layout = pVulkanPipe.pipelineLayout;
+
+        pipelineInfo.renderPass = pVulkanPipe.renderPass;
+        pipelineInfo.subpass = 0;
+        pipelineInfo.basePipelineHandle = VK_NULL_HANDLE; // Optional
+        pipelineInfo.basePipelineIndex = -1; // Optional
+
+        VkPipeline graphicsPipelinaae;
+        VkResult a = vkCreateGraphicsPipelines(pVulkanPipe.device, VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &graphicsPipelinaae);
+        if (a != VK_SUCCESS) {
+            switchError(a);
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create graphics pipeline!");
+        }
+
         vkDestroyShaderModule(pVulkanPipe.device, ShaderModule.first, nullptr);
         vkDestroyShaderModule(pVulkanPipe.device, ShaderModule.second, nullptr);
+
+        return graphicsPipelinaae;
+    }
+
+    void RenderingLayer::createRenderPass() {
+        VkAttachmentDescription colorAttachment{};
+        colorAttachment.format = pVulkanPipe.swapChainImageFormat;
+        colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+
+        colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+        colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+
+        colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+        colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+        colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+        colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+
+        VkAttachmentReference colorAttachmentRef{};
+        colorAttachmentRef.attachment = 0;
+        colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+
+        VkSubpassDescription subpass{};
+        subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+        subpass.colorAttachmentCount = 1;
+        subpass.pColorAttachments = &colorAttachmentRef;
+
+        VkRenderPassCreateInfo renderPassInfo{};
+        renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
+        renderPassInfo.attachmentCount = 1;
+        renderPassInfo.pAttachments = &colorAttachment;
+        renderPassInfo.subpassCount = 1;
+        renderPassInfo.pSubpasses = &subpass;
+
+        if (vkCreateRenderPass(pVulkanPipe.device, &renderPassInfo, nullptr, &pVulkanPipe.renderPass) != VK_SUCCESS) {
+            throw std::runtime_error("failed to create render pass!");
+        }
     }
 
     void RenderingLayer::InitVulkanRendering() {
@@ -725,14 +788,6 @@ namespace Drizzle3D {
 
         log.Info(std::to_string(extensionCount) + " Extensions Supported.", "[Drizzle3D::Core::Vulkan] ");
 
-        createInstance();
-        setupDebugMessenger();
-        createSurface();
-        pickPhysicalDevice();
-        createLogicalDevice();
-        createSwapChain();
-        createImageViews();
-
         VkViewport viewport{};
         viewport.x = 0.0f;
         viewport.y = 0.0f;
@@ -740,7 +795,16 @@ namespace Drizzle3D {
         viewport.height = (float)pVulkanPipe.swapChainExtent.height;
         viewport.minDepth = 0.0f;
         viewport.maxDepth = 1.0f;
-        createGraphicsPipeline("vert.spv", "frag.spv", viewport);
+
+        createInstance();
+        setupDebugMessenger();
+        createSurface();
+        pickPhysicalDevice();
+        createLogicalDevice();
+        createSwapChain();
+        createImageViews();
+        createRenderPass();
+        pVulkanPipe.DefaultgraphicsPipeline = createGraphicsPipeline("vert.spv", "frag.spv", viewport);
 
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
         // Init Vulkan Shaders
