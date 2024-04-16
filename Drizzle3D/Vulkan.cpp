@@ -79,6 +79,10 @@ namespace Drizzle3D {
     }
 
     void RenderingLayer::VulkanDestroy() {
+        for (auto framebuffer : pVulkanPipe.swapChainFramebuffers) {
+            vkDestroyFramebuffer(pVulkanPipe.device, framebuffer, nullptr);
+        }
+
         vkDestroyPipeline(pVulkanPipe.device, pVulkanPipe.DefaultgraphicsPipeline, nullptr);
         vkDestroyPipelineLayout(pVulkanPipe.device, pVulkanPipe.pipelineLayout, nullptr);
         vkDestroyRenderPass(pVulkanPipe.device, pVulkanPipe.renderPass, nullptr);
@@ -778,6 +782,29 @@ namespace Drizzle3D {
         }
     }
 
+    void RenderingLayer::createFramebuffers() {
+        pVulkanPipe.swapChainFramebuffers.resize(pVulkanPipe.swapChainImageViews.size());
+
+        for (size_t i = 0; i < pVulkanPipe.swapChainImageViews.size(); i++) {
+            VkImageView attachments[] = {
+                pVulkanPipe.swapChainImageViews[i]
+            };
+
+            VkFramebufferCreateInfo framebufferInfo{};
+            framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+            framebufferInfo.renderPass = pVulkanPipe.renderPass;
+            framebufferInfo.attachmentCount = 1;
+            framebufferInfo.pAttachments = attachments;
+            framebufferInfo.width = pVulkanPipe.swapChainExtent.width;
+            framebufferInfo.height = pVulkanPipe.swapChainExtent.height;
+            framebufferInfo.layers = 1;
+
+            if (vkCreateFramebuffer(pVulkanPipe.device, &framebufferInfo, nullptr, &pVulkanPipe.swapChainFramebuffers[i]) != VK_SUCCESS) {
+                throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create framebuffer!");
+            }
+        }
+    }
+
     void RenderingLayer::InitVulkanRendering() {
 
         log.Warning("Vulkan Initialization Not Implemented.");
@@ -805,6 +832,7 @@ namespace Drizzle3D {
         createImageViews();
         createRenderPass();
         pVulkanPipe.DefaultgraphicsPipeline = createGraphicsPipeline("vert.spv", "frag.spv", viewport);
+        createFramebuffers();
 
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
         // Init Vulkan Shaders

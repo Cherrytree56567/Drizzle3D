@@ -2332,6 +2332,7 @@ namespace Drizzle3D {
         VkRenderPass renderPass;
         VkPipelineLayout pipelineLayout;
         VkPipeline graphicsPipeline;
+        std::vector<VkFramebuffer> swapChainFramebuffers;
     };
 
     enum Lights {
@@ -2456,6 +2457,7 @@ namespace Drizzle3D {
         void createImageViews();
         VkPipeline createGraphicsPipeline(const char* fname, const char* fgname, VkViewport viewport);
         void createRenderPass();
+        void createFramebuffers();
 
         bool Lighting = true;
         bool fullscreen = false;
