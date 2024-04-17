@@ -2339,6 +2339,7 @@ namespace Drizzle3D {
         std::vector<VkFence> inFlightFences;
         const int MAX_FRAMES_IN_FLIGHT = 2;
         uint32_t currentFrame = 0;
+        bool framebufferResized = false;
     };
 
     enum Lights {
@@ -2431,6 +2432,7 @@ namespace Drizzle3D {
         Drizzle3D_API Camera GetCameraFromID(char* cam);
         Drizzle3D_API Flags* GetFlags() { return &flags; }
         Drizzle3D_API GLuint GetTexture(const char* TexturePath);
+        Drizzle3D_API VulkanPipeline* getVkPipe() { return &pVulkanPipe; }
     private:
         void InitGlRendering();
         void RenderInitGlRendering();
@@ -2470,6 +2472,8 @@ namespace Drizzle3D {
         void createCommandBuffers();
         void createSyncObjects();
         void drawFrame();
+        void cleanupSwapChain();
+        void recreateSwapChain();
 
         bool Lighting = true;
         bool fullscreen = false;

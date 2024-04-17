@@ -79,17 +79,7 @@ namespace Drizzle3D {
     }
 
     void RenderingLayer::VulkanDestroy() {
-        vkDeviceWaitIdle(pVulkanPipe.device);
-        for (size_t i = 0; i < pVulkanPipe.MAX_FRAMES_IN_FLIGHT; i++) {
-            vkDestroySemaphore(pVulkanPipe.device, pVulkanPipe.renderFinishedSemaphores[i], nullptr);
-            vkDestroySemaphore(pVulkanPipe.device, pVulkanPipe.imageAvailableSemaphores[i], nullptr);
-            vkDestroyFence(pVulkanPipe.device, pVulkanPipe.inFlightFences[i], nullptr);
-        }
-
-        vkDestroyCommandPool(pVulkanPipe.device, pVulkanPipe.commandPool, nullptr);
-        for (auto framebuffer : pVulkanPipe.swapChainFramebuffers) {
-            vkDestroyFramebuffer(pVulkanPipe.device, framebuffer, nullptr);
-        }
+        cleanupSwapChain();
 
         vkDestroyPipeline(pVulkanPipe.device, pVulkanPipe.DefaultgraphicsPipeline, nullptr);
         vkDestroyPipelineLayout(pVulkanPipe.device, pVulkanPipe.pipelineLayout, nullptr);
@@ -918,10 +908,20 @@ namespace Drizzle3D {
 
     void RenderingLayer::drawFrame() {
         vkWaitForFences(pVulkanPipe.device, 1, &pVulkanPipe.inFlightFences[pVulkanPipe.currentFrame], VK_TRUE, UINT64_MAX);
-        vkResetFences(pVulkanPipe.device, 1, &pVulkanPipe.inFlightFences[pVulkanPipe.currentFrame]);
 
         uint32_t imageIndex;
-        vkAcquireNextImageKHR(pVulkanPipe.device, pVulkanPipe.swapChain, UINT64_MAX, pVulkanPipe.imageAvailableSemaphores[pVulkanPipe.currentFrame], VK_NULL_HANDLE, &imageIndex);
+        VkResult result = vkAcquireNextImageKHR(pVulkanPipe.device, pVulkanPipe.swapChain, UINT64_MAX, pVulkanPipe.imageAvailableSemaphores[pVulkanPipe.currentFrame], VK_NULL_HANDLE, &imageIndex);
+
+        if (result == VK_ERROR_OUT_OF_DATE_KHR) {
+            recreateSwapChain();
+            return;
+        }
+        else if (result != VK_SUCCESS) {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to acquire swap chain image!");
+        }
+
+        // Only reset the fence if we are submitting work
+        vkResetFences(pVulkanPipe.device, 1, &pVulkanPipe.inFlightFences[pVulkanPipe.currentFrame]);
 
         vkResetCommandBuffer(pVulkanPipe.commandBuffers[pVulkanPipe.currentFrame], /*VkCommandBufferResetFlagBits*/ 0);
         recordCommandBuffer(pVulkanPipe.commandBuffers[pVulkanPipe.currentFrame], imageIndex);
@@ -958,9 +958,50 @@ namespace Drizzle3D {
 
         presentInfo.pImageIndices = &imageIndex;
 
-        vkQueuePresentKHR(pVulkanPipe.presentQueue, &presentInfo);
+        result = vkQueuePresentKHR(pVulkanPipe.presentQueue, &presentInfo);
+
+        if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) {
+            recreateSwapChain();
+        }
+        else if (result != VK_SUCCESS) {
+            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to present swap chain image!");
+        }
 
         pVulkanPipe.currentFrame = (pVulkanPipe.currentFrame + 1) % pVulkanPipe.MAX_FRAMES_IN_FLIGHT;
+    }
+
+    void RenderingLayer::cleanupSwapChain() {
+        for (size_t i = 0; i < pVulkanPipe.swapChainFramebuffers.size(); i++) {
+            vkDestroyFramebuffer(pVulkanPipe.device, pVulkanPipe.swapChainFramebuffers[i], nullptr);
+        }
+
+        for (size_t i = 0; i < pVulkanPipe.swapChainImageViews.size(); i++) {
+            vkDestroyImageView(pVulkanPipe.device, pVulkanPipe.swapChainImageViews[i], nullptr);
+        }
+
+        vkDestroySwapchainKHR(pVulkanPipe.device, pVulkanPipe.swapChain, nullptr);
+    }
+
+    void RenderingLayer::recreateSwapChain() {
+        int width = 0, height = 0;
+        glfwGetFramebufferSize(pWindow->returnwindow(), &width, &height);
+        while (width == 0 || height == 0) {
+            glfwGetFramebufferSize(pWindow->returnwindow(), &width, &height);
+            glfwWaitEvents();
+        }
+
+        vkDeviceWaitIdle(pVulkanPipe.device);
+
+        cleanupSwapChain();
+
+        createSwapChain();
+        createImageViews();
+        createFramebuffers();
+    }
+
+    void resizeCallback(GLFWwindow* app, std::unique_ptr<Event> events, std::any rend) {
+        std::cout << "Type: " << rend.type().name();
+        std::any_cast<RenderingLayer*>(rend)->getVkPipe()->framebufferResized = true;
     }
 
     void RenderingLayer::InitVulkanRendering() {
@@ -994,6 +1035,8 @@ namespace Drizzle3D {
         createCommandPool();
         createCommandBuffers();
         createSyncObjects();
+
+        pWindow->dispatcher->AddEventListener(WindowResize, resizeCallback, this);
 
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
         // Init Vulkan Shaders

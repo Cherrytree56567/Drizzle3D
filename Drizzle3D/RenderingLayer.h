@@ -100,6 +100,7 @@ namespace Drizzle3D {
         Drizzle3D_API Camera GetCameraFromID(char* cam);
         Drizzle3D_API Flags* GetFlags() { return &flags; }
         Drizzle3D_API GLuint GetTexture(const char* TexturePath);
+        Drizzle3D_API VulkanPipeline* getVkPipe() { return &pVulkanPipe; }
     private:
         void InitGlRendering();
         void RenderInitGlRendering();
@@ -139,6 +140,8 @@ namespace Drizzle3D {
         void createCommandBuffers();
         void createSyncObjects();
         void drawFrame();
+        void cleanupSwapChain();
+        void recreateSwapChain();
 
         bool Lighting = true;
         bool fullscreen = false;

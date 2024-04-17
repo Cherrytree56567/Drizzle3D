@@ -54,6 +54,7 @@ namespace Drizzle3D {
         std::vector<VkFence> inFlightFences;
         const int MAX_FRAMES_IN_FLIGHT = 2;
         uint32_t currentFrame = 0;
+        bool framebufferResized = false;
     };
 
     struct QueueFamilyIndices {
