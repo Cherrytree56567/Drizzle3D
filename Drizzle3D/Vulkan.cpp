@@ -80,9 +80,11 @@ namespace Drizzle3D {
 
     void RenderingLayer::VulkanDestroy() {
         vkDeviceWaitIdle(pVulkanPipe.device);
-        vkDestroySemaphore(pVulkanPipe.device, pVulkanPipe.imageAvailableSemaphore, nullptr);
-        vkDestroySemaphore(pVulkanPipe.device, pVulkanPipe.renderFinishedSemaphore, nullptr);
-        vkDestroyFence(pVulkanPipe.device, pVulkanPipe.inFlightFence, nullptr);
+        for (size_t i = 0; i < pVulkanPipe.MAX_FRAMES_IN_FLIGHT; i++) {
+            vkDestroySemaphore(pVulkanPipe.device, pVulkanPipe.renderFinishedSemaphores[i], nullptr);
+            vkDestroySemaphore(pVulkanPipe.device, pVulkanPipe.imageAvailableSemaphores[i], nullptr);
+            vkDestroyFence(pVulkanPipe.device, pVulkanPipe.inFlightFences[i], nullptr);
+        }
 
         vkDestroyCommandPool(pVulkanPipe.device, pVulkanPipe.commandPool, nullptr);
         for (auto framebuffer : pVulkanPipe.swapChainFramebuffers) {
@@ -832,14 +834,16 @@ namespace Drizzle3D {
         }
     }
 
-    void RenderingLayer::createCommandBuffer() {
+    void RenderingLayer::createCommandBuffers() {
+        pVulkanPipe.commandBuffers.resize(pVulkanPipe.MAX_FRAMES_IN_FLIGHT);
+
         VkCommandBufferAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
         allocInfo.commandPool = pVulkanPipe.commandPool;
         allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-        allocInfo.commandBufferCount = 1;
+        allocInfo.commandBufferCount = (uint32_t)pVulkanPipe.commandBuffers.size();
 
-        if (vkAllocateCommandBuffers(pVulkanPipe.device, &allocInfo, &pVulkanPipe.commandBuffer) != VK_SUCCESS) {
+        if (vkAllocateCommandBuffers(pVulkanPipe.device, &allocInfo, pVulkanPipe.commandBuffers.data()) != VK_SUCCESS) {
             throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to allocate command buffers!");
         }
     }
@@ -891,6 +895,10 @@ namespace Drizzle3D {
     }
 
     void RenderingLayer::createSyncObjects() {
+        pVulkanPipe.imageAvailableSemaphores.resize(pVulkanPipe.MAX_FRAMES_IN_FLIGHT);
+        pVulkanPipe.renderFinishedSemaphores.resize(pVulkanPipe.MAX_FRAMES_IN_FLIGHT);
+        pVulkanPipe.inFlightFences.resize(pVulkanPipe.MAX_FRAMES_IN_FLIGHT);
+
         VkSemaphoreCreateInfo semaphoreInfo{};
         semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 
@@ -898,40 +906,43 @@ namespace Drizzle3D {
         fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
         fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
-        if (vkCreateSemaphore(pVulkanPipe.device, &semaphoreInfo, nullptr, &pVulkanPipe.imageAvailableSemaphore) != VK_SUCCESS ||
-            vkCreateSemaphore(pVulkanPipe.device, &semaphoreInfo, nullptr, &pVulkanPipe.renderFinishedSemaphore) != VK_SUCCESS ||
-            vkCreateFence(pVulkanPipe.device, &fenceInfo, nullptr, &pVulkanPipe.inFlightFence) != VK_SUCCESS) {
-            throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create semaphores!");
+        for (size_t i = 0; i < pVulkanPipe.MAX_FRAMES_IN_FLIGHT; i++) {
+            if (vkCreateSemaphore(pVulkanPipe.device, &semaphoreInfo, nullptr, &pVulkanPipe.imageAvailableSemaphores[i]) != VK_SUCCESS ||
+                vkCreateSemaphore(pVulkanPipe.device, &semaphoreInfo, nullptr, &pVulkanPipe.renderFinishedSemaphores[i]) != VK_SUCCESS ||
+                vkCreateFence(pVulkanPipe.device, &fenceInfo, nullptr, &pVulkanPipe.inFlightFences[i]) != VK_SUCCESS) {
+
+                throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to create semaphores!");
+            }
         }
     }
 
     void RenderingLayer::drawFrame() {
-        vkWaitForFences(pVulkanPipe.device, 1, &pVulkanPipe.inFlightFence, VK_TRUE, UINT64_MAX);
-        vkResetFences(pVulkanPipe.device, 1, &pVulkanPipe.inFlightFence);
+        vkWaitForFences(pVulkanPipe.device, 1, &pVulkanPipe.inFlightFences[pVulkanPipe.currentFrame], VK_TRUE, UINT64_MAX);
+        vkResetFences(pVulkanPipe.device, 1, &pVulkanPipe.inFlightFences[pVulkanPipe.currentFrame]);
 
         uint32_t imageIndex;
-        vkAcquireNextImageKHR(pVulkanPipe.device, pVulkanPipe.swapChain, UINT64_MAX, pVulkanPipe.imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
+        vkAcquireNextImageKHR(pVulkanPipe.device, pVulkanPipe.swapChain, UINT64_MAX, pVulkanPipe.imageAvailableSemaphores[pVulkanPipe.currentFrame], VK_NULL_HANDLE, &imageIndex);
 
-        vkResetCommandBuffer(pVulkanPipe.commandBuffer, /*VkCommandBufferResetFlagBits*/ 0);
-        recordCommandBuffer(pVulkanPipe.commandBuffer, imageIndex);
+        vkResetCommandBuffer(pVulkanPipe.commandBuffers[pVulkanPipe.currentFrame], /*VkCommandBufferResetFlagBits*/ 0);
+        recordCommandBuffer(pVulkanPipe.commandBuffers[pVulkanPipe.currentFrame], imageIndex);
 
         VkSubmitInfo submitInfo{};
         submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-        VkSemaphore waitSemaphores[] = { pVulkanPipe.imageAvailableSemaphore };
+        VkSemaphore waitSemaphores[] = { pVulkanPipe.imageAvailableSemaphores[pVulkanPipe.currentFrame] };
         VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
         submitInfo.waitSemaphoreCount = 1;
         submitInfo.pWaitSemaphores = waitSemaphores;
         submitInfo.pWaitDstStageMask = waitStages;
 
         submitInfo.commandBufferCount = 1;
-        submitInfo.pCommandBuffers = &pVulkanPipe.commandBuffer;
+        submitInfo.pCommandBuffers = &pVulkanPipe.commandBuffers[pVulkanPipe.currentFrame];
 
-        VkSemaphore signalSemaphores[] = { pVulkanPipe.renderFinishedSemaphore };
+        VkSemaphore signalSemaphores[] = { pVulkanPipe.renderFinishedSemaphores[pVulkanPipe.currentFrame] };
         submitInfo.signalSemaphoreCount = 1;
         submitInfo.pSignalSemaphores = signalSemaphores;
 
-        if (vkQueueSubmit(pVulkanPipe.graphicsQueue, 1, &submitInfo, pVulkanPipe.inFlightFence) != VK_SUCCESS) {
+        if (vkQueueSubmit(pVulkanPipe.graphicsQueue, 1, &submitInfo, pVulkanPipe.inFlightFences[pVulkanPipe.currentFrame]) != VK_SUCCESS) {
             throw std::runtime_error("[Drizzle3D::Core::Vulkan] Error: Failed to submit draw command buffer!");
         }
 
@@ -944,10 +955,12 @@ namespace Drizzle3D {
         VkSwapchainKHR swapChains[] = { pVulkanPipe.swapChain };
         presentInfo.swapchainCount = 1;
         presentInfo.pSwapchains = swapChains;
+
         presentInfo.pImageIndices = &imageIndex;
-        presentInfo.pResults = nullptr; // Optional
 
         vkQueuePresentKHR(pVulkanPipe.presentQueue, &presentInfo);
+
+        pVulkanPipe.currentFrame = (pVulkanPipe.currentFrame + 1) % pVulkanPipe.MAX_FRAMES_IN_FLIGHT;
     }
 
     void RenderingLayer::InitVulkanRendering() {
@@ -979,7 +992,7 @@ namespace Drizzle3D {
         pVulkanPipe.DefaultgraphicsPipeline = createGraphicsPipeline("vert.spv", "frag.spv", viewport);
         createFramebuffers();
         createCommandPool();
-        createCommandBuffer();
+        createCommandBuffers();
         createSyncObjects();
 
         glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);

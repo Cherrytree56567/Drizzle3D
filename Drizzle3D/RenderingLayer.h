@@ -136,7 +136,7 @@ namespace Drizzle3D {
         void createRenderPass();
         void createFramebuffers();
         void createCommandPool();
-        void createCommandBuffer();
+        void createCommandBuffers();
         void createSyncObjects();
         void drawFrame();
 
