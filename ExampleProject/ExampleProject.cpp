@@ -78,6 +78,11 @@ int main() {
     /*
     * NOTE:
     * Key Released and Mouse Released
+    * 
+    * TODO:
+    * Extract Vertices and indecies from Objects 
+    * Add Collision Detection for Objects
+    * Add Collision Detection for Camera
     */
     std::shared_ptr<Drizzle3D::App> app = std::make_shared<Drizzle3D::App>(Drizzle3D::RenderingAPI::OpenGL);
 
