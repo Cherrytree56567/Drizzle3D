@@ -69,4 +69,15 @@ namespace Drizzle3D {
 
 		Drizzle3D_API EventType GetEventType() override { return EventType::AppRender; }
 	};
+
+	class ObjectColliderEvent : public Event {
+	public:
+		Drizzle3D_API ObjectColliderEvent(std::vector<std::string> col) : collided(col) {};
+
+		Drizzle3D_API std::vector<std::string> GetColliders() { return collided; }
+
+		Drizzle3D_API EventType GetEventType() override { return EventType::Collided; }
+	private:
+		std::vector<std::string> collided;
+	};
 }

@@ -1891,7 +1891,8 @@ namespace Drizzle3D {
         WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
         AppTick, AppUpdate, AppRender,
         KeyPressed, KeyReleased,
-        MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
+        MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
+        Collided
     };
 
     class Event {
@@ -2203,6 +2204,17 @@ namespace Drizzle3D {
         Drizzle3D_API EventType GetEventType() override { return EventType::MouseButtonReleased; }
     private:
         MouseCode m_Button;
+    };
+
+    class ObjectColliderEvent : public Event {
+    public:
+        Drizzle3D_API ObjectColliderEvent(std::vector<std::string> col) : collided(col) {};
+
+        Drizzle3D_API std::vector<std::string> GetColliders() { return collided; }
+
+        Drizzle3D_API EventType GetEventType() override { return EventType::Collided; }
+    private:
+        std::vector<std::string> collided;
     };
 
     /*
@@ -2576,6 +2588,20 @@ namespace Drizzle3D {
         std::shared_ptr<ResourceManager> resourcemgr;
         Logging log;
         RenderingAPI renderingAPI;
+    };
+
+    /*
+    * Collision Detection
+    */
+
+    class CollisionDetection {
+    public:
+        Drizzle3D_API CollisionDetection(std::vector<std::tuple<std::string, std::vector<float>, std::vector<unsigned int>>> col, std::shared_ptr<EventDispatcher> disp) : colliders(col), dispatcher(disp) {}
+        Drizzle3D_API void CheckCollision();
+
+    private:
+        std::vector<std::tuple<std::string, std::vector<float>, std::vector<unsigned int>>> colliders;
+        std::shared_ptr<EventDispatcher> dispatcher;
     };
 
     /*
