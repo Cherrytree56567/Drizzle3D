@@ -97,6 +97,9 @@
     <Filter Include="Source Files\Renderer3D\Renderers\OpenGL">
       <UniqueIdentifier>{24491997-d0b6-4f55-b431-bb163eb68d07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Collision Detection">
+      <UniqueIdentifier>{76336790-ba92-4533-91f2-2883e3ab2e66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -189,6 +192,9 @@
     <ClCompile Include="OpenGL.cpp">
       <Filter>Source Files\Renderer3D\Renderers\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionDetection.cpp">
+      <Filter>Source Files\Collision Detection</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -280,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="Vulkan.h">
       <Filter>Source Files\Renderer3D\Renderers\Vulkan</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionDetection.h">
+      <Filter>Source Files\Collision Detection</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
