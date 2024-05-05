@@ -1892,7 +1892,7 @@ namespace Drizzle3D {
         AppTick, AppUpdate, AppRender,
         KeyPressed, KeyReleased,
         MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
-        Collided
+        ObjectMoved
     };
 
     class Event {
@@ -2206,15 +2206,17 @@ namespace Drizzle3D {
         MouseCode m_Button;
     };
 
-    class ObjectColliderEvent : public Event {
+    class ObjectMovedEvent : public Event {
     public:
-        Drizzle3D_API ObjectColliderEvent(std::vector<std::string> col) : collided(col) {};
+        Drizzle3D_API ObjectMovedEvent(glm::mat4 mM, glm::mat4 OldmM) : modelMatrix(mM), OldmodelMatrix(OldmM) {};
 
-        Drizzle3D_API std::vector<std::string> GetColliders() { return collided; }
+        Drizzle3D_API glm::mat4 GetModelMatrix() { return modelMatrix; }
+        Drizzle3D_API glm::mat4 GetOldModelMatrix() { return OldmodelMatrix; }
 
-        Drizzle3D_API EventType GetEventType() override { return EventType::Collided; }
+        Drizzle3D_API EventType GetEventType() override { return EventType::ObjectMoved; }
     private:
-        std::vector<std::string> collided;
+        glm::mat4 modelMatrix;
+        glm::mat4 OldmodelMatrix;
     };
 
     /*
@@ -2244,7 +2246,7 @@ namespace Drizzle3D {
 
     class Window {
     public:
-        Drizzle3D_API Window(EventDispatcher* dispatch, char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
+        Drizzle3D_API Window(RenderingAPI rAPI, std::shared_ptr<EventDispatcher> dispatch, char* WindowName = (char*)"New Drizzle3D Game", int width = 800, int height = 600);
         Drizzle3D_API ~Window();
 
         Drizzle3D_API GLFWwindow* returnwindow() { return window; };
@@ -2265,6 +2267,7 @@ namespace Drizzle3D {
         std::shared_ptr<EventDispatcher> dispatcher;
     private:
         GLFWwindow* window = NULL;
+        RenderingAPI renderingAPI;
         int winwidth;
         int winheight;
         int winx;
@@ -2394,6 +2397,7 @@ namespace Drizzle3D {
         std::vector<float> vertices;
         std::vector<unsigned int> indices;
         glm::mat4 modelMatrix;
+        glm::mat4 OldmodelMatrix;
         GLuint textureID = NULL;
         GLuint mat = NULL;
         char* name;

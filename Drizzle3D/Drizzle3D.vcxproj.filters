@@ -100,6 +100,9 @@
     <Filter Include="Source Files\Collision Detection">
       <UniqueIdentifier>{76336790-ba92-4533-91f2-2883e3ab2e66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Events\Object">
+      <UniqueIdentifier>{a959947f-5085-4240-adf6-a20f1de36bbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -289,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="CollisionDetection.h">
       <Filter>Source Files\Collision Detection</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Source Files\Events\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

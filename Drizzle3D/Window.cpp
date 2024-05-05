@@ -93,10 +93,10 @@ namespace Drizzle3D {
 				std::unique_ptr<KeyPressedEvent> at = std::make_unique<KeyPressedEvent>((KeyCode)key);
 				dispatcher->AddEvent(std::move(at));
 			}
-			/*if (glfwGetKey(window, key) == GLFW_RELEASE) {
+			if (glfwGetKey(window, key) == GLFW_RELEASE) {
 				std::unique_ptr<KeyReleasedEvent> at = std::make_unique<KeyReleasedEvent>((KeyCode)key);
 				dispatcher->AddEvent(std::move(at));
-			}*/
+			}
 		}
 
 		int blef = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
@@ -116,79 +116,79 @@ namespace Drizzle3D {
 			std::unique_ptr<MouseButtonPressedEvent> at = std::make_unique<MouseButtonPressedEvent>(((MouseCode)blef));
 			dispatcher->AddEvent(std::move(at));
 		}
-		/*else if (blef == GLFW_RELEASE) {
+		else if (blef == GLFW_RELEASE) {
 			std::unique_ptr<MouseButtonReleasedEvent> at = std::make_unique<MouseButtonReleasedEvent>((MouseCode)blef);
 			dispatcher->AddEvent(std::move(at));
-		}*/
+		}
 
 		if (bmid == GLFW_PRESS) {
 			std::unique_ptr<MouseButtonPressedEvent> at = std::make_unique<MouseButtonPressedEvent>((MouseCode)bmid);
 			dispatcher->AddEvent(std::move(at));
 		}
-		/*else if (bmid == GLFW_RELEASE) {
+		else if (bmid == GLFW_RELEASE) {
 			std::unique_ptr<MouseButtonReleasedEvent> at = std::make_unique<MouseButtonReleasedEvent>((MouseCode)bmid);
 			dispatcher->AddEvent(std::move(at));
-		}*/
+		}
 
 		if (brig == GLFW_PRESS) {
 			std::unique_ptr<MouseButtonPressedEvent> at = std::make_unique<MouseButtonPressedEvent>((MouseCode)brig);
 			dispatcher->AddEvent(std::move(at));
 		}
-		/*else if (brig == GLFW_RELEASE) {
+		else if (brig == GLFW_RELEASE) {
 			std::unique_ptr<MouseButtonReleasedEvent> at = std::make_unique<MouseButtonReleasedEvent>((MouseCode)brig);
 			dispatcher->AddEvent(std::move(at));
-		}*/
+		}
 
 		if (blas == GLFW_PRESS) {
 			std::unique_ptr<MouseButtonPressedEvent> at = std::make_unique<MouseButtonPressedEvent>((MouseCode)blas);
 			dispatcher->AddEvent(std::move(at));
 		}
-		/*else if (blas == GLFW_RELEASE) {
+		else if (blas == GLFW_RELEASE) {
 			std::unique_ptr<MouseButtonReleasedEvent> at = std::make_unique<MouseButtonReleasedEvent>((MouseCode)blas);
 			dispatcher->AddEvent(std::move(at));
-		}*/
+		}
 
 		if (beig == GLFW_PRESS) {
 			std::unique_ptr<MouseButtonPressedEvent> at = std::make_unique<MouseButtonPressedEvent>((MouseCode)beig);
 			dispatcher->AddEvent(std::move(at));
 		}
-		/*else if (beig == GLFW_RELEASE) {
+		else if (beig == GLFW_RELEASE) {
 			std::unique_ptr<MouseButtonReleasedEvent> at = std::make_unique<MouseButtonReleasedEvent>((MouseCode)beig);
 			dispatcher->AddEvent(std::move(at));
-		}*/
+		}
 
 		if (bsev == GLFW_PRESS) {
 			std::unique_ptr<MouseButtonPressedEvent> at = std::make_unique<MouseButtonPressedEvent>((MouseCode)bsev);
 			dispatcher->AddEvent(std::move(at));
 		}
-		/*else if (bsev == GLFW_RELEASE) {
+		else if (bsev == GLFW_RELEASE) {
 			std::unique_ptr<MouseButtonReleasedEvent> at = std::make_unique<MouseButtonReleasedEvent>((MouseCode)bsev);
 			dispatcher->AddEvent(std::move(at));
-		}*/
+		}
 
 		if (bsix == GLFW_PRESS) {
 			std::unique_ptr<MouseButtonPressedEvent> at = std::make_unique<MouseButtonPressedEvent>((MouseCode)bsix);
 			dispatcher->AddEvent(std::move(at));
 		}
-		/*else if (bsix == GLFW_RELEASE) {
+		else if (bsix == GLFW_RELEASE) {
 			std::unique_ptr<MouseButtonReleasedEvent> at = std::make_unique<MouseButtonReleasedEvent>((MouseCode)bsix);
 			dispatcher->AddEvent(std::move(at));
-		}*/
+		}
 
 		if (bfiv == GLFW_PRESS) {
 			std::unique_ptr<MouseButtonPressedEvent> at = std::make_unique<MouseButtonPressedEvent>((MouseCode)bfiv);
 			dispatcher->AddEvent(std::move(at));
 		}
-		/*else if (bfiv == GLFW_RELEASE) {
+		else if (bfiv == GLFW_RELEASE) {
 			std::unique_ptr<MouseButtonReleasedEvent> at = std::make_unique<MouseButtonReleasedEvent>((MouseCode)bfiv);
 			dispatcher->AddEvent(std::move(at));
-		}*/
+		}
 
 		if (bfor == GLFW_PRESS) {
 			std::unique_ptr<MouseButtonPressedEvent> at = std::make_unique<MouseButtonPressedEvent>((MouseCode)bfor);
 			dispatcher->AddEvent(std::move(at));
 		}
-		/*else if (bfor == GLFW_RELEASE) {
+		else if (bfor == GLFW_RELEASE) {
 			std::unique_ptr<MouseButtonReleasedEvent> at = std::make_unique<MouseButtonReleasedEvent>((MouseCode)bfor);
 			dispatcher->AddEvent(std::move(at));
 		}
@@ -197,28 +197,28 @@ namespace Drizzle3D {
 			std::unique_ptr<MouseButtonPressedEvent> at = std::make_unique<MouseButtonPressedEvent>((MouseCode)btre);
 			dispatcher->AddEvent(std::move(at));
 		}
-		/*else if (btre == GLFW_RELEASE) {
+		else if (btre == GLFW_RELEASE) {
 			std::unique_ptr<MouseButtonReleasedEvent> at = std::make_unique<MouseButtonReleasedEvent>((MouseCode)btre);
 			dispatcher->AddEvent(std::move(at));
-		}*/
+		}
 
 		if (btwo == GLFW_PRESS) {
 			std::unique_ptr<MouseButtonPressedEvent> at = std::make_unique<MouseButtonPressedEvent>((MouseCode)btwo);
 			dispatcher->AddEvent(std::move(at));
 		}
-		/*else if (btwo == GLFW_RELEASE) {
+		else if (btwo == GLFW_RELEASE) {
 			std::unique_ptr<MouseButtonReleasedEvent> at = std::make_unique<MouseButtonReleasedEvent>((MouseCode)btwo);
 			dispatcher->AddEvent(std::move(at));
-		}*/
+		}
 
 		if (bone == GLFW_PRESS) {
 			std::unique_ptr<MouseButtonPressedEvent> at = std::make_unique<MouseButtonPressedEvent>((MouseCode)bone);
 			dispatcher->AddEvent(std::move(at));
 		}
-		/*else if (bone == GLFW_RELEASE) {
+		else if (bone == GLFW_RELEASE) {
 			std::unique_ptr<MouseButtonReleasedEvent> at = std::make_unique<MouseButtonReleasedEvent>((MouseCode)bone);
 			dispatcher->AddEvent(std::move(at));
-		}*/
+		}
 
 		// Check mouse movement
 		double mouseX, mouseY;
@@ -238,5 +238,6 @@ namespace Drizzle3D {
 	}
 
 	void Window::Render() {
+
 	}
 }

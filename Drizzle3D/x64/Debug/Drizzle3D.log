@@ -1,29 +1,6 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   Scanning sources for module dependencies...
-  App.cpp
-  Camera.cpp
-  CollisionDetection.cpp
-  FirstPersonCamera.cpp
-  ImGuiLayer.cpp
-  Layer.cpp
-  Light.cpp
-D:\Drizzle3D\Drizzle3D\Light.cpp(13,16): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  main.cpp
-  Object.cpp
-  OpenGL.cpp
-D:\Drizzle3D\Drizzle3D\OpenGL.cpp(184,59): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  RenderingLayer.cpp
-  Renderer2D.cpp
-  Shader.cpp
-  Skybox.cpp
-  Vulkan.cpp
   Window.cpp
-  Generating Code...
-D:\Drizzle3D\Drizzle3D\RenderingLayer.cpp(192,1): warning C4715: 'Drizzle3D::RenderingLayer::GetTexture': not all control paths return a value
-D:\Drizzle3D\Drizzle3D\Camera.cpp(46,1): warning C4715: 'Drizzle3D::RenderingLayer::ReturnActiveCamera': not all control paths return a value
-D:\Drizzle3D\Drizzle3D\Camera.cpp(54,1): warning C4715: 'Drizzle3D::RenderingLayer::GetCameraFromID': not all control paths return a value
-     Creating library D:\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.lib and object D:\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.exp
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   Drizzle3D.vcxproj -> D:\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.dll
   D:\Drizzle3D\ExampleProject\vendor\Drizzle3D\Drizzle3D.dll
   1 File(s) copied

@@ -25,7 +25,7 @@ namespace Drizzle3D {
         AppTick, AppUpdate, AppRender,
         KeyPressed, KeyReleased,
         MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
-        Collided
+        ObjectMoved
     };
 
     class Event {
