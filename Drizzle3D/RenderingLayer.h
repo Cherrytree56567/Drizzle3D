@@ -19,6 +19,7 @@
 #include "base.h"
 #include "Flags.h"
 #include "Vulkan.h"
+#include "ObjectWindow.h"
 
 namespace Drizzle3D {
 
@@ -49,19 +50,6 @@ namespace Drizzle3D {
         float constant;
         float linear;
         float quadratic;
-    };
-
-    struct Object {
-        GLuint VertexArray, VertexBuffer, IndexBuffer = 0;
-        std::vector<float> vertices;
-        std::vector<unsigned int> indices;
-        glm::mat4 modelMatrix;
-        glm::mat4 OldmodelMatrix;
-        GLuint textureID = NULL;
-        GLuint mat = 0;
-        char* name = (char*)"PLZ_SPECIFY_A_NAME";
-        bool hide = false;
-        VkPipeline Pipeline;
     };
 
     struct Camera {
@@ -102,6 +90,7 @@ namespace Drizzle3D {
         Drizzle3D_API Flags* GetFlags() { return &flags; }
         Drizzle3D_API GLuint GetTexture(const char* TexturePath);
         Drizzle3D_API VulkanPipeline* getVkPipe() { return &pVulkanPipe; }
+        Drizzle3D_API std::vector<Object>* getObjects() { return &Objects; }
     private:
         void InitGlRendering();
         void RenderInitGlRendering();

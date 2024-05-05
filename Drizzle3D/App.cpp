@@ -22,6 +22,8 @@ namespace Drizzle3D {
 		LayerDispatcher->AddLayer(renderinglayer);
 		LayerDispatcher->AddLayer(imguilayer);
 		LayerDispatcher->DispatchLayerAttach();
+
+		D3DWindow->AddRLayer(renderinglayer->getObjects());
 	}
 
 	bool App::Run() {

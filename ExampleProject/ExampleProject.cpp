@@ -98,6 +98,10 @@ int main() {
         std::cout << "Mouse Moved\n";
         });
 
+    app->dispatcher()->AddEventListener(Drizzle3D::EventType::ObjectMoved, [](GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
+        std::cout << "Object Moved\n";
+        });
+
     app->dispatcher()->AddEventListener(EWindowClose, Closed);
 
     app->ImguiLayer()->code = ImGUICode;

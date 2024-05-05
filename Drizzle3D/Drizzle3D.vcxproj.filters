@@ -296,5 +296,8 @@
     <ClInclude Include="Object.h">
       <Filter>Source Files\Events\Object</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectWindow.h">
+      <Filter>Source Files\Window</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

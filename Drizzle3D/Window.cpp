@@ -235,6 +235,19 @@ namespace Drizzle3D {
 			std::unique_ptr<MouseScrolledEvent> at = std::make_unique<MouseScrolledEvent>((float)xffset, (float)yffset);
 			dispatcher->AddEvent(std::move(at));
 		}
+
+		std::vector<Object>* objes = std::any_cast<std::vector<Object>*>(rLayer);
+
+		for (int i = 0; i < objes->size(); i++) {
+			if (objes->at(i).modelMatrix == objes->at(i).OldmodelMatrix) {
+				continue;
+			}
+			else {
+				std::unique_ptr<ObjectMovedEvent> attt = std::make_unique<ObjectMovedEvent>(objes->at(i).modelMatrix, objes->at(i).OldmodelMatrix);
+				dispatcher->AddEvent(std::move(attt));
+				objes->at(i).OldmodelMatrix = objes->at(i).modelMatrix;
+			}
+		}
 	}
 
 	void Window::Render() {

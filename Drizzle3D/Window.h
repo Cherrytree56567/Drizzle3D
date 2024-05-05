@@ -13,10 +13,13 @@
 #include <iostream>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
+#include <glm/glm.hpp>
 #include "AppEvent.h"
 #include "KeyEvent.h"
 #include "MouseEvent.h"
+#include "Object.h"
 #include "base.h"
+#include "ObjectWindow.h"
 
 namespace Drizzle3D {
 
@@ -36,6 +39,7 @@ namespace Drizzle3D {
 		Drizzle3D_API void clearKeyReleasedCodes() { keyRel_codes.clear(); }
 		Drizzle3D_API double returnMouseX() { return lastMouseX; }
 		Drizzle3D_API double returnMouseY() { return lastMouseY; }
+		Drizzle3D_API void AddRLayer(std::any rL) { rLayer = rL; }
 
 		Drizzle3D_API void ProcessEvents();
 		Drizzle3D_API void Render();
@@ -44,6 +48,7 @@ namespace Drizzle3D {
 	private:
 		GLFWwindow* window = NULL;
 		RenderingAPI renderingAPI;
+		std::any rLayer;
 		int winwidth;
 		int winheight;
 		int winx;

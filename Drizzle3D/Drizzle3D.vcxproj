@@ -69,6 +69,7 @@
     <ClInclude Include="MouseCodes.h" />
     <ClInclude Include="MouseEvent.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectWindow.h" />
     <ClInclude Include="RenderingLayer.h" />
     <ClInclude Include="Renderer2D.h" />
     <ClInclude Include="ResourceManager.h" />

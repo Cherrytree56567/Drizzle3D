@@ -2260,6 +2260,7 @@ namespace Drizzle3D {
         Drizzle3D_API void clearKeyReleasedCodes() { keyRel_codes.clear(); }
         Drizzle3D_API double returnMouseX() { return lastMouseX; }
         Drizzle3D_API double returnMouseY() { return lastMouseY; }
+        Drizzle3D_API void AddRLayer(std::any rL) { rLayer = rL; }
 
         Drizzle3D_API void ProcessEvents();
         Drizzle3D_API void Render();
@@ -2268,6 +2269,7 @@ namespace Drizzle3D {
     private:
         GLFWwindow* window = NULL;
         RenderingAPI renderingAPI;
+        std::any rLayer;
         int winwidth;
         int winheight;
         int winx;
@@ -2449,6 +2451,7 @@ namespace Drizzle3D {
         Drizzle3D_API Flags* GetFlags() { return &flags; }
         Drizzle3D_API GLuint GetTexture(const char* TexturePath);
         Drizzle3D_API VulkanPipeline* getVkPipe() { return &pVulkanPipe; }
+        Drizzle3D_API std::vector<Object>* getObjects() { return &Objects; }
     private:
         void InitGlRendering();
         void RenderInitGlRendering();
