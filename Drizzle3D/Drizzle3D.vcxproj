@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CollisionDetection.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="FirstPersonCamera.cpp" />
     <ClCompile Include="Flags.cpp" />
@@ -55,7 +55,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="AppEvent.h" />
     <ClInclude Include="base.h" />
-    <ClInclude Include="CollisionDetection.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="FirstPersonCamera.h" />
     <ClInclude Include="Flags.h" />

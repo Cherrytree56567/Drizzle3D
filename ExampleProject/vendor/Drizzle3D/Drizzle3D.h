@@ -2598,20 +2598,6 @@ namespace Drizzle3D {
     };
 
     /*
-    * Collision Detection
-    */
-
-    class CollisionDetection {
-    public:
-        Drizzle3D_API CollisionDetection(std::vector<std::tuple<std::string, std::vector<float>, std::vector<unsigned int>>> col, std::shared_ptr<EventDispatcher> disp) : colliders(col), dispatcher(disp) {}
-        Drizzle3D_API void CheckCollision();
-
-    private:
-        std::vector<std::tuple<std::string, std::vector<float>, std::vector<unsigned int>>> colliders;
-        std::shared_ptr<EventDispatcher> dispatcher;
-    };
-
-    /*
     * App
     */
 
@@ -2646,6 +2632,22 @@ namespace Drizzle3D {
 
         // Flags
         RenderingAPI renderingAPI;
+    };
+
+    /*
+    * Physics
+    */
+
+    class Physics {
+    public:
+        Drizzle3D_API Physics(std::shared_ptr<App> ap) : app(ap) {}
+        Drizzle3D_API void CheckCollision();
+        Drizzle3D_API void AddCollider(const char* name, bool isCollider, std::vector<float> verts = std::vector<float>(NULL), std::vector<unsigned int> indecies = std::vector<unsigned int>(NULL));
+        Drizzle3D_API void RemoveCollider(std::string name);
+
+    private:
+        std::vector<std::tuple<std::string, bool, std::vector<float>, std::vector<unsigned int>>> colliders;
+        std::shared_ptr<App> app;
     };
 
     /*
