@@ -28,7 +28,7 @@ void ImGUICode(std::shared_ptr<Drizzle3D::ImGuiLayer> rend) {
     ImGui::SliderFloat("Rotation Z", &rotation.z, 0.0f, 360.0f);
 
     ImGui::SliderFloat("Position X", &position.x, 0.0f, 360.0f);
-    ImGui::SliderFloat("Position Y", &position.y, 0.0f, 360.0f);
+    ImGui::SliderFloat("Position Y", &position.y, -5.0f, 360.0f);
     ImGui::SliderFloat("Position Z", &position.z, -360.0f, 360.0f);
 
     if (ImGui::Button("Ios Texture")) {

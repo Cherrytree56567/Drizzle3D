@@ -6,6 +6,11 @@ namespace Drizzle3D {
 		app->dispatcher()->AddEventListener(Drizzle3D::EventType::ObjectMoved, [](GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
 			Physics* al = std::any_cast<Physics*>(a);
 			al->calculateAABB(dynamic_cast<Drizzle3D::ObjectMovedEvent*>(ev.get())->GetObjectName());
+
+			if (al->CheckColliders(dynamic_cast<Drizzle3D::ObjectMovedEvent*>(ev.get())->GetObjectName())) {
+				std::cout << "Object Collided!";
+				exit(-1993);
+			}
 		}, this);
 	}
 
@@ -67,7 +72,36 @@ namespace Drizzle3D {
 		}
 	}
 
-	bool CheckColliders(std::string name) {
+	bool Physics::CheckColliders(std::string name) {
+		glm::vec3 objectMin;
+		glm::vec3 objectMax;
+		bool isCollider = false;
+		for (const auto& collider : colliders) {
+			if (std::get<0>(collider) == name) {
+				objectMin = std::get<2>(collider).min;
+				objectMax = std::get<2>(collider).max;
+				isCollider = std::get<1>(collider);
+				break;
+			}
+		}
 
+		if (!isCollider)
+			return false;
+
+		for (const auto& otherCollider : colliders) {
+			if (std::get<0>(otherCollider) == name || !std::get<1>(otherCollider))
+				continue;
+
+			glm::vec3 otherMin = std::get<2>(otherCollider).min;
+			glm::vec3 otherMax = std::get<2>(otherCollider).max;
+
+			if (objectMin.x <= otherMax.x && objectMax.x >= otherMin.x &&
+				objectMin.y <= otherMax.y && objectMax.y >= otherMin.y &&
+				objectMin.z <= otherMax.z && objectMax.z >= otherMin.z) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
