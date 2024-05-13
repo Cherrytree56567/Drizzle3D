@@ -12,6 +12,11 @@ namespace Drizzle3D {
 				exit(-1993);
 			}
 		}, this);
+
+		app->dispatcher()->AddEventListener(Drizzle3D::EventType::AppUpdate, [](GLFWwindow* window, std::unique_ptr<Drizzle3D::Event> ev, std::any a) {
+			Physics* al = std::any_cast<Physics*>(a);
+			al->UpdateColliders();
+			}, this);
 	}
 
 	void Physics::calculateAABB(std::string name) {
@@ -36,6 +41,9 @@ namespace Drizzle3D {
 			min_bound = glm::min(min_bound, vertex);
 			max_bound = glm::max(max_bound, vertex);
 		}
+
+		std::cout << "min: " << min_bound.x << ", " << min_bound.y << ", " << min_bound.z << "\n";
+		std::cout << "max: " << max_bound.x << ", " << max_bound.y << ", " << max_bound.z << "\n";
 
 		// Update collider's AABB if it exists for the specified object
 		for (auto& collider : colliders) {
@@ -84,9 +92,6 @@ namespace Drizzle3D {
 				break;
 			}
 		}
-
-		if (!isCollider)
-			return false;
 
 		for (const auto& otherCollider : colliders) {
 			if (std::get<0>(otherCollider) == name || !std::get<1>(otherCollider))
