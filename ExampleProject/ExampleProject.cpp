@@ -109,16 +109,14 @@ int main() {
     app->GetRenderingLayer()->AddObject("Cube", app->GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Cube.obj"), modelMatrix));
     app->GetRenderingLayer()->returnObject("Cube")->textureID = app->GetRenderingLayer()->GetTexture("duck.png");
     app->GetRenderingLayer()->returnObject("Cube")->mat = mat1.GetShaderProgram();
-    physics.AddCollider("Cube", false);
 
     app->GetRenderingLayer()->AddObject("Plane", app->GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Plane.obj"), modelMatrix));
     app->GetRenderingLayer()->returnObject("Plane")->textureID = app->GetRenderingLayer()->GetTexture("duck.png");
     app->GetRenderingLayer()->returnObject("Plane")->hide = false;
-    physics.AddCollider("Plane", true);
+    physics.addCollider("Plane");
 
     app->GetRenderingLayer()->AddObject("Cylinder", app->GetRenderingLayer()->DrawVerts(Drizzle3D::LoadObjFile("Scene1_Cylinder.obj"), modelMatrix));
     app->GetRenderingLayer()->returnObject("Cylinder")->textureID = app->GetRenderingLayer()->GetTexture("duck.png");
-    physics.AddCollider("Cylinder", false);
     //app.ImguiLayer()->SetShow(false);    
 
     Drizzle3D::Camera aCamera = { glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f) };

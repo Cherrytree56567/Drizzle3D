@@ -243,7 +243,7 @@ namespace Drizzle3D {
 				continue;
 			}
 			else {
-				std::unique_ptr<ObjectMovedEvent> attt = std::make_unique<ObjectMovedEvent>(objes->at(i).modelMatrix, objes->at(i).OldmodelMatrix);
+				std::unique_ptr<ObjectMovedEvent> attt = std::make_unique<ObjectMovedEvent>(objes->at(i).modelMatrix, objes->at(i).OldmodelMatrix, objes->at(i).name);
 				dispatcher->AddEvent(std::move(attt));
 				objes->at(i).OldmodelMatrix = objes->at(i).modelMatrix;
 			}

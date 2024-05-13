@@ -2208,15 +2208,17 @@ namespace Drizzle3D {
 
     class ObjectMovedEvent : public Event {
     public:
-        Drizzle3D_API ObjectMovedEvent(glm::mat4 mM, glm::mat4 OldmM) : modelMatrix(mM), OldmodelMatrix(OldmM) {};
+        Drizzle3D_API ObjectMovedEvent(glm::mat4 mM, glm::mat4 OldmM, std::string ObjName) : modelMatrix(mM), OldmodelMatrix(OldmM), ObjectName(ObjName) {};
 
         Drizzle3D_API glm::mat4 GetModelMatrix() { return modelMatrix; }
         Drizzle3D_API glm::mat4 GetOldModelMatrix() { return OldmodelMatrix; }
+        Drizzle3D_API std::string GetObjectName() { return ObjectName; }
 
         Drizzle3D_API EventType GetEventType() override { return EventType::ObjectMoved; }
     private:
         glm::mat4 modelMatrix;
         glm::mat4 OldmodelMatrix;
+        std::string ObjectName;
     };
 
     /*
@@ -2638,15 +2640,21 @@ namespace Drizzle3D {
     * Physics
     */
 
+    struct AABB {
+        glm::vec3 min;
+        glm::vec3 max;
+    };
+
     class Physics {
     public:
-        Drizzle3D_API Physics(std::shared_ptr<App> ap) : app(ap) {}
-        Drizzle3D_API void CheckCollision();
-        Drizzle3D_API void AddCollider(const char* name, bool isCollider, std::vector<float> verts = std::vector<float>(NULL), std::vector<unsigned int> indecies = std::vector<unsigned int>(NULL));
-        Drizzle3D_API void RemoveCollider(std::string name);
+        Drizzle3D_API Physics(std::shared_ptr<App> ap);
 
+        Drizzle3D_API void calculateAABB(std::string name);
+        Drizzle3D_API void addCollider(std::string name, bool isCollider = true);
+        Drizzle3D_API void UpdateColliders();
+        Drizzle3D_API bool CheckColliders(std::string name);
     private:
-        std::vector<std::tuple<std::string, bool, std::vector<float>, std::vector<unsigned int>>> colliders;
+        std::vector<std::tuple<std::string, bool, AABB>> colliders;
         std::shared_ptr<App> app;
     };
 
